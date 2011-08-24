@@ -12,9 +12,6 @@ import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.minestar.MineStarWarp.listener.TeleportCommandListener;
-import com.minestar.MineStarWarp.listener.WarpCommandListener;
-
 /**
  * @author Meldanor
  * 
