@@ -5,6 +5,9 @@ package com.minestar.MineStarWarp;
 
 import java.util.logging.Logger;
 
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -37,13 +40,17 @@ public class Main extends JavaPlugin {
 
         PluginManager pm = this.getServer().getPluginManager();
 
-        pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS,
-                new WarpCommandListener(this.getServer()),
-                Event.Priority.Normal, this);
-        pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS,
-                new TeleportCommandListener(this.getServer()),
-                Event.Priority.Normal, this);
         writeToLog("enabled");
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command,
+            String label, String[] args) {
+        if (!(sender instanceof Player))
+            return false;
+        
+        
+        return true;
     }
 
 }
