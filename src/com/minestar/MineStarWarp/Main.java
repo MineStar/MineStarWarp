@@ -38,9 +38,11 @@ public class Main extends JavaPlugin {
         PluginManager pm = this.getServer().getPluginManager();
 
         pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS,
-                new WarpCommandListener(), Event.Priority.Normal, this);
+                new WarpCommandListener(this.getServer()),
+                Event.Priority.Normal, this);
         pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS,
-                new TeleportCommandListener(), Event.Priority.Normal, this);
+                new TeleportCommandListener(this.getServer()),
+                Event.Priority.Normal, this);
         writeToLog("enabled");
     }
 

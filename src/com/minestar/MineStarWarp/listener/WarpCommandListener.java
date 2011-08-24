@@ -1,5 +1,6 @@
 package com.minestar.MineStarWarp.listener;
 
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerListener;
@@ -7,6 +8,12 @@ import org.bukkit.event.player.PlayerListener;
 import com.minestar.MineStarWarp.Main;
 
 public class WarpCommandListener extends PlayerListener {
+
+    private final Server server;
+
+    public WarpCommandListener(Server server) {
+        this.server = server;
+    }
 
     @Override
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
@@ -23,10 +30,10 @@ public class WarpCommandListener extends PlayerListener {
             handleCreate(player, split);
         }
 
-//        // /warp pcreacte <name> -> creates a new private warp
-//        else if (split[0].equals("pcreate")) {
-//            handlePCreate(player, split);
-//        }
+        // // /warp pcreacte <name> -> creates a new private warp
+        // else if (split[0].equals("pcreate")) {
+        // handlePCreate(player, split);
+        // }
         // /warp delete <name> -> deletes a warp but only the owner can do this!
         else if (split[0].equals("delete")) {
             handleDelete(player, split);
@@ -78,20 +85,20 @@ public class WarpCommandListener extends PlayerListener {
 
     }
 
-//    /**
-//     * Representing the command <br>
-//     * /warp pcreate WARPNAME <br>
-//     * This creates a private warp
-//     * 
-//     * @param player
-//     *            Called the command
-//     * @param split
-//     *            split[1] is the WARPNAME
-//     */
-//    private void handlePCreate(Player player, String[] split) {
-//        // TODO Auto-generated method stub
-//
-//    }
+    // /**
+    // * Representing the command <br>
+    // * /warp pcreate WARPNAME <br>
+    // * This creates a private warp
+    // *
+    // * @param player
+    // * Called the command
+    // * @param split
+    // * split[1] is the WARPNAME
+    // */
+    // private void handlePCreate(Player player, String[] split) {
+    // // TODO Auto-generated method stub
+    //
+    // }
 
     /**
      * Representing the command <br>
