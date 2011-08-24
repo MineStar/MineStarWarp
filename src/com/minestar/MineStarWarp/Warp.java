@@ -52,6 +52,7 @@ public class Warp {
     public Warp(Player owner, String name, boolean isPublic) {
         this(owner, name, owner.getLocation(), isPublic ? null
                 : new ArrayList<Player>());
+        Main.writeToLog("New Warp created: "+owner.getDisplayName()+" "+name+" "+isPublic);
     }
 
     /**
