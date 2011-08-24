@@ -9,7 +9,8 @@ import org.bukkit.event.Event;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.minestar.MineStarWarp.listener.ChatCommandListener;
+import com.minestar.MineStarWarp.listener.TeleportCommandListener;
+import com.minestar.MineStarWarp.listener.WarpCommandListener;
 
 /**
  * @author Meldanor
@@ -27,7 +28,7 @@ public class Main extends JavaPlugin {
     }
 
     public void onDisable() {
-        
+
         writeToLog("disabled");
 
     }
@@ -37,8 +38,9 @@ public class Main extends JavaPlugin {
         PluginManager pm = this.getServer().getPluginManager();
 
         pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS,
-                new ChatCommandListener(), Event.Priority.Normal, this);
-
+                new WarpCommandListener(), Event.Priority.Normal, this);
+        pm.registerEvent(Event.Type.PLAYER_COMMAND_PREPROCESS,
+                new TeleportCommandListener(), Event.Priority.Normal, this);
         writeToLog("enabled");
     }
 

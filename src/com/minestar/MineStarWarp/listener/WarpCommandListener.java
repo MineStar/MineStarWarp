@@ -6,27 +6,27 @@ import org.bukkit.event.player.PlayerListener;
 
 import com.minestar.MineStarWarp.Main;
 
-public class ChatCommandListener extends PlayerListener {
+public class WarpCommandListener extends PlayerListener {
 
     @Override
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
 
         String message = event.getMessage();
         // not ours
-        if (!message.startsWith("/warp))"))
+        if (!message.startsWith("/warp"))
             return;
 
         final Player player = event.getPlayer();
         String[] split = message.substring(6).split(" ");
-        // /warp create <name> -> creates a new public warp
-        if (split[0].equals("create")) {
+        // /warp create <name> -> creates a new private warp
+        if (split[0].equals("create") || split[0].equals("pcreate")) {
             handleCreate(player, split);
         }
 
-        // /warp pcreacte <name> -> creates a new private warp
-        else if (split[0].equals("pcreate")) {
-            handlePCreate(player, split);
-        }
+//        // /warp pcreacte <name> -> creates a new private warp
+//        else if (split[0].equals("pcreate")) {
+//            handlePCreate(player, split);
+//        }
         // /warp delete <name> -> deletes a warp but only the owner can do this!
         else if (split[0].equals("delete")) {
             handleDelete(player, split);
@@ -78,20 +78,20 @@ public class ChatCommandListener extends PlayerListener {
 
     }
 
-    /**
-     * Representing the command <br>
-     * /warp pcreate WARPNAME <br>
-     * This creates a private warp
-     * 
-     * @param player
-     *            Called the command
-     * @param split
-     *            split[1] is the WARPNAME
-     */
-    private void handlePCreate(Player player, String[] split) {
-        // TODO Auto-generated method stub
-
-    }
+//    /**
+//     * Representing the command <br>
+//     * /warp pcreate WARPNAME <br>
+//     * This creates a private warp
+//     * 
+//     * @param player
+//     *            Called the command
+//     * @param split
+//     *            split[1] is the WARPNAME
+//     */
+//    private void handlePCreate(Player player, String[] split) {
+//        // TODO Auto-generated method stub
+//
+//    }
 
     /**
      * Representing the command <br>
