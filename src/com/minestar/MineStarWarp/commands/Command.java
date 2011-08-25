@@ -3,6 +3,8 @@ package com.minestar.MineStarWarp.commands;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
+import com.gemo.utils.UtilPermissions;
+
 public abstract class Command {
 
     public final static String NO_RIGHT = "You aren't allowed to use this command!";
@@ -11,11 +13,13 @@ public abstract class Command {
     private String description;
     private String syntax;
     private String arguments;
+    private String node;
 
-    public Command(String syntax, String arguments, Server server) {
+    public Command(String syntax, String arguments, String node, Server server) {
         this.syntax = syntax;
         this.arguments = arguments;
         this.server = server;
+        this.node = node;
     }
 
     public void run(String[] args, Player player) {
@@ -25,7 +29,8 @@ public abstract class Command {
         }
 
         if (!hasCorrectSyntax(args)) {
-            player.sendMessage(syntax + " " + arguments + " " + description);
+            player.sendMessage(getSyntax() + " " + getArguments() + " "
+                    + getDescription());
             return;
         }
 
@@ -34,9 +39,12 @@ public abstract class Command {
 
     public abstract void execute(String[] args, Player player);
 
-    public abstract boolean hasRights(Player player);
+    public final boolean hasRights(Player player) {
+        return UtilPermissions.playerCanUseCommand(player,
+                "minestarwarp.command." + getNode());
+    }
 
-    public boolean hasCorrectSyntax(String[] args) {
+    public final boolean hasCorrectSyntax(String[] args) {
         return args.length == countArguments();
     }
 
@@ -47,14 +55,18 @@ public abstract class Command {
     public String getSyntax() {
         return syntax;
     }
-    
+
     public String getArguments() {
         return arguments;
     }
-    
+
+    public String getNode() {
+        return node;
+    }
+
     private int countArguments() {
         int counter = 0;
-        for (int i = 0 ; i < arguments.length() ; ++i)
+        for (int i = 0; i < arguments.length(); ++i)
             if (arguments.charAt(i) == '<')
                 ++counter;
         return counter;
