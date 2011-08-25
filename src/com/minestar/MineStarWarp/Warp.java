@@ -9,8 +9,6 @@ public class Warp {
 
     /** Is able to edit , use the warp and invite other player to it */
     private final Player owner;
-    /** The unique name */
-    private final String name;
     /** The position to warp to */
     private final Location loc;
     /** When the warp is a public warp, the value is null */
@@ -28,10 +26,8 @@ public class Warp {
      * @param guests
      *            Players are able to use the Warp
      */
-    public Warp(Player owner, String name, Location loc,
-            ArrayList<Player> guests) {
+    public Warp(Player owner, Location loc, ArrayList<Player> guests) {
         this.owner = owner;
-        this.name = name;
         this.loc = loc;
         this.guests = guests;
     }
@@ -50,9 +46,10 @@ public class Warp {
      *            created. Otherwise the value for guests is null
      */
     public Warp(Player owner, String name, boolean isPublic) {
-        this(owner, name, owner.getLocation(), isPublic ? null
+        this(owner, owner.getLocation(), isPublic ? null
                 : new ArrayList<Player>());
-        Main.writeToLog("New Warp created: "+owner.getDisplayName()+" "+name+" "+isPublic);
+        Main.writeToLog("New Warp created: " + owner.getDisplayName() + " "
+                + name + " " + isPublic);
     }
 
     /**
@@ -60,13 +57,6 @@ public class Warp {
      */
     public Player getOwner() {
         return owner;
-    }
-
-    /**
-     * @return The unique name of the warp
-     */
-    public String getName() {
-        return name;
     }
 
     /**
