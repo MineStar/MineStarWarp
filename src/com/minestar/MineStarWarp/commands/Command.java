@@ -10,7 +10,7 @@ public abstract class Command {
     public final static String NO_RIGHT = "You aren't allowed to use this command!";
     public final Server server;
 
-    private String description;
+    private String description = "";
     private String syntax;
     private String arguments;
     private String node;
