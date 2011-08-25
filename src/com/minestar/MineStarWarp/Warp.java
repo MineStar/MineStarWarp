@@ -1,6 +1,7 @@
 package com.minestar.MineStarWarp;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -8,14 +9,14 @@ import org.bukkit.entity.Player;
 public class Warp {
 
     /** Is able to edit , use the warp and invite other player to it */
-    private final Player owner;
+    private final String owner;
     /** The position to warp to */
     private final Location loc;
     /** When the warp is a public warp, the value is null */
-    private ArrayList<Player> guests = null;
+    private ArrayList<String> guests = null;
 
     /**
-     * Use this constructor in the save system
+     * Use this constructor for loading it from database
      * 
      * @param owner
      *            The creator of the Warp
@@ -26,7 +27,7 @@ public class Warp {
      * @param guests
      *            Players are able to use the Warp
      */
-    public Warp(Player owner, Location loc, ArrayList<Player> guests) {
+    public Warp(String owner, Location loc, ArrayList<String> guests) {
         this.owner = owner;
         this.loc = loc;
         this.guests = guests;
@@ -45,17 +46,14 @@ public class Warp {
      *            by setting false, a new Object of ArrayList<Player> will be
      *            created. Otherwise the value for guests is null
      */
-    public Warp(Player owner, String name, boolean isPublic) {
-        this(owner, owner.getLocation(), isPublic ? null
-                : new ArrayList<Player>());
-        Main.writeToLog("New Warp created: " + owner.getDisplayName() + " "
-                + name + " " + isPublic);
+    public Warp(Player creator) {
+        this(creator.getName(),creator.getLocation(),null);
     }
 
     /**
      * @return The owner of the warp
      */
-    public Player getOwner() {
+    public String getOwner() {
         return owner;
     }
 
@@ -70,7 +68,7 @@ public class Warp {
      * @return All player who can also use the warp. If the value is null, the
      *         warp is public.
      */
-    public ArrayList<Player> getGuests() {
+    public ArrayList<String> getGuests() {
         return guests;
     }
 
@@ -82,21 +80,10 @@ public class Warp {
      *            The player which is checked
      * @return True if the player is allowed to use it
      */
-    public boolean canUse(Player player) {
-        return isPublic() || arePlayersEqual(owner, player)
-                || guests.contains(player);
+    public boolean canUse(String name) {
+        return isPublic() || owner.equals(name)
+                || guests.contains(name);
 
-    }
-
-    /**
-     * An implementation of the function Player.Equals(Object o)
-     * 
-     * @param player1
-     * @param player2
-     * @return True when both player has the same Entity ID
-     */
-    private boolean arePlayersEqual(Player player1, Player player2) {
-        return player1.getEntityId() == player2.getEntityId();
     }
 
     /**
@@ -117,7 +104,7 @@ public class Warp {
         if (isPublic)
             guests = null;
         else if (guests == null)
-            guests = new ArrayList<Player>();
+            guests = new ArrayList<String>();
     }
 
     /**
@@ -127,10 +114,10 @@ public class Warp {
      *            The new guest
      * @return False when the Warp is a public warp (prevents a NPE)
      */
-    public boolean invitePlayer(Player player) {
+    public boolean invitePlayer(String name) {
         if (isPublic())
             return false;
-        guests.add(player);
+        guests.add(name);
         return true;
     }
 
@@ -154,7 +141,17 @@ public class Warp {
      *            The checked player
      * @return True when the possibleOwner is the owner
      */
-    public boolean isTheOwner(Player possibleOwner) {
-        return arePlayersEqual(owner, possibleOwner);
+    public boolean isTheOwner(String possibleOwner) {
+        return owner.equals(possibleOwner);
+    }
+    
+    public String getGuestsAsString() {
+        StringBuilder result = new StringBuilder("");
+        for (String player : guests) {
+            result.append(player);
+            result.append(";");
+        }
+                
+        return result.substring(0, result.length()-1);
     }
 }
