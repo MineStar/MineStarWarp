@@ -5,14 +5,14 @@ package com.minestar.MineStarWarp;
 
 import java.io.File;
 import java.util.logging.Logger;
-import org.bukkit.util.config.Configuration;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.config.Configuration;
 
-import com.minestar.MineStarWarp.data.ConnectionManager;
+import com.minestar.MineStarWarp.dataManager.ConnectionManager;
 
 /**
  * @author Meldanor
