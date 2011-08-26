@@ -3,6 +3,7 @@ package com.minestar.MineStarWarp.data;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.TreeMap;
@@ -36,10 +37,57 @@ public class DatabaseManager {
 
     private void initiate() throws Exception {
         addWarp = con
-                .prepareStatement("INSERT INTO warpTable (name, creator, world, x, y, z, yaw, pitch) VALUES (?,?,?,?,?,?,?,?)");
+                .prepareStatement("INSERT INTO warps (name, creator, world, x, y, z, yaw, pitch) VALUES (?,?,?,?,?,?,?,?)");
         deleteWarp = con.prepareStatement("DELETE FROM warps WHERE name = ?)");
-        changeGuestList = con.prepareStatement("UPDATE warpTable SET permissions = ?");
+        changeGuestList = con
+                .prepareStatement("UPDATE warps SET permissions = ?");
 
+        // check the database structure
+        if (!con.createStatement()
+                .executeQuery(
+                        "SELECT name FROM sqlite_master WHERE type = 'table'")
+                .next()) {
+            createTables();
+        }
+    }
+
+    private void createTables() {
+        // create the table for storing the warps
+        try {
+            con.createStatement().execute(
+                "CREATE TABLE warps ("
+                + "`id` INTEGER PRIMARY KEY,"
+                + "`name` varchar(32) NOT NULL DEFAULT 'warp',"
+                + "`creator` varchar(32) NOT NULL DEFAULT 'Player',"
+                + "`world` varchar(32) NOT NULL DEFAULT '0',"
+                + "`x` DOUBLE NOT NULL DEFAULT '0',"
+                + "`y` tinyint NOT NULL DEFAULT '0',"
+                + "`z` DOUBLE NOT NULL DEFAULT '0',"
+                + "`yaw` smallint NOT NULL DEFAULT '0',"
+                + "`pitch` smallint NOT NULL DEFAULT '0',"
+                + "`publicAll` boolean NOT NULL DEFAULT '1',"
+                + "`permissions` text," + ");");
+        }
+        catch (SQLException e) {
+            Main.writeToLog(e.getMessage());
+        }
+
+        // create the table for storing the homes
+        try {
+            con.createStatement().execute(
+                "CREATE TABLE home ("
+                + "`player` varchar(32) PRIMARY KEY,"
+                + "`name` varchar(32) NOT NULL DEFAULT 'warp',"
+                + "`world` varchar(32) NOT NULL DEFAULT '0',"
+                + "`x` DOUBLE NOT NULL DEFAULT '0',"
+                + "`y` tinyint NOT NULL DEFAULT '0',"
+                + "`z` DOUBLE NOT NULL DEFAULT '0',"
+                + "`yaw` smallint NOT NULL DEFAULT '0',"
+                + "`pitch` smallint NOT NULL DEFAULT '0'," + ");");
+        }
+        catch (SQLException e) {
+            Main.writeToLog(e.getMessage());
+        }
     }
 
     public TreeMap<String, Warp> loadWarpsFromDatabase() {
@@ -48,7 +96,7 @@ public class DatabaseManager {
             ResultSet rs = con
                     .createStatement()
                     .executeQuery(
-                            "SELECT name,creator,world,x,y,z,yaw,pitch,permissions FROM warpTable");
+                            "SELECT name,creator,world,x,y,z,yaw,pitch,permissions FROM warps");
             while (rs.next()) {
 
                 String name = rs.getString(1);

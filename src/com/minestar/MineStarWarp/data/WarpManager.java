@@ -17,13 +17,6 @@ public class WarpManager {
     public WarpManager(Server server) {
         this.server = server;
         dbManager = new DatabaseManager(server);
+        warps = dbManager.loadWarpsFromDatabase();
     }
-
-    private void save() {
-
-    }
-
-    private void load() {
-
-    }    
 }

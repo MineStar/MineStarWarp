@@ -4,6 +4,7 @@ import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.minestar.MineStarWarp.commands.home.*;
 import com.minestar.MineStarWarp.commands.teleport.*;
 import com.minestar.MineStarWarp.commands.warp.*;
 
@@ -38,7 +39,11 @@ public class CommandList {
                 // Guests
                 new InviteCommand("/warp pcreate", "<Name>", "invite", server),
                 new UninviteCommand("/warp pcreate", "<Name>", "uninvite",
-                        server) };
+                        server),
+                // Home
+                new SetHomeCommand("/setHome", "<Name>", "setHome", server),
+                new HomeCommand("/home", "", "home", server) };
+
     }
 
     public static void handleCommand(CommandSender sender, String label,
@@ -57,5 +62,4 @@ public class CommandList {
             ((Player) sender).sendMessage("command not found!");
         }
     }
-
 }
