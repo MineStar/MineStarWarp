@@ -16,5 +16,6 @@ public class HomeManager {
     public HomeManager(Server server, DatabaseManager dbManager) {
         this.server = server;
         this.dbManager = dbManager;
+        homes = dbManager.loadHomesFromDatabase();
     }
 }
