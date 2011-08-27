@@ -94,7 +94,7 @@ public class WarpManager {
     public void addGuest(Player player, String warpName, String guest) {
         Warp warp = warps.get(warpName);
         warp.invitePlayer(guest);
-        if (dbManager.changeGuestList(warp.getGuestsAsString()))
+        if (dbManager.changeGuestList(warp.getGuestsAsString(), warpName))
             player.sendMessage(ChatColor.AQUA + guest
                     + " was sucessfully invited into " + warpName);
         else {
@@ -109,7 +109,7 @@ public class WarpManager {
     public void removeGuest(Player player, String warpName, String guest) {
         Warp warp = warps.get(warpName);
         warp.uninvitePlayer(guest);
-        if (dbManager.changeGuestList(warp.getGuestsAsString()))
+        if (dbManager.changeGuestList(warp.getGuestsAsString(), warpName))
             player.sendMessage(ChatColor.AQUA + guest
                     + " was sucessfully uninvited from " + warpName);
         else {
@@ -124,7 +124,7 @@ public class WarpManager {
     public int getWarpCount(Player player) {
         int counter = 0;
         for (Warp warp : warps.values()) {
-            if (warp.getOwner().equals(player.getName()))
+            if (!warp.isPublic() && warp.getOwner().equals(player.getName()))
                 ++counter;
         }
 
@@ -192,5 +192,38 @@ public class WarpManager {
         if (similiarWarps.size() == 0)
             return null;
         return similiarWarps;
+    }
+    
+    public Warp getWarpPlayerCanUser(String playerName, String warpName) {
+        Warp warp = warps.get(warpName);
+        if (warp != null && warp.canUse(playerName))
+            return warp;
+        return null;
+    }
+
+    public void changeAccess(Player player, boolean toPublic, String name) {
+        if (toPublic) {
+            if (dbManager.removeGuestsList(name)) {
+                player.sendMessage(ChatColor.AQUA + "Warp " + name
+                        + " is now public!");
+                warps.get(name).setAccess(toPublic);
+            }
+            else
+                player.sendMessage(ChatColor.RED
+                        + "ERROR! Can't change access in the database! The access is not changed! Contact an admin!");
+        }
+        else {
+            if (dbManager.changeGuestList("", name)) {
+                player.sendMessage(ChatColor.AQUA + "Warp " + name
+                        + " is now private.!");
+                player.sendMessage(ChatColor.AQUA
+                        + "Use /warp invite <Player> " + name
+                        + " to invite the player to this warp!");
+                warps.get(name).setAccess(toPublic);
+            }
+            else
+                player.sendMessage(ChatColor.RED
+                        + "ERROR! Can't change access in the database! The access is not changed! Contact an admin!");
+        }
     }
 }

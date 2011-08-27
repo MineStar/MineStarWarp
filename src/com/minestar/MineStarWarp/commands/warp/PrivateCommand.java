@@ -18,9 +18,12 @@
 
 package com.minestar.MineStarWarp.commands.warp;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
+import com.minestar.MineStarWarp.Main;
+import com.minestar.MineStarWarp.Warp;
 import com.minestar.MineStarWarp.commands.Command;
 
 public class PrivateCommand extends Command {
@@ -32,7 +35,15 @@ public class PrivateCommand extends Command {
 
     @Override
     public void execute(String[] args, Player player) {
-        // TODO Auto-generated method stub
-
+        String warpName = args[0];
+        Warp warp = Main.warpManager.getWarp(warpName);
+        if (warp.isOwner(player.getName())) {
+            if (warp.isPublic())
+                Main.warpManager.changeAccess(player, false, warpName);                
+            else
+                player.sendMessage(ChatColor.RED + "The warp is already private!");
+        }
+        else
+            player.sendRawMessage(ChatColor.RED + "You don't have the rights to edit the warp!");
     }
 }

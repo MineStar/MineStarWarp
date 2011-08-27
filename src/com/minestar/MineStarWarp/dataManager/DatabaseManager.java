@@ -44,6 +44,7 @@ public class DatabaseManager {
     private PreparedStatement changeGuestList = null;
     private PreparedStatement addHome = null;
     private PreparedStatement updateHome = null;
+    private PreparedStatement convertToPublic = null;
 
     public DatabaseManager(Server server) {
         this.server = server;
@@ -60,12 +61,13 @@ public class DatabaseManager {
                 .prepareStatement("INSERT INTO warps (name, creator, world, x, y, z, yaw, pitch) VALUES (?,?,?,?,?,?,?,?);");
         deleteWarp = con.prepareStatement("DELETE FROM warps WHERE name = ?;");
         changeGuestList = con
-                .prepareStatement("UPDATE warps SET permissions = ?;");
-
+                .prepareStatement("UPDATE warps SET permissions = ? WHERE name = ?;");
         addHome = con
                 .prepareStatement("INSERT INTO homes (player,world, x, y, z, yaw, pitch) VALUES (?,?,?,?,?,?,?);");
         updateHome = con
                 .prepareStatement("UPDATE homes SET world = ? , x = ? , y = ? , z = ? , yaw = ? , pitch = ? WHERE name = ?;");
+        convertToPublic = con
+                .prepareStatement("UPDATE warps SET permissions = null WHERE name = ?");
 
         // check the database structure
         if (!con.createStatement()
@@ -249,10 +251,11 @@ public class DatabaseManager {
         return true;
     }
 
-    public boolean changeGuestList(String name) {
+    public boolean changeGuestList(String guestList, String name) {
         try {
-            // UPDATE warps SET permissions = ?;
-            changeGuestList.setString(1, name);
+            // UPDATE warps SET permissions = ? WHERE name = ?;
+            changeGuestList.setString(1, guestList);
+            changeGuestList.setString(2, name);
             changeGuestList.executeUpdate();
             con.commit();
         }
@@ -271,5 +274,19 @@ public class DatabaseManager {
         guests.addAll(Arrays.asList(split));
 
         return guests;
+    }
+
+    public boolean removeGuestsList(String name) {
+        try {
+            // UPDATE warps SET permissions = null WHERE name = ?
+            convertToPublic.setString(1, name);
+            convertToPublic.executeUpdate();
+            con.commit();
+        }
+        catch (Exception e) {
+            Main.writeToLog(e.getMessage());
+            return false;
+        }
+        return true;
     }
 }
