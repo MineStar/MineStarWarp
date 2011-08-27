@@ -42,7 +42,7 @@ public class Main extends JavaPlugin {
     public static HomeManager homeManager;
     private DatabaseManager dbManager;
 
-    public static Configuration configFile;
+    public static Configuration config;
 
     public Main() {
 
@@ -66,7 +66,7 @@ public class Main extends JavaPlugin {
 
         if (ConnectionManager.initialize()) {
             dbManager = new DatabaseManager(this.getServer());
-            warpManager = WarpManager.getInstance(dbManager);
+            warpManager = WarpManager.getInstance(dbManager,config);
             homeManager = HomeManager.getInstance(dbManager);
             writeToLog("enabled");
         }
@@ -87,7 +87,7 @@ public class Main extends JavaPlugin {
     public void loadConfig() {
         File pluginDir = new File("plugins/MineStarWarp/Config.yml");
         pluginDir.mkdirs();
-        configFile = new Configuration(pluginDir);
+        config = new Configuration(pluginDir);
     }
 
     public void saveConfig() {

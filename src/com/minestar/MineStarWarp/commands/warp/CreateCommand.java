@@ -18,9 +18,12 @@
 
 package com.minestar.MineStarWarp.commands.warp;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
+import com.minestar.MineStarWarp.Main;
+import com.minestar.MineStarWarp.Warp;
 import com.minestar.MineStarWarp.commands.Command;
 
 public class CreateCommand extends Command {
@@ -32,7 +35,16 @@ public class CreateCommand extends Command {
 
     @Override
     public void execute(String[] args, Player player) {
-        // TODO Auto-generated method stub
-
+        String warpName = args[0];
+        if (Main.warpManager.hasFreeWarps(player)) {
+            if (!Main.warpManager.isWarpExisting(warpName))
+                Main.warpManager.addWarp(player, warpName, new Warp(player));
+            else
+                player.sendMessage(ChatColor.RED
+                        + "Sorry, there is already an warp named " + warpName);
+        }
+        else
+            player.sendMessage(ChatColor.RED
+                    + "Sorry, you didn't have enough free warp slots to create one more. Please delete one warp of yours!");
     }
 }

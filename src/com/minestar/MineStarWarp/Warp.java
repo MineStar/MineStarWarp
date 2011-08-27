@@ -19,7 +19,6 @@
 package com.minestar.MineStarWarp;
 
 import java.util.ArrayList;
-import java.util.TreeMap;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -65,7 +64,7 @@ public class Warp {
      *            created. Otherwise the value for guests is null
      */
     public Warp(Player creator) {
-        this(creator.getName(),creator.getLocation(),null);
+        this(creator.getName(), creator.getLocation(), null);
     }
 
     /**
@@ -99,8 +98,7 @@ public class Warp {
      * @return True if the player is allowed to use it
      */
     public boolean canUse(String name) {
-        return isPublic() || owner.equals(name)
-                || guests.contains(name);
+        return isPublic() || owner.equals(name) || guests.contains(name);
 
     }
 
@@ -126,17 +124,15 @@ public class Warp {
     }
 
     /**
-     * Add
+     * The given player can now use the warp
      * 
      * @param player
      *            The new guest
-     * @return False when the Warp is a public warp (prevents a NPE)
      */
-    public boolean invitePlayer(String name) {
+    public void invitePlayer(String name) {
         if (isPublic())
-            return false;
+            return;
         guests.add(name);
-        return true;
     }
 
     /**
@@ -145,13 +141,11 @@ public class Warp {
      * 
      * @param player
      *            The uninvited player
-     * @return False when the Warp is a public warp (prevents a NPE)
      */
-    public boolean uninvitePlayer(Player player) {
+    public void uninvitePlayer(String name) {
         if (isPublic())
-            return false;
-        guests.remove(player);
-        return true;
+            return;
+        guests.remove(name);
     }
 
     /**
@@ -159,17 +153,17 @@ public class Warp {
      *            The checked player
      * @return True when the possibleOwner is the owner
      */
-    public boolean isTheOwner(String possibleOwner) {
+    public boolean isOwner(String possibleOwner) {
         return owner.equals(possibleOwner);
     }
-    
+
     public String getGuestsAsString() {
         StringBuilder result = new StringBuilder("");
         for (String player : guests) {
             result.append(player);
             result.append(";");
         }
-                
-        return result.substring(0, result.length()-1);
+
+        return result.substring(0, result.length() - 1);
     }
 }

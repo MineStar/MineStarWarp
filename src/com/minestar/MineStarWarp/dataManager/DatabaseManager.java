@@ -168,7 +168,7 @@ public class DatabaseManager {
         return homes;
     }
 
-    public boolean addWarp(Player creator, Warp warp, String name) {
+    public boolean addWarp(Player creator, String name, Warp warp) {
         try {
             Location loc = warp.getLoc();
             // INSERT INTO warps (name, creator, world, x, y, z, yaw, pitch)

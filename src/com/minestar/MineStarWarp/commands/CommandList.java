@@ -18,20 +18,34 @@
 
 package com.minestar.MineStarWarp.commands;
 
+import java.util.HashMap;
+
+import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.minestar.MineStarWarp.commands.home.*;
-import com.minestar.MineStarWarp.commands.teleport.*;
-import com.minestar.MineStarWarp.commands.warp.*;
+import com.minestar.MineStarWarp.commands.home.HomeCommand;
+import com.minestar.MineStarWarp.commands.home.SetHomeCommand;
+import com.minestar.MineStarWarp.commands.teleport.TeleportHereCommand;
+import com.minestar.MineStarWarp.commands.teleport.TeleportPlayerToCommand;
+import com.minestar.MineStarWarp.commands.teleport.TeleportToCommand;
+import com.minestar.MineStarWarp.commands.warp.CreateCommand;
+import com.minestar.MineStarWarp.commands.warp.DeleteCommand;
+import com.minestar.MineStarWarp.commands.warp.InviteCommand;
+import com.minestar.MineStarWarp.commands.warp.ListCommand;
+import com.minestar.MineStarWarp.commands.warp.PrivateCommand;
+import com.minestar.MineStarWarp.commands.warp.PublicCommand;
+import com.minestar.MineStarWarp.commands.warp.SearchCommand;
+import com.minestar.MineStarWarp.commands.warp.UninviteCommand;
+import com.minestar.MineStarWarp.commands.warp.WarpToCommand;
 
 public class CommandList {
 
-    private static Command[] commands;
+    private static HashMap<String, Command> commandList = new HashMap<String, Command>();
 
     public CommandList(Server server) {
-        commands = new Command[] {
+        Command[] commands = new Command[] {
                 // Teleport Commands
                 new TeleportHereCommand("/tphere", "<Player>", "tphere", server),
                 new TeleportPlayerToCommand("/tp", "<Player> <Player>",
@@ -62,6 +76,7 @@ public class CommandList {
                 new SetHomeCommand("/setHome", "<Name>", "setHome", server),
                 new HomeCommand("/home", "", "home", server) };
 
+        initCommandList(commands);
     }
 
     public static void handleCommand(CommandSender sender, String label,
@@ -70,14 +85,23 @@ public class CommandList {
             label = "/" + label;
 
         if (sender instanceof Player) {
-            for (Command cmd : commands) {
-                if (cmd.getSyntax().equalsIgnoreCase(label)
-                        && cmd.hasCorrectSyntax(args)) {
-                    cmd.run(args, (Player) sender);
-                    return;
-                }
+            if (commandList.containsKey(label + "_" + args.length)) {
+                commandList.get(label + "_" + args.length).run(args,
+                        (Player) sender);
+                return;
             }
-            ((Player) sender).sendMessage("command not found!");
+            else {
+                ((Player) sender).sendMessage(ChatColor.RED + "Command '"
+                        + label + "' not found!");
+                return;
+            }
         }
+    }
+
+    public static void initCommandList(Command[] cmds) {
+        for (Command cmd : cmds)
+            commandList.put(
+                    cmd.getSyntax() + "_"
+                            + cmd.getArguments().split("<").length, cmd);
     }
 }

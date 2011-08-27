@@ -35,8 +35,8 @@ public class HomeCommand extends Command {
 
     @Override
     public void execute(String[] args, Player player) {
-        
-     // When the player didn't have set a home, it returns null
+
+        // When the player didn't have set a home, it returns null
         Location homeLocation = Main.homeManager.getPlayersHome(player);
         if (homeLocation != null)
             player.teleport(homeLocation);
@@ -45,5 +45,4 @@ public class HomeCommand extends Command {
             player.sendMessage(ChatColor.RED
                     + "You didn't have set a home! Use /setHome to create one.");
     }
-
 }

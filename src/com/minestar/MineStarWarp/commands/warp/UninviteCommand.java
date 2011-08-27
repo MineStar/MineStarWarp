@@ -18,9 +18,12 @@
 
 package com.minestar.MineStarWarp.commands.warp;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
+import com.minestar.MineStarWarp.Main;
+import com.minestar.MineStarWarp.Warp;
 import com.minestar.MineStarWarp.commands.Command;
 
 public class UninviteCommand extends Command {
@@ -32,7 +35,17 @@ public class UninviteCommand extends Command {
 
     @Override
     public void execute(String[] args, Player player) {
-        // TODO Auto-generated method stub
-
+        String warpName = args[0];
+        String guestName = args[1];
+        Warp warp = Main.warpManager.getWarp(warpName);
+        if (warp != null) {
+            if (warp.isOwner(player.getName()))
+                Main.warpManager.removeGuest(player, warpName, guestName);
+            else
+                player.sendMessage(ChatColor.RED + "You are not the owner of "
+                        + warpName);
+        }
+        else
+            player.sendMessage(ChatColor.RED + warpName + " doesn't not exist!");
     }
 }
