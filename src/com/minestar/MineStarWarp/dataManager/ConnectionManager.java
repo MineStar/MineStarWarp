@@ -37,13 +37,12 @@ public class ConnectionManager {
         return con;
     }
     
-    public static void initialize() {
+    public static boolean initialize() {
         if (con != null) {
             Main.writeToLog("Connection is already initialized! Check for double initiations!");
-            return;
+            return false;
         }
-        createConnection();
-        
+        return createConnection();
     }
     
     public static void closeConnection() {
@@ -58,7 +57,7 @@ public class ConnectionManager {
         }
     }
 
-    private static void createConnection() {
+    private static boolean createConnection() {
         
         try {
             Class.forName("org.sqlite.JDBC");
@@ -67,6 +66,8 @@ public class ConnectionManager {
         }
         catch (Exception e) {
             Main.writeToLog(e.getMessage());
+            return false;
         }
+        return true;
     }
 }

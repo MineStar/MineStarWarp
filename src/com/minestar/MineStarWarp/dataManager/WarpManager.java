@@ -27,14 +27,21 @@ import com.minestar.MineStarWarp.Warp;
 
 public class WarpManager {
 
+    // Key = Name of Warp
     private TreeMap<String, Warp> warps;
     
-    private final Server server;
-    private final DatabaseManager dbManager; 
+    private final DatabaseManager dbManager;
     
-    public WarpManager(Server server) {
-        this.server = server;
-        dbManager = new DatabaseManager(server);
+    private static WarpManager instance;
+    
+    private WarpManager(DatabaseManager dbManager) {
+        this.dbManager = dbManager;
         warps = dbManager.loadWarpsFromDatabase();
+    }
+    
+    public static WarpManager getInstance(DatabaseManager dbManager) {
+        if (instance == null)
+            instance = new WarpManager(dbManager);
+        return instance;
     }
 }

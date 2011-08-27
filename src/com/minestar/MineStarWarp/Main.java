@@ -28,6 +28,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
 import com.minestar.MineStarWarp.dataManager.ConnectionManager;
+import com.minestar.MineStarWarp.dataManager.DatabaseManager;
+import com.minestar.MineStarWarp.dataManager.HomeManager;
+import com.minestar.MineStarWarp.dataManager.WarpManager;
 
 public class Main extends JavaPlugin {
 
@@ -35,9 +38,14 @@ public class Main extends JavaPlugin {
 
     private static final String PLUGIN_NAME = "MineStarWarp";
 
+    public static WarpManager warpManager;
+    public static HomeManager homeManager;
+    private DatabaseManager dbManager;
+
     public static Configuration configFile;
 
     public Main() {
+
     }
 
     public static void writeToLog(String info) {
@@ -48,17 +56,23 @@ public class Main extends JavaPlugin {
     public void onDisable() {
 
         writeToLog("disabled");
-        
+
         saveConfig();
     }
 
     public void onEnable() {
 
-        writeToLog("enabled");
-        
         loadConfig();
-        
-        ConnectionManager.initialize();
+
+        if (ConnectionManager.initialize()) {
+            dbManager = new DatabaseManager(this.getServer());
+            warpManager = WarpManager.getInstance(dbManager);
+            homeManager = HomeManager.getInstance(dbManager);
+            writeToLog("enabled");
+        }
+        else {
+            writeToLog("Can't connect to database!");
+        }
     }
 
     @Override

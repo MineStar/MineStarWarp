@@ -18,9 +18,12 @@
 
 package com.minestar.MineStarWarp.commands.home;
 
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
+import com.minestar.MineStarWarp.Main;
 import com.minestar.MineStarWarp.commands.Command;
 
 public class HomeCommand extends Command {
@@ -32,7 +35,15 @@ public class HomeCommand extends Command {
 
     @Override
     public void execute(String[] args, Player player) {
+        
+     // When the player didn't have set a home, it returns null
+        Location homeLocation = Main.homeManager.getPlayersHome(player);
+        if (homeLocation != null)
+            player.teleport(homeLocation);
 
+        else
+            player.sendMessage(ChatColor.RED
+                    + "You didn't have set a home! Use /setHome to create one.");
     }
 
 }
