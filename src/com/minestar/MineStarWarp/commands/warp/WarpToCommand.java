@@ -18,9 +18,12 @@
 
 package com.minestar.MineStarWarp.commands.warp;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
+import com.minestar.MineStarWarp.Main;
+import com.minestar.MineStarWarp.Warp;
 import com.minestar.MineStarWarp.commands.Command;
 
 public class WarpToCommand extends Command {
@@ -32,7 +35,17 @@ public class WarpToCommand extends Command {
 
     @Override
     public void execute(String[] args, Player player) {
-        // TODO Auto-generated method stub
-
+        String warpName = args[0];
+        Warp warp = Main.warpManager.getSimiliarWarp(warpName);
+        if (warp != null) {
+            if (warp.canUse(player.getName())) {
+                player.teleport(warp.getLoc());
+                player.sendMessage(ChatColor.AQUA + "Welcome to "+warpName);
+            }
+            else
+                player.sendMessage(ChatColor.RED + "Sorry, you can't use the warp "+warpName+"!");
+        }
+        else
+            player.sendMessage(ChatColor.RED + warpName + " doesn't not exist!");
     }
 }

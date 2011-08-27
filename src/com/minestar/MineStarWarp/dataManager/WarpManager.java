@@ -18,6 +18,7 @@
 
 package com.minestar.MineStarWarp.dataManager;
 
+import java.util.ArrayList;
 import java.util.TreeMap;
 
 import org.bukkit.ChatColor;
@@ -148,7 +149,48 @@ public class WarpManager {
         return false;
     }
 
+    /**
+     * @param name
+     *            The case-sensitive name
+     * @return Warp have the same, case-sensitive name as given. Null if no warp
+     *         exists
+     */
     public Warp getWarp(String name) {
         return warps.get(name);
+    }
+
+    /**
+     * Return a warp that have the same name. If no warp exists with the same
+     * name, the first warp, that starts with the name will returned.
+     * 
+     * @param name
+     *            Same name or similiar name
+     * @return Warp matching name
+     */
+    public Warp getSimiliarWarp(String name) {
+        Warp warp = warps.get(name);
+        if (warp != null)
+            return warp;
+        for (String tempName : warps.keySet())
+            if (tempName.startsWith(name))
+                return warps.get(tempName);
+        return null;
+    }
+
+    /**
+     * Example : Returning warps Castle, Castle1 and astl, because the param was
+     * 'astl'
+     * 
+     * @return Returns a list of all warps that contains the name.
+     */
+    public ArrayList<Warp> getSimiliarWarps(String name) {
+        ArrayList<Warp> similiarWarps = new ArrayList<Warp>();
+        for (String warpName : warps.keySet()) {
+            if (warpName.contains(name))
+                similiarWarps.add(warps.get(warpName));
+        }
+        if (similiarWarps.size() == 0)
+            return null;
+        return similiarWarps;
     }
 }
