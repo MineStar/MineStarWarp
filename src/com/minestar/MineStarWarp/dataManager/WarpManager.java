@@ -18,7 +18,7 @@
 
 package com.minestar.MineStarWarp.dataManager;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeMap;
 
 import org.bukkit.ChatColor;
@@ -183,11 +183,11 @@ public class WarpManager {
      * 
      * @return Returns a list of all warps that contains the name.
      */
-    public ArrayList<Warp> getSimiliarWarps(String name) {
-        ArrayList<Warp> similiarWarps = new ArrayList<Warp>();
+    public HashMap<String, Warp> getSimiliarWarps(String name) {
+        HashMap<String, Warp> similiarWarps = new HashMap<String, Warp>();
         for (String warpName : warps.keySet()) {
             if (warpName.contains(name))
-                similiarWarps.add(warps.get(warpName));
+                similiarWarps.put(warpName, warps.get(warpName));
         }
         if (similiarWarps.size() == 0)
             return null;

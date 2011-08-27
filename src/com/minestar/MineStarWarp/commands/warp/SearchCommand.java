@@ -18,9 +18,14 @@
 
 package com.minestar.MineStarWarp.commands.warp;
 
+import java.util.HashMap;
+
+import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
+import com.minestar.MineStarWarp.Main;
+import com.minestar.MineStarWarp.Warp;
 import com.minestar.MineStarWarp.commands.Command;
 
 public class SearchCommand extends Command {
@@ -32,6 +37,52 @@ public class SearchCommand extends Command {
 
     @Override
     public void execute(String[] args, Player player) {
-        
+
+        String query = args[0];
+
+        // Getting all warps that contains the query
+        HashMap<String, Warp> matchingWarps = Main.warpManager
+                .getSimiliarWarps(query);
+
+        // When at least one warp is found
+        if (matchingWarps != null) {
+            player.sendMessage(ChatColor.YELLOW
+                    + "Partial matches for search: " + ChatColor.GRAY + query);
+            // Sending all warps per Line to the player
+            for (String warpName : matchingWarps.keySet()) {
+                Warp warp = matchingWarps.get(warpName);
+
+                // The player can only search for warps he can use
+                if (warp.canUse(query)) {
+                    // Output Formation START
+                    String owner = null;
+                    ChatColor color = null;
+
+                    if (warp.isOwner(player.getName())) {
+                        color = ChatColor.AQUA;
+                        owner = "you";
+                    }
+                    else if (warp.isPublic())
+                        color = ChatColor.GREEN;
+                    else
+                        color = ChatColor.RED;
+
+                    if (owner == null)
+                        owner = warp.getOwner();
+
+                    int x = warp.getLoc().getBlockX();
+                    int y = warp.getLoc().getBlockY();
+                    int z = warp.getLoc().getBlockZ();
+                    // Output Formation END
+                    player.sendMessage(color + "'" + warpName + "'"
+                            + ChatColor.WHITE + " by " + owner + " @(" + x
+                            + ", " + y + ", " + z + ")");
+                }
+            }
+        }
+        // When no warp was found
+        else
+            player.sendMessage(ChatColor.RED + "No warp matches for search: "
+                    + ChatColor.GRAY + query);
     }
 }
