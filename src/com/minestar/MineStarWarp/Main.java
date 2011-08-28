@@ -27,6 +27,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
+import com.minestar.MineStarWarp.commands.CommandList;
 import com.minestar.MineStarWarp.dataManager.ConnectionManager;
 import com.minestar.MineStarWarp.dataManager.DatabaseManager;
 import com.minestar.MineStarWarp.dataManager.HomeManager;
@@ -66,7 +67,7 @@ public class Main extends JavaPlugin {
 
         if (ConnectionManager.initialize()) {
             dbManager = new DatabaseManager(this.getServer());
-            warpManager = WarpManager.getInstance(dbManager,config);
+            warpManager = WarpManager.getInstance(dbManager, config);
             homeManager = HomeManager.getInstance(dbManager);
             writeToLog("enabled");
         }
@@ -78,9 +79,7 @@ public class Main extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command command,
             String label, String[] args) {
-        if (!(sender instanceof Player))
-            return false;
-
+        CommandList.handleCommand(sender, label, args);
         return true;
     }
 
