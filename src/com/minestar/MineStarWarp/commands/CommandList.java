@@ -61,7 +61,7 @@ public class CommandList {
                 new DeleteCommand("/warp pcreate", "<Name>", "delete", server),
 
                 // Searching Warps
-                new ListCommand("/warp pcreate", "<Name>", "list", server),
+                new ListCommand("/warp list", "<Number or my>", "list", server),
                 new SearchCommand("/warp search", "<Name>", "search", server),
 
                 // Modifiers

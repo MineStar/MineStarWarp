@@ -121,29 +121,37 @@ public class WarpManager {
         }
     }
 
-    public int getWarpCount(Player player) {
+    public int countWarpsCreatedBy(Player player) {
         int counter = 0;
         for (Warp warp : warps.values()) {
             if (!warp.isPublic() && warp.getOwner().equals(player.getName()))
                 ++counter;
         }
+        return counter;
+    }
 
+    public int countWarpsCanUse(Player player) {
+        int counter = 0;
+        for (Warp warp : warps.values()) {
+            if (warp.canUse(player.getName()))
+                ++counter;
+        }
         return counter;
     }
 
     public boolean hasFreeWarps(Player player) {
         if (player.isOp())
             return true;
-        int warpCount = getWarpCount(player);
+        int warpCount = countWarpsCreatedBy(player);
         String groupName = UtilPermissions.getGroupName(player);
 
         if (groupName.equals("default"))
             return warpCount < this.maximumWarps[DEFAULTS];
         else if (groupName.equals("probe"))
             return warpCount < this.maximumWarps[PROBE];
-        else if (groupName.equals("probe"))
+        else if (groupName.equals("free"))
             return warpCount < this.maximumWarps[FREE];
-        else if (groupName.equals("probe"))
+        else if (groupName.equals("pay"))
             return warpCount < this.maximumWarps[PAY];
 
         return false;
@@ -193,12 +201,27 @@ public class WarpManager {
             return null;
         return similiarWarps;
     }
-    
-    public Warp getWarpPlayerCanUser(String playerName, String warpName) {
-        Warp warp = warps.get(warpName);
-        if (warp != null && warp.canUse(playerName))
-            return warp;
-        return null;
+
+    public HashMap<String, Warp> getWarpsPlayerIsOwner(String playerName) {
+        HashMap<String, Warp> warpList = new HashMap<String, Warp>();
+        for (String warpName : warps.keySet()) {
+            Warp tempWarp = warps.get(warpName);
+            if (tempWarp.isOwner(playerName))
+                warpList.put(warpName, tempWarp);
+        }
+        return warpList.size() > 0 ? warpList : null;
+    }
+
+    public HashMap<String, Warp> getWarpsForList(int pageNumber,
+            int warpsPerPage) {
+        HashMap<String, Warp> warpList = new HashMap<String, Warp>();
+        String[] keys = new String[warps.size()];
+        keys = warps.keySet().toArray(keys);
+        for (int i = 0; i < warpsPerPage; ++i) {
+            String key = keys[((pageNumber - 1) * warpsPerPage) + i];
+            warpList.put(key, warps.get(key));
+        }
+        return warpList.size() > 0 ? warpList : null;
     }
 
     public void changeAccess(Player player, boolean toPublic, String name) {
