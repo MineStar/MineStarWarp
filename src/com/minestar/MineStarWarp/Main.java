@@ -83,9 +83,10 @@ public class Main extends JavaPlugin {
     }
 
     public void loadConfig() {
-        File pluginDir = new File("plugins/MineStarWarp/Config.yml");
-        pluginDir.mkdirs();
-        config = new Configuration(pluginDir);
+        File pluginDir = getDataFolder();
+        if (!pluginDir.exists())
+            pluginDir.mkdirs();
+        config = new Configuration(new File(pluginDir.getAbsolutePath().concat("/config.yml")));
     }
 
     public void saveConfig() {
