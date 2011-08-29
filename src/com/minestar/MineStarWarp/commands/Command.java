@@ -21,6 +21,8 @@ package com.minestar.MineStarWarp.commands;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
+import com.gemo.utils.UtilPermissions;
+
 public abstract class Command {
 
     public final static String NO_RIGHT = "You aren't allowed to use this command!";
@@ -56,9 +58,9 @@ public abstract class Command {
     public abstract void execute(String[] args, Player player);
 
     public final boolean hasRights(Player player) {
-        return true;
-//        return UtilPermissions.playerCanUseCommand(player,
-//                "minestarwarp.command." + getNode());
+
+        return UtilPermissions.playerCanUseCommand(player,
+                "minestarwarp.command." + getNode());
     }
 
     public final boolean hasCorrectSyntax(String[] args) {
@@ -82,6 +84,8 @@ public abstract class Command {
     }
 
     private int countArguments() {
+        if (arguments.isEmpty())
+            return 0;
         int counter = 0;
         for (int i = 0; i < arguments.length(); ++i)
             if (arguments.charAt(i) == '<')

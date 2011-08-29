@@ -74,7 +74,7 @@ public class CommandList {
                 new UninviteCommand("/warp uninvite", "<Name>", "uninvite",
                         server),
                 // Home
-                new SetHomeCommand("/setHome", "<Name>", "setHome", server),
+                new SetHomeCommand("/sethome", "", "sethome", server),
                 new HomeCommand("/home", "", "home", server) };
 
         initCommandList(commands);
