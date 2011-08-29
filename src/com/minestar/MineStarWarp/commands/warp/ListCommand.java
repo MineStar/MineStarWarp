@@ -63,10 +63,9 @@ public class ListCommand extends Command {
             if (pageNumber <= maxPageNumber) {
                 warps = Main.warpManager.getWarpsForList(pageNumber,
                         WARPS_PER_PAGE);
-                String intro = "------------------- Page " + pageNumber + "/"
-                        + maxPageNumber + " -------------------";
-
-                showWarpList(player, warps, intro);
+                player.sendMessage("------------------- Page " + pageNumber
+                        + "/" + maxPageNumber + " -------------------");
+                showWarpList(player, warps);
             }
             else
                 player.sendMessage(ChatColor.RED
@@ -76,11 +75,6 @@ public class ListCommand extends Command {
     }
 
     private void showWarpList(Player player, HashMap<String, Warp> warps) {
-        showWarpList(player, warps, "");
-    }
-
-    private void showWarpList(Player player, HashMap<String, Warp> warps,
-            String intro) {
 
         for (String warpName : warps.keySet()) {
 
@@ -103,72 +97,8 @@ public class ListCommand extends Command {
             String location = " @(" + x + ", " + y + ", " + z + ")";
             String creatorString = (warp.isPublic() ? "(+)" : "(-)") + " by "
                     + creator;
-
-            // Find remaining length left
-            int left = getStringWidth(intro)
-                    - getStringWidth("''" + creatorString + location);
-
-            int nameLength = getStringWidth(warpName);
-            if (left > nameLength) {
-                warpName = "'" + warpName + "'" + ChatColor.WHITE
-                        + creatorString + whitespace(left - nameLength);
-            }
-            else if (left < nameLength) {
-                warpName = "'" + substring(warpName, left) + "'"
-                        + ChatColor.WHITE + creatorString;
-            }
-
-            player.sendMessage(color + warpName + location);
+            player.sendMessage(color + "'" + warpName + "'" + ChatColor.WHITE
+                    + creatorString + location);
         }
     }
-
-    private String charWidthIndexIndex = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_'abcdefghijklmnopqrstuvwxyz{|}~⌂ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜø£Ø×ƒáíóúñÑªº¿®¬½¼¡«»";
-    private int[] charWidths = { 4, 2, 5, 6, 6, 6, 6, 3, 5, 5, 5, 6, 2, 6, 2,
-            6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 2, 2, 5, 6, 5, 6, 7, 6, 6, 6, 6,
-            6, 6, 6, 6, 4, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
-            4, 6, 4, 6, 6, 3, 6, 6, 6, 6, 6, 5, 6, 6, 2, 6, 5, 3, 6, 6, 6, 6,
-            6, 6, 6, 4, 6, 6, 6, 6, 6, 6, 5, 2, 5, 7, 6, 6, 6, 6, 6, 6, 6, 6,
-            6, 6, 6, 6, 4, 6, 3, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
-            6, 4, 6, 6, 3, 6, 6, 6, 6, 6, 6, 6, 7, 6, 6, 6, 2, 6, 6, 8, 9, 9,
-            6, 6, 6, 8, 8, 6, 8, 8, 8, 8, 8, 6, 6, 9, 9, 9, 9, 9, 9, 9, 9, 9,
-            9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 6, 9, 9, 9, 5, 9,
-            9, 8, 7, 7, 8, 7, 8, 8, 8, 7, 8, 8, 7, 9, 9, 6, 7, 7, 7, 7, 7, 9,
-            6, 7, 8, 7, 6, 6, 9, 7, 6, 7, 1 };
-
-    private int getStringWidth(String s) {
-        int i = 0;
-        if (s != null)
-            for (int j = 0; j < s.length(); j++)
-                i += getCharWidth(s.charAt(j));
-        return i;
-    }
-
-    private int getCharWidth(char c) {
-        int k = charWidthIndexIndex.indexOf(c);
-        if (c != '\247' && k >= 0)
-            return charWidths[k];
-        return 0;
-    }
-
-    /**
-     * Lob shit off that string till it fits.
-     */
-    private String substring(String name, int left) {
-        while (getStringWidth(name) > left) {
-            name = name.substring(0, name.length() - 1);
-        }
-        return name;
-    }
-
-    public String whitespace(int length) {
-        int spaceWidth = getStringWidth(" ");
-
-        StringBuilder ret = new StringBuilder();
-
-        for (int i = 0; i < length; i += spaceWidth)
-            ret.append(" ");
-
-        return ret.toString();
-    }
-
 }

@@ -271,13 +271,13 @@ public class WarpManager {
         String groupName = UtilPermissions.getGroupName(player);
 
         if (groupName.equals("default"))
-            return warpCount < this.maximumWarps[DEFAULTS];
+            return warpCount < maximumWarps[DEFAULTS];
         else if (groupName.equals("probe"))
-            return warpCount < this.maximumWarps[PROBE];
+            return warpCount < maximumWarps[PROBE];
         else if (groupName.equals("free"))
-            return warpCount < this.maximumWarps[FREE];
+            return warpCount < maximumWarps[FREE];
         else if (groupName.equals("pay"))
-            return warpCount < this.maximumWarps[PAY];
+            return warpCount < maximumWarps[PAY];
 
         return false;
     }
