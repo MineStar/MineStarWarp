@@ -120,8 +120,8 @@ public class WarpManager {
     public void addWarp(Player creator, String name, Warp warp) {
         if (dbManager.addWarp(creator, name, warp)) {
             warps.put(name, warp);
-            creator.sendMessage(ChatColor.AQUA + name
-                    + "was sucessfully created!");
+            creator.sendMessage(ChatColor.AQUA + "Warp " + name
+                    + " was sucessfully created!");
         }
         else {
             creator.sendMessage(ChatColor.RED
@@ -144,7 +144,7 @@ public class WarpManager {
     public void deleteWarp(Player player, String name) {
 
         if (dbManager.deleteWarp(name)) {
-            player.sendMessage(ChatColor.AQUA + name
+            player.sendMessage(ChatColor.AQUA + "Warp " + name
                     + " was sucessfully deleted!");
             warps.remove(name);
         }
