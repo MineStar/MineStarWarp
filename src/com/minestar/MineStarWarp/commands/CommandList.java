@@ -87,7 +87,6 @@ public class CommandList {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             String key = label + "_" + (args != null ? args.length : 0);
-            System.out.println(key);
             Command com = commandList.get(key);
             if (com != null)
                 com.run(args, player);
