@@ -41,11 +41,12 @@ public class Main extends JavaPlugin {
     public static WarpManager warpManager;
     public static HomeManager homeManager;
     private DatabaseManager dbManager;
+    
+    private CommandList commandList;
 
     public static Configuration config;
 
     public Main() {
-
     }
 
     public static void writeToLog(String info) {
@@ -54,7 +55,7 @@ public class Main extends JavaPlugin {
     }
 
     public void onDisable() {
-
+        ConnectionManager.closeConnection();
         writeToLog("disabled");
 
         saveConfig();
@@ -63,6 +64,7 @@ public class Main extends JavaPlugin {
     public void onEnable() {
 
         loadConfig();
+        commandList = new CommandList(getServer());
 
         if (ConnectionManager.initialize()) {
             dbManager = new DatabaseManager(this.getServer());
@@ -78,7 +80,7 @@ public class Main extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command command,
             String label, String[] args) {
-        CommandList.handleCommand(sender, label, args);
+        commandList.handleCommand(sender, label, args);
         return true;
     }
 

@@ -42,7 +42,7 @@ import com.minestar.MineStarWarp.commands.warp.WarpToCommand;
 
 public class CommandList {
 
-    private static HashMap<String, Command> commandList = new HashMap<String, Command>();
+    private HashMap<String, Command> commandList = new HashMap<String, Command>();
 
     public CommandList(Server server) {
         Command[] commands = new Command[] {
@@ -65,12 +65,12 @@ public class CommandList {
                 new SearchCommand("/warp search", "<Name>", "search", server),
 
                 // Modifiers
-                new PrivateCommand("/warp pcreate", "<Name>", "private", server),
-                new PublicCommand("/warp pcreate", "<Name>", "public", server),
+                new PrivateCommand("/warp private", "<Name>", "private", server),
+                new PublicCommand("/warp public", "<Name>", "public", server),
 
                 // Guests
-                new InviteCommand("/warp pcreate", "<Name>", "invite", server),
-                new UninviteCommand("/warp pcreate", "<Name>", "uninvite",
+                new InviteCommand("/warp invite", "<Name>", "invite", server),
+                new UninviteCommand("/warp uninvite", "<Name>", "uninvite",
                         server),
                 // Home
                 new SetHomeCommand("/setHome", "<Name>", "setHome", server),
@@ -79,29 +79,26 @@ public class CommandList {
         initCommandList(commands);
     }
 
-    public static void handleCommand(CommandSender sender, String label,
-            String[] args) {
+    public void handleCommand(CommandSender sender, String label, String[] args) {
         if (!label.startsWith("/"))
             label = "/" + label;
 
         if (sender instanceof Player) {
-            if (commandList.containsKey(label + "_" + args.length)) {
-                commandList.get(label + "_" + args.length).run(args,
-                        (Player) sender);
-                return;
-            }
+            Player player = (Player) sender;
+            Command com = commandList.get(label + "_" + args.length);
+            if (com != null)
+                com.run(args, player);
             else {
-                ((Player) sender).sendMessage(ChatColor.RED + "Command '"
-                        + label + "' not found!");
-                return;
+                player.sendMessage(ChatColor.RED + "Command '" + label
+                        + "' not found!");
             }
         }
     }
 
-    public static void initCommandList(Command[] cmds) {
+    private void initCommandList(Command[] cmds) {
         for (Command cmd : cmds)
             commandList.put(
                     cmd.getSyntax() + "_"
-                            + cmd.getArguments().split("<").length, cmd);
+                            + (cmd.getArguments().split("<").length - 1), cmd);
     }
 }

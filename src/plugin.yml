@@ -1,3 +1,19 @@
 name: MineStarWarp
 main: com.minestar.MineStarWarp.Main
 version: 1.0
+commands:
+  home:
+    description: Teleports Player to his Home
+    usage: /home
+  setHome:
+    description: Creates a Players Home
+    usage: /setHome
+  warp:
+    description: Warps a Player to the Warp if he can use it
+    usage: /warp
+  tp:
+    description: Teleports the Caller to the Player
+    usage: /tp
+  tpHere:
+    description: Telepors a Player to the Caller
+    usage: /tpHere
