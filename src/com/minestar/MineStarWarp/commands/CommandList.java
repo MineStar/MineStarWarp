@@ -18,6 +18,7 @@
 
 package com.minestar.MineStarWarp.commands;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 import org.bukkit.ChatColor;
@@ -53,12 +54,12 @@ public class CommandList {
                 new TeleportToCommand("/tp", "<Player>", "tpTo", server),
 
                 // Warp Command
-                new WarpToCommand("/warp pcreate", "<Name>", "warpTo", server),
+                new WarpToCommand("/warp", "<Name>", "warpTo", server),
 
                 // Warp Creation and Removing
                 new CreateCommand("/warp create", "<Name>", "create", server),
                 new CreateCommand("/warp pcreate", "<Name>", "create", server),
-                new DeleteCommand("/warp pcreate", "<Name>", "delete", server),
+                new DeleteCommand("/warp delete", "<Name>", "delete", server),
 
                 // Searching Warps
                 new ListCommand("/warp list", "<Number or my>", "list", server),
@@ -85,9 +86,20 @@ public class CommandList {
 
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            Command com = commandList.get(label + "_" + args.length);
+            String key = label + "_" + (args != null ? args.length : 0);
+            System.out.println(key);
+            Command com = commandList.get(key);
             if (com != null)
                 com.run(args, player);
+            else if (com == null && args.length >= 1) {
+                label += " " + args[0];
+                if (args.length == 1)
+                    args = null;
+                else
+                    args = Arrays.copyOfRange(args, 1, args.length);
+
+                handleCommand(sender, label, args);
+            }
             else {
                 player.sendMessage(ChatColor.RED + "Command '" + label
                         + "' not found!");
