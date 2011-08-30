@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import com.gemo.utils.UtilPermissions;
-
 public class Warp {
 
     /** Is able to edit , use the warp and invite other player to it */
@@ -99,8 +97,8 @@ public class Warp {
      *            The player which is checked
      * @return True if the player is allowed to use it
      */
-    public boolean canUse(String name) {
-        return isPublic() || owner.equals(name) || guests.contains(name);
+    public boolean canUse(Player player) {
+        return isPublic() || canEdit(player) || guests.contains(player.getName());
 
     }
 

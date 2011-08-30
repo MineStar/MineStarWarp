@@ -53,7 +53,7 @@ public class SearchCommand extends Command {
                 Warp warp = matchingWarps.get(warpName);
 
                 // The player can only search for warps he can use
-                if (warp.canUse(query)) {
+                if (warp.canUse(player)) {
                     // Output Formation START
                     String owner = null;
                     ChatColor color = null;

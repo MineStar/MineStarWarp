@@ -38,7 +38,7 @@ public class WarpToCommand extends Command {
         String warpName = args[0];
         Warp warp = Main.warpManager.getSimiliarWarp(warpName);
         if (warp != null) {
-            if (warp.canUse(player.getName())) {
+            if (warp.canUse(player)) {
                 player.teleport(warp.getLoc());
                 player.sendMessage(ChatColor.AQUA + "Welcome to "+warpName);
             }

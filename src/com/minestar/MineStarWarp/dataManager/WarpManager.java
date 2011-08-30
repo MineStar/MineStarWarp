@@ -246,7 +246,7 @@ public class WarpManager {
             return warps.size();
         int counter = 0;
         for (Warp warp : warps.values()) {
-            if (warp.canUse(player.getName()))
+            if (warp.canUse(player))
                 ++counter;
         }
         return counter;
