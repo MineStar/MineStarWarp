@@ -38,10 +38,10 @@ public class InviteCommand extends Command {
         String guestName = args[1];
         Warp warp = Main.warpManager.getWarp(warpName);
         if (warp != null) {
-            if (warp.isOwner(player.getName()))
+            if (warp.canEdit(player))
                 Main.warpManager.addGuest(player, warpName, guestName);
             else
-                player.sendMessage(ChatColor.RED + "You are not the owner of "
+                player.sendMessage(ChatColor.RED + "You are not allowed to edit "
                         + warpName);
         }
         else

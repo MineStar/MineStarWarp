@@ -35,16 +35,18 @@ public class PublicCommand extends Command {
 
     @Override
     public void execute(String[] args, Player player) {
-        
+
         String warpName = args[0];
         Warp warp = Main.warpManager.getWarp(warpName);
-        if (warp.isOwner(player.getName())) {
+        if (warp.canEdit(player)) {
             if (!warp.isPublic())
-                Main.warpManager.changeAccess(player, true, warpName);                
+                Main.warpManager.changeAccess(player, true, warpName);
             else
-                player.sendMessage(ChatColor.RED + "The warp is already public!");
+                player.sendMessage(ChatColor.RED
+                        + "The warp is already public!");
         }
         else
-            player.sendRawMessage(ChatColor.RED + "You don't have the rights to edit the warp!");
+            player.sendMessage(ChatColor.RED + "You are not allowed to edit "
+                    + warpName);
     }
 }

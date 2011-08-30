@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import com.gemo.utils.UtilPermissions;
+
 public class Warp {
 
     /** Is able to edit , use the warp and invite other player to it */
@@ -64,7 +66,7 @@ public class Warp {
      *            created. Otherwise the value for guests is null
      */
     public Warp(Player creator) {
-        this(creator.getName(), creator.getLocation(), null);
+        this(creator.getName(), creator.getLocation(), new ArrayList<String>());
     }
 
     /**
@@ -156,8 +158,13 @@ public class Warp {
     public boolean isOwner(String possibleOwner) {
         return owner.equals(possibleOwner);
     }
+    
+    public boolean canEdit(Player player) {
+        return isOwner(player.getName()) || player.isOp(); 
+    }
 
     public String getGuestsAsString() {
+        
         StringBuilder result = new StringBuilder("");
         for (String player : guests) {
             result.append(player);

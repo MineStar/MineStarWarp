@@ -39,11 +39,11 @@ public class UninviteCommand extends Command {
         String guestName = args[1];
         Warp warp = Main.warpManager.getWarp(warpName);
         if (warp != null) {
-            if (warp.isOwner(player.getName()))
+            if (warp.canEdit(player))
                 Main.warpManager.removeGuest(player, warpName, guestName);
             else
-                player.sendMessage(ChatColor.RED + "You are not the owner of "
-                        + warpName);
+                player.sendMessage(ChatColor.RED
+                        + "You are not allowed to edit " + warpName);
         }
         else
             player.sendMessage(ChatColor.RED + warpName + " doesn't not exist!");

@@ -38,10 +38,10 @@ public class DeleteCommand extends Command {
         String warpName = args[0];
         if (Main.warpManager.isWarpExisting(warpName)) {
             Warp warp = Main.warpManager.getWarp(warpName);
-            if (warp.isOwner(player.getName()))
+            if (warp.canEdit(player))
                 Main.warpManager.deleteWarp(player, warpName);
             else
-                player.sendMessage(ChatColor.RED + "You are not the owner of "
+                player.sendMessage(ChatColor.RED + "You are not allowed to edit "
                         + warpName);
         }
         else
