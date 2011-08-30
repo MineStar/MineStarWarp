@@ -57,8 +57,6 @@ public class Main extends JavaPlugin {
     public void onDisable() {
         ConnectionManager.closeConnection();
         writeToLog("disabled");
-
-        saveConfig();
     }
 
     public void onEnable() {
@@ -88,11 +86,19 @@ public class Main extends JavaPlugin {
         File pluginDir = getDataFolder();
         if (!pluginDir.exists())
             pluginDir.mkdirs();
+        File configFile = new File(pluginDir.getAbsolutePath().concat("/config.yml"));
         config = new Configuration(new File(pluginDir.getAbsolutePath().concat("/config.yml")));
+        if (!configFile.exists())
+            createConfig();
+        else
+            config.load();
     }
 
-    public void saveConfig() {
-
+    public void createConfig() {
+        config.setProperty("warps.default", 0);
+        config.setProperty("warps.proble", 2);
+        config.setProperty("warps.free", 5);
+        config.setProperty("warps.pay", 9);
+        config.save();
     }
-
 }

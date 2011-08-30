@@ -71,8 +71,8 @@ public class WarpManager {
 
         maximumWarps[DEFAULTS] = config.getInt("warps.default", 0);
         maximumWarps[PROBE] = config.getInt("warps.probe", 2);
-        maximumWarps[FREE] = config.getInt("warps.default", 5);
-        maximumWarps[PAY] = config.getInt("warps.default", 9);
+        maximumWarps[FREE] = config.getInt("warps.free", 5);
+        maximumWarps[PAY] = config.getInt("warps.pay", 9);
     }
 
     /**
