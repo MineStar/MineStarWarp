@@ -35,8 +35,9 @@ public class UninviteCommand extends Command {
 
     @Override
     public void execute(String[] args, Player player) {
-        String warpName = args[0];
-        String guestName = args[1];
+
+        String guestName = args[0];
+        String warpName = args[1];
         Warp warp = Main.warpManager.getWarp(warpName);
         if (warp != null) {
             if (warp.canEdit(player))

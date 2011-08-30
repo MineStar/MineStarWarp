@@ -266,6 +266,8 @@ public class DatabaseManager {
     private ArrayList<String> convertsGuestsToList(String guestList) {
         if (guestList == null)
             return null;
+        if (guestList.equals(""))
+            return new ArrayList<String>();
         ArrayList<String> guests = new ArrayList<String>();
         String[] split = guestList.split(";");
         guests.addAll(Arrays.asList(split));

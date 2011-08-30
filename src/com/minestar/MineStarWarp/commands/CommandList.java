@@ -70,9 +70,10 @@ public class CommandList {
                 new PublicCommand("/warp public", "<Name>", "public", server),
 
                 // Guests
-                new InviteCommand("/warp invite", "<Name>", "invite", server),
-                new UninviteCommand("/warp uninvite", "<Name>", "uninvite",
-                        server),
+                new InviteCommand("/warp invite", "<PlayerName> <Warpname>",
+                        "invite", server),
+                new UninviteCommand("/warp uninvite",
+                        "<PlayerName> <Warpname>", "uninvite", server),
                 // Home
                 new SetHomeCommand("/sethome", "", "sethome", server),
                 new HomeCommand("/home", "", "home", server) };
@@ -90,7 +91,7 @@ public class CommandList {
             Command com = commandList.get(key);
             if (com != null)
                 com.run(args, player);
-            else if (com == null && args.length >= 1) {
+            else if (com == null && args != null && args.length >= 1) {
                 label += " " + args[0];
                 if (args.length == 1)
                     args = null;

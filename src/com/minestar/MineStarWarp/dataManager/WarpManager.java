@@ -98,6 +98,7 @@ public class WarpManager {
      *            this.
      */
     public void addWarp(Player creator, String name, Warp warp) {
+
         if (dbManager.addWarp(creator, name, warp)) {
             warps.put(name, warp);
             creator.sendMessage(ChatColor.AQUA + "Warp " + name
@@ -151,16 +152,17 @@ public class WarpManager {
     public void addGuest(Player player, String warpName, String guest) {
 
         Warp warp = warps.get(warpName);
-        if (dbManager.changeGuestList(warp.getGuestsAsString(), warpName)) {
-            warp.invitePlayer(guest);
+        warp.invitePlayer(guest);
+        if (dbManager.changeGuestList(warp.getGuestsAsString(), warpName))
             player.sendMessage(ChatColor.AQUA + guest
                     + " was sucessfully invited into " + warpName);
-        }
-        else
+        else {
+            warp.uninvitePlayer(guest);
             player.sendMessage(ChatColor.RED
                     + "ERROR! Can't add "
                     + guest
                     + " as an guest to the database! He was not invited! Contact an admin!");
+        }
 
     }
 
@@ -180,18 +182,20 @@ public class WarpManager {
      *            The player who cannot use the warp anymore
      */
     public void removeGuest(Player player, String warpName, String guest) {
-        Warp warp = warps.get(warpName);
 
-        if (dbManager.changeGuestList(warp.getGuestsAsString(), warpName)) {
+        Warp warp = warps.get(warpName);
+        warp.uninvitePlayer(guest);
+        if (dbManager.changeGuestList(warp.getGuestsAsString(), warpName))
             player.sendMessage(ChatColor.AQUA + guest
                     + " was sucessfully uninvited from " + warpName);
-            warp.uninvitePlayer(guest);
-        }
-        else
+
+        else {
+            warp.invitePlayer(guest);
             player.sendMessage(ChatColor.RED
                     + "ERROR! Can't remove "
                     + guest
                     + " as an guest to the database! He was not uninvited! Contact an admin!");
+        }
 
     }
 
@@ -204,6 +208,7 @@ public class WarpManager {
      * @return How many warps the player has created and are not public
      */
     public int countWarpsCreatedBy(Player player) {
+
         int counter = 0;
         for (Warp warp : warps.values()) {
             if (!warp.isPublic() && warp.getOwner().equals(player.getName()))
@@ -222,6 +227,7 @@ public class WarpManager {
      * @return How many warps the player can use
      */
     public int countWarpsCanUse(Player player) {
+
         if (player.isOp())
             return warps.size();
         int counter = 0;
@@ -245,6 +251,7 @@ public class WarpManager {
      * @return True when the player can at least create one private warp
      */
     public boolean hasFreeWarps(Player player) {
+
         if (player.isOp())
             return true;
         int warpCount = countWarpsCreatedBy(player);
@@ -281,12 +288,16 @@ public class WarpManager {
      * @return Warp matching name
      */
     public Warp getSimiliarWarp(String name) {
+
         Warp warp = warps.get(name);
+
         if (warp != null)
             return warp;
+
         for (String tempName : warps.keySet())
             if (tempName.startsWith(name))
                 return warps.get(tempName);
+
         return null;
     }
 
@@ -302,11 +313,14 @@ public class WarpManager {
      *         warp is find
      */
     public HashMap<String, Warp> getSimiliarWarps(String query) {
+
         HashMap<String, Warp> warpList = new HashMap<String, Warp>();
+
         for (String warpName : warps.keySet()) {
             if (warpName.contains(query))
                 warpList.put(warpName, warps.get(warpName));
         }
+
         return warpList.size() > 0 ? warpList : null;
     }
 
@@ -320,12 +334,15 @@ public class WarpManager {
      *         matching warp is find
      */
     public HashMap<String, Warp> getWarpsPlayerIsOwner(String playerName) {
+
         HashMap<String, Warp> warpList = new HashMap<String, Warp>();
+
         for (String warpName : warps.keySet()) {
             Warp tempWarp = warps.get(warpName);
             if (tempWarp.isOwner(playerName))
                 warpList.put(warpName, tempWarp);
         }
+
         return warpList.size() > 0 ? warpList : null;
     }
 
@@ -350,11 +367,13 @@ public class WarpManager {
         HashMap<String, Warp> warpList = new HashMap<String, Warp>();
         String[] keys = new String[warps.size()];
         keys = warps.keySet().toArray(keys);
+
         for (int i = 0; i < warpsPerPage
                 && (((pageNumber - 1) * warpsPerPage) + i) < keys.length; ++i) {
             String key = keys[((pageNumber - 1) * warpsPerPage) + i];
             warpList.put(key, warps.get(key));
         }
+
         return warpList.size() > 0 ? warpList : null;
     }
 
@@ -376,6 +395,7 @@ public class WarpManager {
      *            The name of the warp
      */
     public void changeAccess(Player player, boolean toPublic, String warpName) {
+
         if (toPublic) {
             if (dbManager.removeGuestsList(warpName)) {
                 player.sendMessage(ChatColor.AQUA + "Warp " + warpName

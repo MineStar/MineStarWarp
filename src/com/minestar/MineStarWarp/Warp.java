@@ -98,7 +98,7 @@ public class Warp {
      * @return True if the player is allowed to use it
      */
     public boolean canUse(Player player) {
-        return isPublic() || canEdit(player) || guests.contains(player.getName());
+        return isPublic() || canEdit(player) || guests.contains(player.getName().toLowerCase());
 
     }
 
@@ -132,7 +132,7 @@ public class Warp {
     public void invitePlayer(String name) {
         if (isPublic())
             return;
-        guests.add(name);
+        guests.add(name.toLowerCase());
     }
 
     /**
@@ -145,7 +145,7 @@ public class Warp {
     public void uninvitePlayer(String name) {
         if (isPublic())
             return;
-        guests.remove(name);
+        guests.remove(name.toLowerCase());
     }
 
     /**
@@ -163,12 +163,14 @@ public class Warp {
 
     public String getGuestsAsString() {
         
+        if (guests.size() == 0)
+            return "";
+        
         StringBuilder result = new StringBuilder("");
         for (String player : guests) {
             result.append(player);
             result.append(";");
         }
-
         return result.substring(0, result.length() - 1);
     }
 }
