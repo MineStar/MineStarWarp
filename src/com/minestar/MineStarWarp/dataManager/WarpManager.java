@@ -370,7 +370,7 @@ public class WarpManager {
         HashMap<String, Warp> warpList = new HashMap<String, Warp>();
         String[] keys = new String[warps.size()];
         keys = warps.keySet().toArray(keys);
-        for (int i = 0; i < warpsPerPage; ++i) {
+        for (int i = 0; i < warpsPerPage && (((pageNumber - 1) * warpsPerPage) + i) < keys.length; ++i) {
             String key = keys[((pageNumber - 1) * warpsPerPage) + i];
             warpList.put(key, warps.get(key));
         }
