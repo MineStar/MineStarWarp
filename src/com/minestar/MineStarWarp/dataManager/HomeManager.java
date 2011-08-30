@@ -40,26 +40,12 @@ public class HomeManager {
     // Is used to persistate the data
     private final DatabaseManager dbManager;
 
-    // The only existing instance of HomeManager
-    private static HomeManager instance;
-
     /**
-     * Used to create the only exisiting instance of HomeManager
+     * Creats a HomeManager handling all data belongs to the homes of the player
      */
-    private HomeManager(DatabaseManager dbManager) {
+    public HomeManager(DatabaseManager dbManager) {
         this.dbManager = dbManager;
         homes = dbManager.loadHomesFromDatabase();
-    }
-
-    /**
-     * If no instance is created, a new will createad und returned
-     * 
-     * @return The only existing instance of HomeManager
-     */
-    public static HomeManager getInstance(DatabaseManager dbManager) {
-        if (instance == null)
-            instance = new HomeManager(dbManager);
-        return instance;
     }
 
     /**
@@ -106,11 +92,13 @@ public class HomeManager {
             }
         }
     }
-    
+
     /**
      * Used for the command <br>
      * /home
-     * @param player Command caller
+     * 
+     * @param player
+     *            Command caller
      * @return Null when the player didn't have a home
      */
     public Location getPlayersHome(Player player) {

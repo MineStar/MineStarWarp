@@ -45,9 +45,6 @@ public class WarpManager {
     // All database handling belongs to this
     private final DatabaseManager dbManager;
 
-    // the only existing instance of the warp manager
-    private static WarpManager instance;
-
     // The indices for all groups
     private final static int DEFAULTS = 0;
     private final static int PROBE = 1;
@@ -58,14 +55,14 @@ public class WarpManager {
     private final int[] maximumWarps = new int[4];
 
     /**
-     * This is private because only one instance is allowed the exist
+     * Creates a WarpManager. Use this for handling all data belongs to warps
      * 
      * @param dbManager
      *            Manages all database communication
      * @param config
      *            The config file for the plugin
      */
-    private WarpManager(DatabaseManager dbManager, Configuration config) {
+    public WarpManager(DatabaseManager dbManager, Configuration config) {
         this.dbManager = dbManager;
         warps = dbManager.loadWarpsFromDatabase();
 
@@ -73,23 +70,6 @@ public class WarpManager {
         maximumWarps[PROBE] = config.getInt("warps.probe", 2);
         maximumWarps[FREE] = config.getInt("warps.free", 5);
         maximumWarps[PAY] = config.getInt("warps.pay", 9);
-    }
-
-    /**
-     * Use this methode to get an object of the class. It creates one if not
-     * happened once before
-     * 
-     * @param dbManager
-     *            Manages all database communication
-     * @param config
-     *            The config file for the plugin
-     * @return The only existing instance of WarpManager
-     */
-    public static WarpManager getInstance(DatabaseManager dbManager,
-            Configuration config) {
-        if (instance == null)
-            instance = new WarpManager(dbManager, config);
-        return instance;
     }
 
     /**
@@ -370,7 +350,8 @@ public class WarpManager {
         HashMap<String, Warp> warpList = new HashMap<String, Warp>();
         String[] keys = new String[warps.size()];
         keys = warps.keySet().toArray(keys);
-        for (int i = 0; i < warpsPerPage && (((pageNumber - 1) * warpsPerPage) + i) < keys.length; ++i) {
+        for (int i = 0; i < warpsPerPage
+                && (((pageNumber - 1) * warpsPerPage) + i) < keys.length; ++i) {
             String key = keys[((pageNumber - 1) * warpsPerPage) + i];
             warpList.put(key, warps.get(key));
         }

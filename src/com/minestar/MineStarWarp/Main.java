@@ -56,6 +56,11 @@ public class Main extends JavaPlugin {
 
     public void onDisable() {
         ConnectionManager.closeConnection();
+        warpManager = null;
+        homeManager = null;
+        dbManager = null;
+        commandList = null;
+        System.gc();
         writeToLog("disabled");
     }
 
@@ -65,9 +70,9 @@ public class Main extends JavaPlugin {
         commandList = new CommandList(getServer());
 
         if (ConnectionManager.initialize()) {
-            dbManager = new DatabaseManager(this.getServer());
-            warpManager = WarpManager.getInstance(dbManager, config);
-            homeManager = HomeManager.getInstance(dbManager);
+            dbManager = new DatabaseManager(getServer());
+            warpManager = new WarpManager(dbManager, config);
+            homeManager = new HomeManager(dbManager);
             writeToLog("enabled");
         }
         else {
