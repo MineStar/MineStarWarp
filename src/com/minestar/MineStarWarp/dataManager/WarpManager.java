@@ -316,10 +316,10 @@ public class WarpManager {
     public HashMap<String, Warp> getSimiliarWarps(String query) {
 
         HashMap<String, Warp> warpList = new HashMap<String, Warp>();
-        for (Entry<String,Warp> entry : warps.entrySet()) {
+        for (Entry<String, Warp> entry : warps.entrySet()) {
             if (entry.getKey().contains(query))
-                warpList.put(entry.getKey(),entry.getValue());
-            
+                warpList.put(entry.getKey(), entry.getValue());
+
         }
 
         return warpList.size() > 0 ? warpList : null;
@@ -338,7 +338,7 @@ public class WarpManager {
 
         HashMap<String, Warp> warpList = new HashMap<String, Warp>();
 
-        for (Entry<String,Warp> entry : warps.entrySet()) {
+        for (Entry<String, Warp> entry : warps.entrySet()) {
             Warp tempWarp = entry.getValue();
             if (tempWarp.isOwner(playerName))
                 warpList.put(entry.getKey(), tempWarp);
