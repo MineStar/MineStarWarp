@@ -41,7 +41,7 @@ public class Main extends JavaPlugin {
     public static WarpManager warpManager;
     public static HomeManager homeManager;
     private DatabaseManager dbManager;
-    
+
     private CommandList commandList;
 
     public static Configuration config;
@@ -84,18 +84,28 @@ public class Main extends JavaPlugin {
         return true;
     }
 
+    /**
+     * Load the properties from the configFile. If the configFile not exists it
+     * create ones
+     */
     public void loadConfig() {
         File pluginDir = getDataFolder();
         if (!pluginDir.exists())
             pluginDir.mkdirs();
-        File configFile = new File(pluginDir.getAbsolutePath().concat("/config.yml"));
-        config = new Configuration(new File(pluginDir.getAbsolutePath().concat("/config.yml")));
+        File configFile = new File(pluginDir.getAbsolutePath().concat(
+                "/config.yml"));
+        config = new Configuration(new File(pluginDir.getAbsolutePath().concat(
+                "/config.yml")));
         if (!configFile.exists())
             createConfig();
         else
             config.load();
     }
 
+    /**
+     * Creates a config and use default values for it. They are stored in a yml
+     * format.
+     */
     public void createConfig() {
         config.setProperty("warps.default", 0);
         config.setProperty("warps.proble", 2);
