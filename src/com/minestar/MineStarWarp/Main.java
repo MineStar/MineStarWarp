@@ -111,6 +111,7 @@ public class Main extends JavaPlugin {
         config.setProperty("warps.proble", 2);
         config.setProperty("warps.free", 5);
         config.setProperty("warps.pay", 9);
+        config.setProperty("warps.warpsPerPage", 8);
         config.save();
     }
 }

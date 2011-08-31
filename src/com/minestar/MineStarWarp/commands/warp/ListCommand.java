@@ -31,11 +31,12 @@ import com.minestar.MineStarWarp.commands.Command;
 
 public class ListCommand extends Command {
 
-    private final static int WARPS_PER_PAGE = 8;
+    private final int warpsPerPage;
 
     public ListCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
+        warpsPerPage = Main.config.getInt("warps.warpsPerPage", 8);
     }
 
     @Override
@@ -64,7 +65,7 @@ public class ListCommand extends Command {
         }
         else {
             int maxPageNumber = (int) Math.ceil(Main.warpManager
-                    .countWarpsCanUse(player) / (double) WARPS_PER_PAGE);
+                    .countWarpsCanUse(player) / (double) warpsPerPage);
             if (maxPageNumber == 0) {
                 player.sendMessage(ChatColor.RED
                         + "You do not have access to any warps!");
@@ -73,7 +74,7 @@ public class ListCommand extends Command {
             int pageNumber = Integer.parseInt(args[0]);
             if (pageNumber <= maxPageNumber) {
                 warps = Main.warpManager.getWarpsForList(pageNumber,
-                        WARPS_PER_PAGE);
+                        warpsPerPage);
                 player.sendMessage("------------------- Page " + pageNumber
                         + "/" + maxPageNumber + " -------------------");
                 showWarpList(player, warps);
