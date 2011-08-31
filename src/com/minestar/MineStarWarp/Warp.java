@@ -98,7 +98,8 @@ public class Warp {
      * @return True if the player is allowed to use it
      */
     public boolean canUse(Player player) {
-        return isPublic() || canEdit(player) || guests.contains(player.getName().toLowerCase());
+        return isPublic() || canEdit(player)
+                || guests.contains(player.getName().toLowerCase());
 
     }
 
@@ -156,16 +157,28 @@ public class Warp {
     public boolean isOwner(String possibleOwner) {
         return owner.equals(possibleOwner);
     }
-    
+
+    /**
+     * 
+     * @param player
+     *            Want to edit(delete,invite,uninvite,private,public) the warp
+     * @return True, when the player is the owner or an admin
+     */
     public boolean canEdit(Player player) {
-        return isOwner(player.getName()) || player.isOp(); 
+        return isOwner(player.getName()) || player.isOp();
     }
 
+    /**
+     * Convert the list of guests to a String. The guests are seperated by ;. If
+     * the guest list is empty it returns an empty String
+     * 
+     * @return The guest list as one String
+     */
     public String getGuestsAsString() {
-        
+
         if (guests.size() == 0)
             return "";
-        
+
         StringBuilder result = new StringBuilder("");
         for (String player : guests) {
             result.append(player);
