@@ -34,16 +34,28 @@ public class WarpToCommand extends Command {
     }
 
     @Override
+    /**
+     * Representing the command <br>
+     * /warp <br>
+     * This teleports the player to the warp with the same name or the first found with a similiar name
+     * 
+     * @param player
+     *            Called the command
+     * @param split
+     *            args[0] is the warp name
+     */
     public void execute(String[] args, Player player) {
+
         String warpName = args[0];
         Warp warp = Main.warpManager.getSimiliarWarp(warpName);
         if (warp != null) {
             if (warp.canUse(player)) {
                 player.teleport(warp.getLoc());
-                player.sendMessage(ChatColor.AQUA + "Welcome to "+warpName);
+                player.sendMessage(ChatColor.AQUA + "Welcome to " + warpName);
             }
             else
-                player.sendMessage(ChatColor.RED + "Sorry, you can't use the warp "+warpName+"!");
+                player.sendMessage(ChatColor.RED
+                        + "Sorry, you can't use the warp " + warpName + "!");
         }
         else
             player.sendMessage(ChatColor.RED + warpName + " doesn't not exist!");

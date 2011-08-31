@@ -34,6 +34,16 @@ public class PublicCommand extends Command {
     }
 
     @Override
+    /**
+     * Representing the command <br>
+     * /warp public <br>
+     * This converts a warp to a public warp, so everybody can use it
+     * 
+     * @param player
+     *            Called the command
+     * @param split
+     *            args[0] is the warp name
+     */
     public void execute(String[] args, Player player) {
 
         String warpName = args[0];

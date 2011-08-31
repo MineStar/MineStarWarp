@@ -34,15 +34,26 @@ public class DeleteCommand extends Command {
     }
 
     @Override
+    /**
+     * Representing the command <br>
+     * /warp delete <br>
+     * If the player is the owner or an admin, it deletes the warp
+     * 
+     * @param player
+     *            Called the command
+     * @param split
+     *            args[0] is the warp name
+     */
     public void execute(String[] args, Player player) {
+
         String warpName = args[0];
         if (Main.warpManager.isWarpExisting(warpName)) {
             Warp warp = Main.warpManager.getWarp(warpName);
             if (warp.canEdit(player))
                 Main.warpManager.deleteWarp(player, warpName);
             else
-                player.sendMessage(ChatColor.RED + "You are not allowed to edit "
-                        + warpName);
+                player.sendMessage(ChatColor.RED
+                        + "You are not allowed to edit " + warpName);
         }
         else
             player.sendMessage(ChatColor.RED + warpName + " doesn't not exist!");

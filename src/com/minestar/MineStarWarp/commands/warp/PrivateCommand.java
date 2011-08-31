@@ -34,6 +34,16 @@ public class PrivateCommand extends Command {
     }
 
     @Override
+    /**
+     * Representing the command <br>
+     * /warp private <br>
+     * This converts a warp to a private warp, so only the creator or an admin can use it
+     * 
+     * @param player
+     *            Called the command
+     * @param split
+     *            args[0] is the warp name
+     */
     public void execute(String[] args, Player player) {
 
         String warpName = args[0];

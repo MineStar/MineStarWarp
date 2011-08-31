@@ -38,7 +38,7 @@ public class TeleportHereCommand extends Command {
      * 
      * @param player
      *            Called the command
-     * @param split
+     * @param args
      *            split[0] is the targets name
      */
     public void execute(String[] args, Player player) {

@@ -32,6 +32,16 @@ public class SetHomeCommand extends Command {
     }
 
     @Override
+    /**
+     * Representing the command <br>
+     * /setHome <br>
+     * This set the home of the player. The player can teleport to this location everytime
+     * 
+     * @param player
+     *            Called the command
+     * @param split
+     *            Must be empty!
+     */
     public void execute(String[] args, Player player) {
         Main.homeManager.setHome(player);
     }

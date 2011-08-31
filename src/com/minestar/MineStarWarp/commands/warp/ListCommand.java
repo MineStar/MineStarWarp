@@ -39,6 +39,17 @@ public class ListCommand extends Command {
     }
 
     @Override
+    /**
+     * Representing the command <br>
+     * /warp list <br>
+     * Sending the player a list of all warps the player can use. 
+     * If warp list my is used it sends a list of warps the player has created
+     * 
+     * @param player
+     *            Called the command
+     * @param split
+     *            args[0] is the warp name
+     */
     public void execute(String[] args, Player player) {
 
         HashMap<String, Warp> warps;
@@ -74,6 +85,14 @@ public class ListCommand extends Command {
         }
     }
 
+    /**
+     * This sends all the warps in a good format to the player
+     * 
+     * @param player
+     *            The reciever
+     * @param warps
+     *            The warps to present
+     */
     private void showWarpList(Player player, HashMap<String, Warp> warps) {
 
         for (String warpName : warps.keySet()) {

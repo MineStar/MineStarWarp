@@ -34,7 +34,20 @@ public class CreateCommand extends Command {
     }
 
     @Override
+    /**
+     * Representing the command <br>
+     * /warp create <br>
+     * This creates a new warp at the location the player is at the moment.
+     * Every warp is created private and must convert to public manuelly.
+     * The player can only create a new warp when he haven't hit the maximum warp number (public warps does not count)
+     * 
+     * @param player
+     *            Called the command
+     * @param split
+     *            args[0] is the warp name
+     */
     public void execute(String[] args, Player player) {
+
         String warpName = args[0];
         if (Main.warpManager.hasFreeWarps(player)) {
             if (!Main.warpManager.isWarpExisting(warpName))

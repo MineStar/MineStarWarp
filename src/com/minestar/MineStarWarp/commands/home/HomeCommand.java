@@ -34,6 +34,16 @@ public class HomeCommand extends Command {
     }
 
     @Override
+    /**
+     * Representing the command <br>
+     * /home <br>
+     * This teleports the player to his home(if set)
+     * 
+     * @param player
+     *            Called the command
+     * @param split
+     *            Must be empty!
+     */
     public void execute(String[] args, Player player) {
 
         // When the player didn't have set a home, it returns null

@@ -32,8 +32,21 @@ public class InviteCommand extends Command {
             Server server) {
         super(syntax, arguments, node, server);
     }
+
     @Override
+    /**
+     * Representing the command <br>
+     * /warp invite <br>
+     * This allows the player to also use the private warp.
+     * 
+     * @param player
+     *            Called the command
+     * @param split
+     *            args[0] is the player name
+     *            args[1] is the warp name
+     */
     public void execute(String[] args, Player player) {
+
         String guestName = args[0];
         String warpName = args[1];
         Warp warp = Main.warpManager.getWarp(warpName);
@@ -41,8 +54,8 @@ public class InviteCommand extends Command {
             if (warp.canEdit(player))
                 Main.warpManager.addGuest(player, warpName, guestName);
             else
-                player.sendMessage(ChatColor.RED + "You are not allowed to edit "
-                        + warpName);
+                player.sendMessage(ChatColor.RED
+                        + "You are not allowed to edit " + warpName);
         }
         else
             player.sendMessage(ChatColor.RED + warpName + " doesn't not exist!");

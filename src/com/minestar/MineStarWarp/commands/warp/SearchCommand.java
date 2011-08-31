@@ -36,6 +36,16 @@ public class SearchCommand extends Command {
     }
 
     @Override
+    /**
+     * Representing the command <br>
+     * /warp search <br>
+     * The player can search for any warps he can use by only tipping a word that is similiar to it
+     * 
+     * @param player
+     *            Called the command
+     * @param split
+     *            args[0] is the query
+     */
     public void execute(String[] args, Player player) {
 
         String query = args[0];

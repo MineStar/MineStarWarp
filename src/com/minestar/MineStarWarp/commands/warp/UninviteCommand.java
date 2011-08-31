@@ -34,6 +34,17 @@ public class UninviteCommand extends Command {
     }
 
     @Override
+    /**
+     * Representing the command <br>
+     * /warp uninvite <br>
+     * This disallows the player to use the private warp anymore
+     * 
+     * @param player
+     *            Called the command
+     * @param split
+     *            args[0] is the player name
+     *            args[1] is the warps name
+     */
     public void execute(String[] args, Player player) {
 
         String guestName = args[0];
