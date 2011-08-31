@@ -19,6 +19,7 @@
 package com.minestar.MineStarWarp.dataManager;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import org.bukkit.ChatColor;
@@ -315,10 +316,10 @@ public class WarpManager {
     public HashMap<String, Warp> getSimiliarWarps(String query) {
 
         HashMap<String, Warp> warpList = new HashMap<String, Warp>();
-
-        for (String warpName : warps.keySet()) {
-            if (warpName.contains(query))
-                warpList.put(warpName, warps.get(warpName));
+        for (Entry<String,Warp> entry : warps.entrySet()) {
+            if (entry.getKey().contains(query))
+                warpList.put(entry.getKey(),entry.getValue());
+            
         }
 
         return warpList.size() > 0 ? warpList : null;
@@ -337,10 +338,10 @@ public class WarpManager {
 
         HashMap<String, Warp> warpList = new HashMap<String, Warp>();
 
-        for (String warpName : warps.keySet()) {
-            Warp tempWarp = warps.get(warpName);
+        for (Entry<String,Warp> entry : warps.entrySet()) {
+            Warp tempWarp = entry.getValue();
             if (tempWarp.isOwner(playerName))
-                warpList.put(warpName, tempWarp);
+                warpList.put(entry.getKey(), tempWarp);
         }
 
         return warpList.size() > 0 ? warpList : null;
