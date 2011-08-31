@@ -296,7 +296,7 @@ public class WarpManager {
             return warp;
 
         for (String tempName : warps.keySet())
-            if (tempName.startsWith(name))
+            if (tempName.toLowerCase().startsWith(name.toLowerCase()))
                 return warps.get(tempName);
 
         return null;
@@ -317,7 +317,7 @@ public class WarpManager {
 
         HashMap<String, Warp> warpList = new HashMap<String, Warp>();
         for (Entry<String, Warp> entry : warps.entrySet()) {
-            if (entry.getKey().contains(query))
+            if (entry.getKey().toLowerCase().contains(query.toLowerCase()))
                 warpList.put(entry.getKey(), entry.getValue());
 
         }
