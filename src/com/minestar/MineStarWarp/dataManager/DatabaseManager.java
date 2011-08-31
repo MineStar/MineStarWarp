@@ -352,6 +352,13 @@ public class DatabaseManager {
         return guests;
     }
 
+    /**
+     * Set the value for 'permissions' to null to remove the guest list
+     * 
+     * @param name
+     *            The name of the warp
+     * @return True when the value is sucessfully set to null
+     */
     public boolean removeGuestsList(String name) {
         try {
             // UPDATE warps SET permissions = null WHERE name = ?
