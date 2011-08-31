@@ -35,10 +35,12 @@ import com.minestar.MineStarWarp.Warp;
 
 public class DatabaseManager {
 
+    // The connection to the SQLLite Database
     private final Connection con = ConnectionManager.getConnection();
 
     private final Server server;
 
+    // PreparedStatements for the often used SQLLite Queries.
     private PreparedStatement addWarp = null;
     private PreparedStatement deleteWarp = null;
     private PreparedStatement changeGuestList = null;
@@ -46,9 +48,15 @@ public class DatabaseManager {
     private PreparedStatement updateHome = null;
     private PreparedStatement convertToPublic = null;
 
+    /**
+     * Uses for all database transactions
+     * 
+     * @param server
+     */
     public DatabaseManager(Server server) {
         this.server = server;
         try {
+            // create tables if not exists and compile the prepare Statements
             initiate();
         }
         catch (Exception e) {
@@ -56,6 +64,12 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * Create the tables 'warps' and 'home' if not existing. Also compiles the
+     * PreparedStatements.
+     * 
+     * @throws Exception
+     */
     private void initiate() throws Exception {
         // check the database structure
         createTables();
@@ -73,48 +87,46 @@ public class DatabaseManager {
 
     }
 
-    private void createTables() {
+    /**
+     * Create the table 'warps' and 'home' when they are not exist.
+     */
+    private void createTables() throws Exception {
         // create the table for storing the warps
-        try {
-            con.createStatement()
-                    .executeUpdate(
-                            "CREATE TABLE IF NOT EXISTS `warps` ("
-                                    + "`id` INTEGER PRIMARY KEY,"
-                                    + "`name` varchar(32) NOT NULL DEFAULT 'warp',"
-                                    + "`creator` varchar(32) NOT NULL DEFAULT 'Player',"
-                                    + "`world` varchar(32) NOT NULL DEFAULT '0',"
-                                    + "`x` DOUBLE NOT NULL DEFAULT '0',"
-                                    + "`y` tinyint NOT NULL DEFAULT '0',"
-                                    + "`z` DOUBLE NOT NULL DEFAULT '0',"
-                                    + "`yaw` smallint NOT NULL DEFAULT '0',"
-                                    + "`pitch` smallint NOT NULL DEFAULT '0',"
-                                    + "`publicAll` boolean NOT NULL DEFAULT '1',"
-                                    + "`permissions` text DEFAULT null);");
-            con.commit();
-        }
-        catch (SQLException e) {
-            Main.writeToLog(e.getMessage());
-        }
+        con.createStatement().executeUpdate(
+                "CREATE TABLE IF NOT EXISTS `warps` ("
+                        + "`id` INTEGER PRIMARY KEY,"
+                        + "`name` varchar(32) NOT NULL DEFAULT 'warp',"
+                        + "`creator` varchar(32) NOT NULL DEFAULT 'Player',"
+                        + "`world` varchar(32) NOT NULL DEFAULT '0',"
+                        + "`x` DOUBLE NOT NULL DEFAULT '0',"
+                        + "`y` tinyint NOT NULL DEFAULT '0',"
+                        + "`z` DOUBLE NOT NULL DEFAULT '0',"
+                        + "`yaw` smallint NOT NULL DEFAULT '0',"
+                        + "`pitch` smallint NOT NULL DEFAULT '0',"
+                        + "`publicAll` boolean NOT NULL DEFAULT '1',"
+                        + "`permissions` text DEFAULT null);");
+        con.commit();
 
         // create the table for storing the homes
-        try {
-            con.createStatement().executeUpdate(
-                    "CREATE TABLE IF NOT EXISTS `homes` ("
-                            + "`player` varchar(32) PRIMARY KEY,"
-                            + "`world` varchar(32) NOT NULL DEFAULT '0',"
-                            + "`x` DOUBLE NOT NULL DEFAULT '0',"
-                            + "`y` tinyint NOT NULL DEFAULT '0',"
-                            + "`z` DOUBLE NOT NULL DEFAULT '0',"
-                            + "`yaw` smallint NOT NULL DEFAULT '0',"
-                            + "`pitch` smallint NOT NULL DEFAULT '0');");
-            con.commit();
-        }
-        catch (SQLException e) {
-            Main.writeToLog(e.getMessage());
-        }
+        con.createStatement().executeUpdate(
+                "CREATE TABLE IF NOT EXISTS `homes` ("
+                        + "`player` varchar(32) PRIMARY KEY,"
+                        + "`world` varchar(32) NOT NULL DEFAULT '0',"
+                        + "`x` DOUBLE NOT NULL DEFAULT '0',"
+                        + "`y` tinyint NOT NULL DEFAULT '0',"
+                        + "`z` DOUBLE NOT NULL DEFAULT '0',"
+                        + "`yaw` smallint NOT NULL DEFAULT '0',"
+                        + "`pitch` smallint NOT NULL DEFAULT '0');");
+        con.commit();
 
     }
 
+    /**
+     * Load the Warps from the Database by and put them into a TreeMap. This
+     * should only loaded onEnabled()
+     * 
+     * @return A TreeMap where the key the name of the warp is
+     */
     public TreeMap<String, Warp> loadWarpsFromDatabase() {
 
         TreeMap<String, Warp> warps = new TreeMap<String, Warp>();
@@ -144,6 +156,12 @@ public class DatabaseManager {
         return warps;
     }
 
+    /**
+     * Load the Homes from the Database by and put them into a TreeMap. This
+     * should only loaded onEnabled()
+     * 
+     * @return A TreeMap where the key the name of the player is
+     */
     public TreeMap<String, Location> loadHomesFromDatabase() {
 
         TreeMap<String, Location> homes = new TreeMap<String, Location>();
@@ -167,6 +185,18 @@ public class DatabaseManager {
         return homes;
     }
 
+    /**
+     * This saves the warp, which a player has created ingame, into the
+     * database.
+     * 
+     * @param creator
+     *            Player who is calling /warp create Name
+     * @param name
+     *            The name of the warp
+     * @param warp
+     *            The warp it selfs, just storing the
+     * @return True when the warp is sucessfully added into the database
+     */
     public boolean addWarp(Player creator, String name, Warp warp) {
         try {
             Location loc = warp.getLoc();
@@ -190,6 +220,15 @@ public class DatabaseManager {
         return true;
     }
 
+    /**
+     * When a player has not set a home yet, this method will called. It stores
+     * a complete new entity to the home table, where the player name is the
+     * primary key, because a player can set one home
+     * 
+     * @param creator
+     *            The command caller
+     * @return True when the home is sucessfully added into the database
+     */
     public boolean setHome(Player creator) {
         try {
             Location loc = creator.getLocation();
@@ -212,6 +251,14 @@ public class DatabaseManager {
         return true;
     }
 
+    /**
+     * When a player has already set a home, this method will called. It just
+     * updates the location and not create a new entity
+     * 
+     * @param player
+     *            The command caller
+     * @return True when the location of the player is sucessfully updated
+     */
     public boolean updateHome(Player player) {
         try {
             Location loc = player.getLocation();
@@ -234,6 +281,14 @@ public class DatabaseManager {
         return true;
     }
 
+    /**
+     * Removes a warp from the database by deleting the entity from the table
+     * 'warps'
+     * 
+     * @param name
+     *            The name of the warp to delete
+     * @return True when the warp is sucessfully deleted
+     */
     public boolean deleteWarp(String name) {
         try {
             // DELETE FROM warps WHERE name = ?;
@@ -248,6 +303,15 @@ public class DatabaseManager {
         return true;
     }
 
+    /**
+     * Updates the guest list by changing the value in 'warps.permissions'.
+     * 
+     * @param guestList
+     *            The new guestlist in a format name,name,name...
+     * @param name
+     *            The name of the warp
+     * @return True when the list is sucessfully changed
+     */
     public boolean changeGuestList(String guestList, String name) {
         try {
             // UPDATE warps SET permissions = ? WHERE name = ?;
@@ -263,7 +327,20 @@ public class DatabaseManager {
         return true;
     }
 
+    /**
+     * Converts the guest list, which is saved as a string in the format
+     * name,name,name..., to an ArrayList for Strings
+     * 
+     * @param guestList
+     *            The loaded string from the database
+     * @return null if the guest list was null(this is a public warp) <br>
+     *         an empty list when the guestList is empty(this is a private warp
+     *         with no guests) <br>
+     *         Otherwise the name of player which can use the warp in an
+     *         ArrayList
+     */
     private ArrayList<String> convertsGuestsToList(String guestList) {
+
         if (guestList == null)
             return null;
         if (guestList.equals(""))
