@@ -25,44 +25,74 @@ import com.minestar.MineStarWarp.Main;
 
 public class ConnectionManager {
 
-    private static Connection con;
+    private static Connection instance;
 
+    /**
+     * The default constructor is private to avoid calling
+     * <code>new Connectionmanager() </code> from outside, because only one
+     * object can exists
+     */
     private ConnectionManager() {
 
     }
 
+    /**
+     * Returns a connection to the sqllite database. When the instance is not
+     * created yet, a new connection is creating
+     * 
+     * @return A connection to the sqllite database
+     */
     public static Connection getConnection() {
-        if (con == null)
+
+        if (instance == null)
             createConnection();
-        return con;
+        return instance;
     }
-    
+
+    /**
+     * Create a connection to the database. Calling this methode twice before
+     * closing an error will send to the log
+     * 
+     * @return True when no error occurs
+     */
     public static boolean initialize() {
-        if (con != null) {
+
+        if (instance != null) {
             Main.writeToLog("Connection is already initialized! Check for double initiations!");
             return false;
         }
         return createConnection();
     }
-    
+
+    /**
+     * Closes the connection to the database and set the value to null. Call
+     * this when you want to establish a new connection
+     */
     public static void closeConnection() {
-        if (con != null) {
+
+        if (instance != null) {
             try {
-                con.close();
-                con = null;
+                instance.close();
+                instance = null;
             }
-            catch(Exception e) {
+            catch (Exception e) {
                 Main.writeToLog(e.getMessage());
             }
         }
     }
 
+    /**
+     * Creates a connection to the database using the JDBC driver
+     * 
+     * @return True when no error occurs
+     */
     private static boolean createConnection() {
-        
+
         try {
             Class.forName("org.sqlite.JDBC");
-            con = DriverManager.getConnection("jdbc:sqlite:plugins/MineStarWarp/warps.db");
-            con.setAutoCommit(false);
+            instance = DriverManager
+                    .getConnection("jdbc:sqlite:plugins/MineStarWarp/warps.db");
+            instance.setAutoCommit(false);
         }
         catch (Exception e) {
             Main.writeToLog(e.getMessage());
