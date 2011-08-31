@@ -49,6 +49,11 @@ public class CreateCommand extends Command {
     public void execute(String[] args, Player player) {
 
         String warpName = args[0];
+        if (isKeyWord(warpName)) {
+            player.sendMessage(ChatColor.RED + "Sorry,the name " + warpName
+                    + " is a key word. Please use another name.");
+            return;
+        }
         if (Main.warpManager.hasFreeWarps(player)) {
             if (!Main.warpManager.isWarpExisting(warpName))
                 Main.warpManager.addWarp(player, warpName, new Warp(player));
@@ -59,5 +64,15 @@ public class CreateCommand extends Command {
         else
             player.sendMessage(ChatColor.RED
                     + "Sorry, you didn't have enough free warp slots to create one more. Please delete one warp of yours!");
+    }
+
+    private boolean isKeyWord(String warpName) {
+        warpName = warpName.toLowerCase();
+        return warpName.equals("create") || warpName.equals("delete")
+                || warpName.equals("invite") || warpName.equals("uninvite")
+                || warpName.equals("list") || warpName.equals("private")
+                || warpName.equals("public") || warpName.equals("search")
+                || warpName.equals("uninvite");
+
     }
 }
