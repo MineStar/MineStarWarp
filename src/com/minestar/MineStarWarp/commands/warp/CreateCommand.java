@@ -49,7 +49,7 @@ public class CreateCommand extends Command {
     public void execute(String[] args, Player player) {
 
         String warpName = args[0];
-        if (isKeyWord(warpName)) {
+        if (isKeyWord(warpName.toLowerCase())) {
             player.sendMessage(ChatColor.RED + "Sorry,the name " + warpName
                     + " is a key word. Please use another name.");
             return;
@@ -67,7 +67,6 @@ public class CreateCommand extends Command {
     }
 
     private boolean isKeyWord(String warpName) {
-        warpName = warpName.toLowerCase();
         return warpName.equals("create") || warpName.equals("delete")
                 || warpName.equals("invite") || warpName.equals("uninvite")
                 || warpName.equals("list") || warpName.equals("private")

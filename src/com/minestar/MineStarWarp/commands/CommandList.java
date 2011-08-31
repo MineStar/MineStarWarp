@@ -117,8 +117,14 @@ public class CommandList {
             String key = label + "_" + (args != null ? args.length : 0);
             Command com = commandList.get(key);
             // a command was found
-            if (com != null)
-                com.run(args, player);
+            if (com != null) {
+                // looking for commands like /warp create without an argument
+                if (usesKeyWord(com, args))
+                    handleSimiliarCommand(player,
+                            label.concat(" ").concat(args[0]), args);
+                else
+                    com.run(args, player);
+            }
             // a command was not found, go recursively try finding the command
             else if (com == null && args != null && args.length >= 1) {
                 // add the first argument of the command to the syntax
@@ -130,10 +136,69 @@ public class CommandList {
 
                 handleCommand(sender, label, args);
             }
-            else
-                player.sendMessage(ChatColor.RED + "Command '" + label
-                        + "' not found!");
+            else {
+                handleSimiliarCommand(player, label, args);
+            }
+
         }
+    }
+
+    /**
+     * Looking for a command like /warp create without an argument(to run it,
+     * there should be an argument)
+     * 
+     * @param com
+     *            The command which is the top name of the sub command
+     * @param args
+     *            The possible sub command name
+     * @return True when the commands syntax + the argument is an subcommand
+     */
+    private boolean usesKeyWord(Command com, String[] args) {
+
+        if (args == null)
+            return false;
+
+        String syntax = com.getSyntax();
+        if (syntax.equals("/warp")) {
+            return args[0].equals("create") || args[0].equals("delete")
+                    || args[0].equals("invite") || args[0].equals("uninvite")
+                    || args[0].equals("list") || args[0].equals("private")
+                    || args[0].equals("public") || args[0].equals("search")
+                    || args[0].equals("uninvite");
+        }
+
+        return false;
+    }
+
+    /**
+     * Looking for commands that sounds similiar or the player has used not the
+     * right number of arguments and print out the description for the command.
+     * 
+     * @param player
+     *            The command caller
+     * @param label
+     *            The label of the command
+     * @param args
+     *            The arguments of the command
+     */
+    public void handleSimiliarCommand(Player player, String label, String[] args) {
+
+        for (Command com : commandList.values()) {
+            if (com.getSyntax().equals(label)) {
+                player.sendMessage(com.getHelpMessage());
+                return;
+            }
+        }
+        if (args != null) {
+            label += " " + args[0];
+            if (args.length == 1)
+                args = null;
+            else
+                args = Arrays.copyOfRange(args, 1, args.length);
+        }
+        else
+            player.sendMessage(ChatColor.RED + "Command '" + label
+                    + "' not found!");
     }
 
     /**
@@ -142,7 +207,8 @@ public class CommandList {
      * <code>syntax_numberOfArguments</code> <br>
      * Example: /warp create_1 (because create has one argument)
      * 
-     * @param cmds The array list for commands
+     * @param cmds
+     *            The array list for commands
      */
     private void initCommandList(Command[] cmds) {
         for (Command cmd : cmds)

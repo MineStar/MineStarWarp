@@ -78,12 +78,6 @@ public abstract class Command {
             return;
         }
 
-        if (!hasCorrectSyntax(args)) {
-            player.sendMessage(getSyntax() + " " + getArguments() + " "
-                    + getDescription());
-            return;
-        }
-
         execute(args, player);
     }
 
@@ -126,6 +120,14 @@ public abstract class Command {
         return description;
     }
 
+    /**
+     * @return Syntax + Arguments + Description
+     */
+    public String getHelpMessage() {
+        return getSyntax() + " " + getArguments() + " "
+                + getDescription();
+    }
+    
     /**
      * @return The syntax (or label) of the Command
      */
