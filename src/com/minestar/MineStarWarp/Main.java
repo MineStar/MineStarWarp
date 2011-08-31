@@ -46,9 +46,6 @@ public class Main extends JavaPlugin {
 
     public static Configuration config;
 
-    public Main() {
-    }
-
     public static void writeToLog(String info) {
 
         log.info("[" + PLUGIN_NAME + "]:" + info);
