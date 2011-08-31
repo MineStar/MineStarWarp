@@ -31,6 +31,7 @@ public class InviteCommand extends Command {
     public InviteCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
+        this.description = "Allows the player to use the private warp";
     }
 
     @Override

@@ -31,6 +31,7 @@ public class PrivateCommand extends Command {
     public PrivateCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
+        this.description = "Changes a public warp to a private one";
     }
 
     @Override

@@ -31,6 +31,7 @@ public class WarpToCommand extends Command {
     public WarpToCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
+        this.description = "Warps you to the warp.";
     }
 
     @Override

@@ -28,6 +28,7 @@ public class TeleportHereCommand extends Command {
     public TeleportHereCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
+        this.description = "Teleports the player to your position";
     }
 
     @Override

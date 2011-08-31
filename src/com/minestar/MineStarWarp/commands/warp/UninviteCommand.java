@@ -31,6 +31,7 @@ public class UninviteCommand extends Command {
     public UninviteCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
+        this.description = "Disallows the player to use the private warp";
     }
 
     @Override

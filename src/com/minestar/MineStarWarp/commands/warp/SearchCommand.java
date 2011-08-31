@@ -33,6 +33,7 @@ public class SearchCommand extends Command {
     public SearchCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
+        this.description = "Searches for a warp contains the word";
     }
 
     @Override

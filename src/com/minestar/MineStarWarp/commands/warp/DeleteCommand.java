@@ -31,6 +31,7 @@ public class DeleteCommand extends Command {
     public DeleteCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
+        this.description = "Deletes a warp you are owning";
     }
 
     @Override

@@ -36,7 +36,7 @@ public abstract class Command {
     public final Server server;
 
     // Add this in every command to add an description
-    private String description = "";
+    protected String description = "";
     // Example : /warp create
     private String syntax;
     // Example : <Name>

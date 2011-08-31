@@ -31,6 +31,7 @@ public class CreateCommand extends Command {
     public CreateCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
+        this.description = "Creates a new private warp";
     }
 
     @Override
