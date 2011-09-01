@@ -48,9 +48,10 @@ public class HomeCommand extends Command {
 
         // When the player didn't have set a home, it returns null
         Location homeLocation = Main.homeManager.getPlayersHome(player);
-        if (homeLocation != null)
+        if (homeLocation != null) {
             player.teleport(homeLocation);
-
+            player.sendMessage("Welcome home!");
+        }
         else
             player.sendMessage(ChatColor.RED
                     + "You didn't have set a home! Use /setHome to create one.");

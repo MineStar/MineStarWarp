@@ -56,7 +56,8 @@ public class ListCommand extends Command {
     public void execute(String[] args, Player player) {
 
         HashMap<String, Warp> warps;
-        boolean showPlayersWarps = args[0].equalsIgnoreCase("my");
+        boolean showPlayersWarps = args != null
+                && args[0].equalsIgnoreCase("my");
         if (showPlayersWarps) {
             warps = Main.warpManager.getWarpsPlayerIsOwner(player.getName());
             if (warps != null) {
@@ -78,7 +79,7 @@ public class ListCommand extends Command {
                         + "You do not have access to any warps!");
                 return;
             }
-            int pageNumber = Integer.parseInt(args[0]);
+            int pageNumber = args == null ? 1 : Integer.parseInt(args[0]);
             if (pageNumber <= maxPageNumber) {
                 warps = Main.warpManager.getWarpsForList(pageNumber,
                         warpsPerPage);

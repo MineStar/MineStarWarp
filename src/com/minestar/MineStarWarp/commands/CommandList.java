@@ -73,6 +73,7 @@ public class CommandList {
 
                 // Searching Warps
                 new ListCommand("/warp list", "<Number or my>", "list", server),
+                new ListCommand("/warp list", "", "list", server),
                 new SearchCommand("/warp search", "<Name>", "search", server),
 
                 // Modifiers
