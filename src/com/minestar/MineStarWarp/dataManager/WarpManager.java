@@ -256,18 +256,24 @@ public class WarpManager {
         if (player.isOp())
             return true;
         int warpCount = countWarpsCreatedBy(player);
+        int maximumWarps = getMaximumWarp(player);
+        // when the value is set to -1 the player group can create infinite
+        // warps
+        return maximumWarps == -1 || maximumWarps > warpCount;
+    }
+
+    private int getMaximumWarp(Player player) {
+
         String groupName = UtilPermissions.getGroupName(player);
-
         if (groupName.equals("default"))
-            return warpCount < maximumWarps[DEFAULTS];
+            return maximumWarps[DEFAULTS];
         else if (groupName.equals("probe"))
-            return warpCount < maximumWarps[PROBE];
+            return maximumWarps[PROBE];
         else if (groupName.equals("free"))
-            return warpCount < maximumWarps[FREE];
+            return maximumWarps[FREE];
         else if (groupName.equals("pay"))
-            return warpCount < maximumWarps[PAY];
-
-        return false;
+            return maximumWarps[PAY];
+        return Integer.MAX_VALUE;
     }
 
     /**
@@ -420,5 +426,10 @@ public class WarpManager {
                 player.sendMessage(ChatColor.RED
                         + "ERROR! Can't change access in the database! The access is not changed! Contact an admin!");
         }
+    }
+
+    public String usedWarpSlots(Player player) {
+
+        return countWarpsCreatedBy(player) + "/" + getMaximumWarp(player);
     }
 }

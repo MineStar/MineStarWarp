@@ -37,7 +37,8 @@ public class ListCommand extends Command {
             Server server) {
         super(syntax, arguments, node, server);
         warpsPerPage = Main.config.getInt("warps.warpsPerPage", 8);
-        this.description = "List warps you have access or your've created";;
+        this.description = "List warps you have access or your've created";
+        ;
     }
 
     @Override
@@ -58,8 +59,13 @@ public class ListCommand extends Command {
         boolean showPlayersWarps = args[0].equalsIgnoreCase("my");
         if (showPlayersWarps) {
             warps = Main.warpManager.getWarpsPlayerIsOwner(player.getName());
-            if (warps != null)
+            if (warps != null) {
+                player.sendMessage("You have used "
+                        + Main.warpManager.usedWarpSlots(player)
+                        + " free slots");
                 showWarpList(player, warps);
+            }
+
             else
                 player.sendMessage(ChatColor.RED
                         + "You didn't have created a warp!");
