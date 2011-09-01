@@ -52,8 +52,20 @@ public class UninviteCommand extends Command {
         String warpName = args[1];
         Warp warp = Main.warpManager.getWarp(warpName);
         if (warp != null) {
-            if (warp.canEdit(player))
-                Main.warpManager.removeGuest(player, warpName, guestName);
+            if (warp.canEdit(player)) {
+                Player guest = server.getPlayer(guestName);
+                if (guest != null)
+                    guestName = guest.getName();
+                else
+                    player.sendMessage("Player " + guestName
+                            + " maybe not exist(is offline), but it uninvited");
+                if (Main.warpManager.removeGuest(player, warpName, guestName)
+                        && guest != null)
+                    guest.sendMessage("You were removed from the warp '"
+                            + warpName + "'");
+
+            }
+
             else
                 player.sendMessage(ChatColor.RED
                         + "You are not allowed to edit " + warpName);

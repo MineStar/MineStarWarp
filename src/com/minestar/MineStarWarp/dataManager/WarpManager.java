@@ -150,7 +150,7 @@ public class WarpManager {
      * @param guest
      *            The player who shall also use the warp
      */
-    public void addGuest(Player player, String warpName, String guest) {
+    public boolean addGuest(Player player, String warpName, String guest) {
 
         Warp warp = warps.get(warpName);
         warp.invitePlayer(guest);
@@ -163,7 +163,10 @@ public class WarpManager {
                     + "ERROR! Can't add "
                     + guest
                     + " as an guest to the database! He was not invited! Contact an admin!");
+            return false;
         }
+        
+        return true;
 
     }
 
@@ -182,7 +185,7 @@ public class WarpManager {
      * @param guest
      *            The player who cannot use the warp anymore
      */
-    public void removeGuest(Player player, String warpName, String guest) {
+    public boolean removeGuest(Player player, String warpName, String guest) {
 
         Warp warp = warps.get(warpName);
         warp.uninvitePlayer(guest);
@@ -196,8 +199,10 @@ public class WarpManager {
                     + "ERROR! Can't remove "
                     + guest
                     + " as an guest to the database! He was not uninvited! Contact an admin!");
+            return false;
         }
-
+        
+        return true;
     }
 
     /**
