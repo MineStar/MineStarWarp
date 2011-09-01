@@ -52,13 +52,15 @@ public class WarpToCommand extends Command {
         if (warp != null) {
             if (warp.canUse(player)) {
                 player.teleport(warp.getLoc());
-                player.sendMessage(ChatColor.AQUA + "Welcome to " + warpName);
+                player.sendMessage(ChatColor.AQUA + "Welcome to '" + warpName
+                        + "'");
             }
             else
                 player.sendMessage(ChatColor.RED
-                        + "Sorry, you can't use the warp " + warpName + "!");
+                        + "Sorry, you can't use the warp '" + warpName + "' !");
         }
         else
-            player.sendMessage(ChatColor.RED + warpName + " doesn't not exist!");
+            player.sendMessage(ChatColor.RED + "'" + warpName + "'"
+                    + " doesn't not exist!");
     }
 }

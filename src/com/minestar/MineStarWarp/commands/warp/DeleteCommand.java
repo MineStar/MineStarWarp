@@ -54,10 +54,11 @@ public class DeleteCommand extends Command {
                 Main.warpManager.deleteWarp(player, warpName);
             else
                 player.sendMessage(ChatColor.RED
-                        + "You are not allowed to edit " + warpName);
+                        + "You are not allowed to edit '" + warpName + "'");
         }
         else
-            player.sendMessage(ChatColor.RED + warpName + " doesn't not exist!");
+            player.sendMessage(ChatColor.RED + "'" + warpName
+                    + "' doesn't not exist!");
 
     }
 }

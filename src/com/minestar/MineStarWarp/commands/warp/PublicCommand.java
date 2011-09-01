@@ -53,11 +53,11 @@ public class PublicCommand extends Command {
             if (!warp.isPublic())
                 Main.warpManager.changeAccess(player, true, warpName);
             else
-                player.sendMessage(ChatColor.RED
-                        + "The warp is already public!");
+                player.sendMessage(ChatColor.RED + "'" + warpName
+                        + "' is already public!");
         }
         else
-            player.sendMessage(ChatColor.RED + "You are not allowed to edit "
-                    + warpName);
+            player.sendMessage(ChatColor.RED + "You are not allowed to edit '"
+                    + warpName + "'");
     }
 }

@@ -60,7 +60,8 @@ public class CreateCommand extends Command {
                 Main.warpManager.addWarp(player, warpName, new Warp(player));
             else
                 player.sendMessage(ChatColor.RED
-                        + "Sorry, there is already an warp named " + warpName);
+                        + "Sorry, there is already an warp named '" + warpName
+                        + "'");
         }
         else
             player.sendMessage(ChatColor.RED

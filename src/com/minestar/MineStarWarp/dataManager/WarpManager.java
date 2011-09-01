@@ -156,7 +156,7 @@ public class WarpManager {
         warp.invitePlayer(guest);
         if (dbManager.changeGuestList(warp.getGuestsAsString(), warpName))
             player.sendMessage(ChatColor.AQUA + guest
-                    + " was sucessfully invited into " + warpName);
+                    + " was sucessfully invited into '" + warpName + "'");
         else {
             warp.uninvitePlayer(guest);
             player.sendMessage(ChatColor.RED
@@ -188,7 +188,7 @@ public class WarpManager {
         warp.uninvitePlayer(guest);
         if (dbManager.changeGuestList(warp.getGuestsAsString(), warpName))
             player.sendMessage(ChatColor.AQUA + guest
-                    + " was sucessfully uninvited from " + warpName);
+                    + " was sucessfully uninvited from '" + warpName + "'");
 
         else {
             warp.invitePlayer(guest);
@@ -405,7 +405,7 @@ public class WarpManager {
 
         if (toPublic) {
             if (dbManager.removeGuestsList(warpName)) {
-                player.sendMessage(ChatColor.AQUA + "Warp " + warpName
+                player.sendMessage(ChatColor.AQUA + "Warp '" + warpName + "'"
                         + " is now public!");
                 warps.get(warpName).setAccess(toPublic);
             }
@@ -415,7 +415,7 @@ public class WarpManager {
         }
         else {
             if (dbManager.changeGuestList("", warpName)) {
-                player.sendMessage(ChatColor.AQUA + "Warp " + warpName
+                player.sendMessage(ChatColor.AQUA + "Warp '" + warpName + "'"
                         + " is now private.!");
                 player.sendMessage(ChatColor.AQUA
                         + "Use /warp invite <Player> " + warpName

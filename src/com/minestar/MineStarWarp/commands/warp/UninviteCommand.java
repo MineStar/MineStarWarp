@@ -59,6 +59,7 @@ public class UninviteCommand extends Command {
                         + "You are not allowed to edit " + warpName);
         }
         else
-            player.sendMessage(ChatColor.RED + warpName + " doesn't not exist!");
+            player.sendMessage(ChatColor.RED + "'" + warpName
+                    + "' doesn't not exist!");
     }
 }

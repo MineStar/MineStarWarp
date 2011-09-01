@@ -56,9 +56,10 @@ public class InviteCommand extends Command {
                 Main.warpManager.addGuest(player, warpName, guestName);
             else
                 player.sendMessage(ChatColor.RED
-                        + "You are not allowed to edit " + warpName);
+                        + "You are not allowed to edit '" + warpName + "'");
         }
         else
-            player.sendMessage(ChatColor.RED + warpName + " doesn't not exist!");
+            player.sendMessage(ChatColor.RED + "'" + warpName
+                    + "' doesn't not exist!");
     }
 }
