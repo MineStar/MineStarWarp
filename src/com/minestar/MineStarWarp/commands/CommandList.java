@@ -144,10 +144,8 @@ public class CommandList {
 
                 handleCommand(sender, label, args);
             }
-            else {
+            else
                 handleSimiliarCommand(player, label, args);
-            }
-
         }
     }
 
@@ -203,6 +201,7 @@ public class CommandList {
                 args = null;
             else
                 args = Arrays.copyOfRange(args, 1, args.length);
+            handleSimiliarCommand(player, label, args);
         }
         else
             player.sendMessage(ChatColor.RED + "Command '" + label
