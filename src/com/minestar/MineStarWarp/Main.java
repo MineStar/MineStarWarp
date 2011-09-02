@@ -23,6 +23,8 @@ import java.util.logging.Logger;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.event.Event.Priority;
+import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
@@ -32,6 +34,7 @@ import com.minestar.MineStarWarp.dataManager.DatabaseManager;
 import com.minestar.MineStarWarp.dataManager.HomeManager;
 import com.minestar.MineStarWarp.dataManager.SpawnManager;
 import com.minestar.MineStarWarp.dataManager.WarpManager;
+import com.minestar.MineStarWarp.listeners.PlayerRespawnListener;
 
 public class Main extends JavaPlugin {
 
@@ -57,6 +60,7 @@ public class Main extends JavaPlugin {
         ConnectionManager.closeConnection();
         warpManager = null;
         homeManager = null;
+        spawnManager = null;
         dbManager = null;
         commandList = null;
         System.gc();
@@ -72,11 +76,17 @@ public class Main extends JavaPlugin {
             dbManager = new DatabaseManager(getServer());
             warpManager = new WarpManager(dbManager, config);
             homeManager = new HomeManager(dbManager);
+            spawnManager = new SpawnManager(dbManager);
+
+            getServer().getPluginManager().registerEvent(Type.PLAYER_RESPAWN,
+                    new PlayerRespawnListener(), Priority.Normal, this);
+
             writeToLog("enabled");
         }
         else {
             writeToLog("Can't connect to database!");
         }
+
     }
 
     @Override
