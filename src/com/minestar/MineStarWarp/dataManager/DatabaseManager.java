@@ -215,10 +215,10 @@ public class DatabaseManager {
                     "SELECT world,x,y,z,yaw,pitch FROM spawns");
             while (rs.next()) {
 
-                String world = rs.getString(2);
+                String world = rs.getString(1);
                 Location loc = new Location(server.getWorld(world),
-                        rs.getDouble(3), rs.getInt(4), rs.getDouble(5),
-                        rs.getInt(6), rs.getInt(7));
+                        rs.getDouble(2), rs.getInt(3), rs.getDouble(4),
+                        rs.getInt(5), rs.getInt(6));
                 spawns.put(world, loc);
             }
         }
