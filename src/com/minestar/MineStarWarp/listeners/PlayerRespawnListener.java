@@ -29,15 +29,10 @@ public class PlayerRespawnListener extends PlayerListener {
 
     @Override
     public void onPlayerRespawn(PlayerRespawnEvent event) {
-        Player player = event.getPlayer();
-        String worldName = player.getWorld().getName();
 
-        Location loc = Main.spawnManager.getSpawn(worldName);
+        Player player = event.getPlayer();
+        Location loc = Main.spawnManager.getMainSpawn(player.getServer());
         if (loc != null)
             event.setRespawnLocation(loc);
-        else
-            Main.writeToLog("Error: Cannot find a spawn for the player '"
-                    + event.getPlayer().getName() + "' in '" + worldName
-                    + "' !");
     }
 }

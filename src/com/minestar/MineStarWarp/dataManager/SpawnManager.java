@@ -23,7 +23,10 @@ import java.util.TreeMap;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Server;
 import org.bukkit.entity.Player;
+
+import com.minestar.MineStarWarp.Main;
 
 public class SpawnManager {
 
@@ -93,5 +96,23 @@ public class SpawnManager {
                     return entry.getValue();
         }
         return null;
+    }
+
+    /**
+     * Get the spawn for the world with the index 0 in server.getWorlds() list
+     * 
+     * @param server
+     *            The server having the worlds
+     * @return Null if the spawn does not exist (but it should!), else the
+     *         locations
+     */
+    public Location getMainSpawn(Server server) {
+
+        String mainWorldName = server.getWorlds().get(0).getName();
+        
+        Location loc = spawns.get(mainWorldName);
+        if (loc == null)
+            Main.writeToLog("Error: The main world does not have a spawn location!");
+        return loc;
     }
 }

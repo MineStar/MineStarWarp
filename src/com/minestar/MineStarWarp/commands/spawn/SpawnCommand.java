@@ -48,10 +48,15 @@ public class SpawnCommand extends Command {
     public void execute(String[] args, Player player) {
 
         if (args == null) {
-            Location loc = Main.spawnManager.getSpawn(server.getWorlds().get(0)
-                    .getName());
-            player.teleport(loc);
-            player.sendMessage(ChatColor.AQUA + "Welcome to the main spawn.");
+            Location loc = Main.spawnManager.getMainSpawn(server);
+            if (loc != null) {
+                player.teleport(loc);
+                player.sendMessage(ChatColor.AQUA
+                        + "Welcome to the main spawn.");
+            }
+            else
+                player.sendMessage(ChatColor.RED
+                        + "Sorry, there is no spawn set! Please contact an admin!");
         }
         else {
             Location loc = Main.spawnManager.getSpawn(args[0]);
