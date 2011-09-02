@@ -93,7 +93,8 @@ public class CommandList {
 
                 // Spawn
                 new SpawnCommand("/spawn", "", "spawn", server),
-                new SpawnCommand("/spawn", "<Worldname>", "spawnSpecific", server),
+                new SpawnCommand("/spawn", "<Worldname>", "spawnSpecific",
+                        server),
                 new SetSpawnCommand("/setSpawn", "", "setSpawn", server) };
 
         // store the commands in the hash map
