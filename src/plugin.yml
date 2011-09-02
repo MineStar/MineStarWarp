@@ -15,5 +15,11 @@ commands:
     description: Teleports the Caller to the Player
     usage: /tp
   tpHere:
-    description: Telepors a Player to the Caller
+    description: Teleports a Player to the Caller
     usage: /tpHere
+  spawn:
+    description: Teleports a Player to spawn
+    usage: /spawn
+  setSpawn:
+    description: Set the spawn for the world
+    usage: /setSpawn

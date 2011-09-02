@@ -37,8 +37,7 @@ public class ListCommand extends Command {
             Server server) {
         super(syntax, arguments, node, server);
         warpsPerPage = Main.config.getInt("warps.warpsPerPage", 8);
-        this.description = "List warps you have access or your've created";
-        ;
+        this.description = "List warps you have access to or have created";
     }
 
     @Override
@@ -51,12 +50,12 @@ public class ListCommand extends Command {
      * @param player
      *            Called the command
      * @param split
-     *            args[0] is the warp name
+     *            args[0] is page number
      */
     public void execute(String[] args, Player player) {
 
         HashMap<String, Warp> warps;
-        boolean showPlayersWarps = args != null
+        boolean showPlayersWarps = args.length != 0
                 && args[0].equalsIgnoreCase("my");
         if (showPlayersWarps) {
             warps = Main.warpManager.getWarpsPlayerIsOwner(player.getName());
@@ -79,7 +78,7 @@ public class ListCommand extends Command {
                         + "You do not have access to any warps!");
                 return;
             }
-            int pageNumber = args == null ? 1 : Integer.parseInt(args[0]);
+            int pageNumber = args.length == 0 ? 1 : Integer.parseInt(args[0]);
             if (pageNumber <= maxPageNumber) {
                 warps = Main.warpManager.getWarpsForList(pageNumber,
                         warpsPerPage);

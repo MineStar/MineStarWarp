@@ -74,8 +74,8 @@ public class CommandList {
                 new DeleteCommand("/warp delete", "<Name>", "delete", server),
 
                 // Searching Warps
-                new ListCommand("/warp list", "<Number or my>", "list", server),
                 new ListCommand("/warp list", "", "list", server),
+                new ListCommand("/warp list", "<Number or my>", "list", server),
                 new SearchCommand("/warp search", "<Name>", "search", server),
 
                 // Modifiers
@@ -95,7 +95,7 @@ public class CommandList {
                 new SpawnCommand("/spawn", "", "spawn", server),
                 new SpawnCommand("/spawn", "<Worldname>", "spawnSpecific",
                         server),
-                new SetSpawnCommand("/setSpawn", "", "setSpawn", server) };
+                new SetSpawnCommand("/setspawn", "", "setSpawn", server) };
 
         // store the commands in the hash map
         initCommandList(commands);
@@ -219,9 +219,11 @@ public class CommandList {
      *            The array list for commands
      */
     private void initCommandList(Command[] cmds) {
-        for (Command cmd : cmds)
-            commandList.put(
-                    cmd.getSyntax() + "_"
-                            + (cmd.getArguments().split("<").length - 1), cmd);
+        for (Command cmd : cmds) {
+            String key = cmd.getSyntax() + "_"
+                    + (cmd.getArguments().split("<").length - 1);
+            commandList.put(key, cmd);
+
+        }
     }
 }

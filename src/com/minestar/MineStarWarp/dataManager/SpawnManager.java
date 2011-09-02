@@ -48,7 +48,7 @@ public class SpawnManager {
     public void setSpawn(Player player) {
 
         Location loc = player.getLocation();
-        if (spawns.containsKey(loc.getWorld().getName())) {
+        if (spawns.containsKey(loc.getWorld().getName().toLowerCase())) {
             if (dbManager.updateSpawn(loc)) {
                 player.sendMessage(ChatColor.AQUA
                         + "Spawn location has updated for world "

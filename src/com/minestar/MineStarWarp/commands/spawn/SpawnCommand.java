@@ -47,7 +47,7 @@ public class SpawnCommand extends Command {
      */
     public void execute(String[] args, Player player) {
 
-        if (args == null) {
+        if (args.length == 0) {
             Location loc = Main.spawnManager.getMainSpawn(server);
             if (loc != null) {
                 player.teleport(loc);
@@ -62,8 +62,8 @@ public class SpawnCommand extends Command {
             Location loc = Main.spawnManager.getSpawn(args[0]);
             if (loc != null) {
                 player.teleport(loc);
-                player.sendMessage(ChatColor.AQUA + "Welcome to the spawn of "
-                        + loc.getWorld().getName());
+                player.sendMessage(ChatColor.AQUA + "Welcome to the spawn of '"
+                        + loc.getWorld().getName()+"'.");
             }
             else
                 player.sendMessage(ChatColor.RED
