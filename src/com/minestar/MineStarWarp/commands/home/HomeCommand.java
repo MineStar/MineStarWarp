@@ -41,7 +41,7 @@ public class HomeCommand extends Command {
      * 
      * @param player
      *            Called the command
-     * @param split
+     * @param args
      *            Must be empty!
      */
     public void execute(String[] args, Player player) {
