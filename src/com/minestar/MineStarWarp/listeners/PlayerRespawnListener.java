@@ -18,14 +18,26 @@
 
 package com.minestar.MineStarWarp.listeners;
 
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerRespawnEvent;
+
+import com.minestar.MineStarWarp.Main;
 
 public class PlayerRespawnListener extends PlayerListener {
 
     @Override
     public void onPlayerRespawn(PlayerRespawnEvent event) {
+        Player player = event.getPlayer();
+        String worldName = player.getWorld().getName();
 
+        Location loc = Main.spawnManager.getSpawn(worldName);
+        if (loc != null)
+            event.setRespawnLocation(loc);
+        else
+            Main.writeToLog("Error: Cannot find a spawn for the player '"
+                    + event.getPlayer().getName() + "' in '" + worldName
+                    + "' !");
     }
-
 }
