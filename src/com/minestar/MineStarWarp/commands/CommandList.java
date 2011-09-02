@@ -28,6 +28,8 @@ import org.bukkit.entity.Player;
 
 import com.minestar.MineStarWarp.commands.home.HomeCommand;
 import com.minestar.MineStarWarp.commands.home.SetHomeCommand;
+import com.minestar.MineStarWarp.commands.spawn.SetSpawnCommand;
+import com.minestar.MineStarWarp.commands.spawn.SpawnCommand;
 import com.minestar.MineStarWarp.commands.teleport.TeleportHereCommand;
 import com.minestar.MineStarWarp.commands.teleport.TeleportPlayerToCommand;
 import com.minestar.MineStarWarp.commands.teleport.TeleportToCommand;
@@ -87,7 +89,12 @@ public class CommandList {
                         "<PlayerName> <Warpname>", "uninvite", server),
                 // Home
                 new SetHomeCommand("/sethome", "", "sethome", server),
-                new HomeCommand("/home", "", "home", server) };
+                new HomeCommand("/home", "", "home", server),
+
+                // Spawn
+                new SpawnCommand("/spawn", "", "spawn", server),
+                new SpawnCommand("/spawn", "<Worldname>", "spawn", server),
+                new SetSpawnCommand("/setSpawn", "", "setSpawn", server) };
 
         // store the commands in the hash map
         initCommandList(commands);

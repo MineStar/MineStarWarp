@@ -46,6 +46,8 @@ public class DatabaseManager {
     private PreparedStatement addHome = null;
     private PreparedStatement updateHome = null;
     private PreparedStatement convertToPublic = null;
+    private PreparedStatement addSpawn = null;
+    private PreparedStatement updateSpawn = null;
 
     /**
      * Uses for all database transactions
@@ -83,6 +85,10 @@ public class DatabaseManager {
                 .prepareStatement("UPDATE homes SET world = ? , x = ? , y = ? , z = ? , yaw = ? , pitch = ? WHERE player = ?;");
         convertToPublic = con
                 .prepareStatement("UPDATE warps SET permissions = null WHERE name = ?");
+        addSpawn = con
+                .prepareStatement("INSERT INTO spawns (world,x,y,z,yaw,pitch) VALUES (?,?,?,?,?,?)");
+        updateSpawn = con
+                .prepareStatement("UPDATE spawns SET  x = ? , y = ? , z = ? , yaw = ? , pitch = ? WHERE world = ?");
 
     }
 
@@ -111,6 +117,17 @@ public class DatabaseManager {
                 "CREATE TABLE IF NOT EXISTS `homes` ("
                         + "`player` varchar(32) PRIMARY KEY,"
                         + "`world` varchar(32) NOT NULL DEFAULT '0',"
+                        + "`x` DOUBLE NOT NULL DEFAULT '0',"
+                        + "`y` tinyint NOT NULL DEFAULT '0',"
+                        + "`z` DOUBLE NOT NULL DEFAULT '0',"
+                        + "`yaw` smallint NOT NULL DEFAULT '0',"
+                        + "`pitch` smallint NOT NULL DEFAULT '0');");
+        con.commit();
+
+        // create the table for storing the homes
+        con.createStatement().executeUpdate(
+                "CREATE TABLE IF NOT EXISTS `spawns` ("
+                        + "`world` varchar(32) PRIMARY KEY,"
                         + "`x` DOUBLE NOT NULL DEFAULT '0',"
                         + "`y` tinyint NOT NULL DEFAULT '0',"
                         + "`z` DOUBLE NOT NULL DEFAULT '0',"
@@ -156,8 +173,8 @@ public class DatabaseManager {
     }
 
     /**
-     * Load the Homes from the Database by and put them into a TreeMap. This
-     * should only loaded onEnabled()
+     * Load the homes from the database and put them into a TreeMap. This should
+     * only loaded onEnabled()
      * 
      * @return A TreeMap where the key the name of the player is
      */
@@ -182,6 +199,35 @@ public class DatabaseManager {
         }
         Main.writeToLog("Loaded sucessfully " + homes.size() + " Homes");
         return homes;
+    }
+
+    /**
+     * Load the spawn from the database and put them into a TreeMap. This should
+     * only loaded onEnabled()
+     * 
+     * @return A TreeMap where the world name the key is
+     */
+    public TreeMap<String, Location> loadSpawnsFromDatabase() {
+
+        TreeMap<String, Location> spawns = new TreeMap<String, Location>();
+        try {
+            ResultSet rs = con.createStatement().executeQuery(
+                    "SELECT world,x,y,z,yaw,pitch FROM spawns");
+            while (rs.next()) {
+
+                String world = rs.getString(2);
+                Location loc = new Location(server.getWorld(world),
+                        rs.getDouble(3), rs.getInt(4), rs.getDouble(5),
+                        rs.getInt(6), rs.getInt(7));
+                spawns.put(world, loc);
+            }
+        }
+        catch (Exception e) {
+            Main.writeToLog(e.getMessage());
+        }
+        Main.writeToLog("Loaded sucessfully " + spawns.size() + " Spawns");
+        return spawns;
+
     }
 
     /**
@@ -251,6 +297,34 @@ public class DatabaseManager {
     }
 
     /**
+     * When a spawn for a world isn't set yet, this method is called. It creates
+     * a new entity in the table spawns and uses the world name as the primary
+     * key to avoid double spawn positions in one world
+     * 
+     * @param loc
+     *            Location of the spawn
+     * @return True when the spawn is sucessfully added into the database
+     */
+    public boolean addSpawn(Location loc) {
+        try {
+            // INSERT INTO spawns (world,x,y,z,yaw,pitch) VALUES (?,?,?,?,?,?)
+            addSpawn.setString(1, loc.getWorld().getName());
+            addSpawn.setDouble(2, loc.getX());
+            addSpawn.setInt(3, loc.getBlockY());
+            addSpawn.setDouble(4, loc.getZ());
+            addSpawn.setInt(5, Math.round(loc.getYaw()) % 360);
+            addSpawn.setInt(6, Math.round(loc.getPitch()) % 360);
+            addSpawn.executeUpdate();
+            con.commit();
+        }
+        catch (Exception e) {
+            Main.writeToLog(e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * When a player has already set a home, this method will called. It just
      * updates the location and not create a new entity
      * 
@@ -271,6 +345,33 @@ public class DatabaseManager {
             updateHome.setInt(6, Math.round(loc.getPitch()) % 360);
             updateHome.setString(7, player.getName());
             updateHome.executeUpdate();
+            con.commit();
+        }
+        catch (Exception e) {
+            Main.writeToLog(e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Changes to position of a spawn, which already exists in a world.
+     * 
+     * @param loc
+     *            The new location of the spawn
+     * @return True when the position is sucessfully updated
+     */
+    public boolean updateSpawn(Location loc) {
+        try {
+            // UPDATE spawns SET x = ? , y = ? , z = ? , yaw = ? , pitch = ?
+            // WHERE world = ?
+            updateSpawn.setDouble(1, loc.getX());
+            updateSpawn.setInt(2, loc.getBlockY());
+            updateSpawn.setDouble(3, loc.getZ());
+            updateSpawn.setInt(4, Math.round(loc.getYaw()) % 360);
+            updateSpawn.setInt(5, Math.round(loc.getPitch()) % 360);
+            updateSpawn.setString(6, loc.getWorld().getName());
+            updateSpawn.executeUpdate();
             con.commit();
         }
         catch (Exception e) {

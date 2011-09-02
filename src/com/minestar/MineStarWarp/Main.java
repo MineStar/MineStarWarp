@@ -30,6 +30,7 @@ import com.minestar.MineStarWarp.commands.CommandList;
 import com.minestar.MineStarWarp.dataManager.ConnectionManager;
 import com.minestar.MineStarWarp.dataManager.DatabaseManager;
 import com.minestar.MineStarWarp.dataManager.HomeManager;
+import com.minestar.MineStarWarp.dataManager.SpawnManager;
 import com.minestar.MineStarWarp.dataManager.WarpManager;
 
 public class Main extends JavaPlugin {
@@ -40,6 +41,7 @@ public class Main extends JavaPlugin {
 
     public static WarpManager warpManager;
     public static HomeManager homeManager;
+    public static SpawnManager spawnManager;
     private DatabaseManager dbManager;
 
     private CommandList commandList;
