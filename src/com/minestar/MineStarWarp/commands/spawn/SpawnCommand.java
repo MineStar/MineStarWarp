@@ -23,6 +23,7 @@ import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
+import com.gemo.utils.UtilPermissions;
 import com.minestar.MineStarWarp.Main;
 import com.minestar.MineStarWarp.commands.Command;
 
@@ -59,7 +60,14 @@ public class SpawnCommand extends Command {
                         + "Sorry, there is no spawn set! Please contact an admin!");
         }
         else {
-            Location loc = Main.spawnManager.getSpawn(args[0]);
+            String worldName = args[0].toLowerCase();
+            
+            if (!UtilPermissions.playerCanUseCommand(player, "minestarwarp.command.spawnSpecific."+worldName)) {
+                player.sendMessage("Sorry, you can not use the spawn of the world '"+worldName+"'!");
+                return;
+            }
+                
+            Location loc = Main.spawnManager.getSpawn(worldName);
             if (loc != null) {
                 player.teleport(loc);
                 player.sendMessage(ChatColor.AQUA + "Welcome to the spawn of '"
