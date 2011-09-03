@@ -48,10 +48,8 @@ public class SpawnManager {
     public void setSpawn(Player player) {
 
         Location loc = player.getLocation();
-        String worldName = loc.getWorld().getName().toLowerCase();
-        if (spawns.containsKey(worldName)) {
+        if (spawns.containsKey(loc.getWorld().getName().toLowerCase())) {
             if (dbManager.updateSpawn(loc)) {
-                spawns.put(worldName, loc);
                 player.sendMessage(ChatColor.AQUA
                         + "Spawn location has updated for world "
                         + loc.getWorld().getName());
@@ -64,7 +62,6 @@ public class SpawnManager {
         }
         else {
             if (dbManager.addSpawn(loc)) {
-                spawns.put(worldName, loc);
                 player.sendMessage(ChatColor.AQUA
                         + "Spawn location was set for world "
                         + loc.getWorld().getName());
