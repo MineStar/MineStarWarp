@@ -48,6 +48,7 @@ public class DatabaseManager {
     private PreparedStatement convertToPublic = null;
     private PreparedStatement addSpawn = null;
     private PreparedStatement updateSpawn = null;
+    private PreparedStatement addHomeSpecial = null;
 
     /**
      * Uses for all database transactions
@@ -89,6 +90,8 @@ public class DatabaseManager {
                 .prepareStatement("INSERT INTO spawns (world,x,y,z,yaw,pitch) VALUES (?,?,?,?,?,?)");
         updateSpawn = con
                 .prepareStatement("UPDATE spawns SET  x = ? , y = ? , z = ? , yaw = ? , pitch = ? WHERE world = ?");
+        addHomeSpecial = con
+                .prepareStatement("INSERT OR REPLACE INTO homes (player,world, x, y, z, yaw, pitch) VALUES (?,?,?,?,?,?,?);");
 
     }
 
@@ -294,6 +297,24 @@ public class DatabaseManager {
             return false;
         }
         return true;
+    }
+    
+    public void setHomeSpecial(String playerName, Location loc) {
+        try {
+            addHomeSpecial.setString(1, playerName);
+            addHomeSpecial.setString(2, loc.getWorld().getName());
+            addHomeSpecial.setDouble(3, loc.getX());
+            addHomeSpecial.setInt(4, loc.getBlockY());
+            addHomeSpecial.setDouble(5, loc.getZ());
+            addHomeSpecial.setInt(6, Math.round(loc.getYaw()) % 360);
+            addHomeSpecial.setInt(7, Math.round(loc.getPitch()) % 360);
+            addHomeSpecial.executeUpdate();
+            con.commit();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        
     }
 
     /**

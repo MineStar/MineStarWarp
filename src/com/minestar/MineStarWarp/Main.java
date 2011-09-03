@@ -21,6 +21,8 @@ package com.minestar.MineStarWarp;
 import java.io.File;
 import java.util.logging.Logger;
 
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event.Priority;
@@ -82,16 +84,39 @@ public class Main extends JavaPlugin {
                     new PlayerRespawnListener(), Priority.Normal, this);
 
             writeToLog("enabled");
+            
         }
         else {
             writeToLog("Can't connect to database!");
         }
 
     }
+    
+    private void transfer() {
+        System.out.println("Start transfer");
+        File[] files = new File("plugins/Essentials/userdata").listFiles();
+        for (File file : files) {
+            Configuration temp = new Configuration(file);
+            temp.load();
+            String playerName = file.getName().substring(0,file.getName().length()-4);
+            World world = getServer().getWorld(temp.getString("home.worlds.world.world", ""));
+            double x = temp.getDouble("home.worlds.world.x", 0);
+            double y = temp.getInt("home.worlds.world.y", 0);
+            double z = temp.getDouble("home.worlds.world.z", 0);
+            float pitch = temp.getInt("home.worlds.world.pitch", 0);
+            float yaw = temp.getInt("home.worlds.world.yaw", 0);
+            Location loc = new Location(world,x,y,z,yaw,pitch);
+            dbManager.setHomeSpecial(playerName, loc);
+            
+        }
+        System.out.println("Finished transfer");
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command,
             String label, String[] args) {
+        if (label.equals("transfer"))
+            transfer();
         commandList.handleCommand(sender, label, args);
         return true;
     }
