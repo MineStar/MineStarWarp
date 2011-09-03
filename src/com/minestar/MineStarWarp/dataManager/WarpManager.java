@@ -165,7 +165,7 @@ public class WarpManager {
                     + " as an guest to the database! He was not invited! Contact an admin!");
             return false;
         }
-        
+
         return true;
 
     }
@@ -201,7 +201,7 @@ public class WarpManager {
                     + " as an guest to the database! He was not uninvited! Contact an admin!");
             return false;
         }
-        
+
         return true;
     }
 
@@ -345,9 +345,9 @@ public class WarpManager {
      * @return HashMap concerning warps player is owning. Returns null if no
      *         matching warp is find
      */
-    public HashMap<String, Warp> getWarpsPlayerIsOwner(String playerName) {
+    public TreeMap<String, Warp> getWarpsPlayerIsOwner(String playerName) {
 
-        HashMap<String, Warp> warpList = new HashMap<String, Warp>();
+        TreeMap<String, Warp> warpList = new TreeMap<String, Warp>();
 
         for (Entry<String, Warp> entry : warps.entrySet()) {
             Warp tempWarp = entry.getValue();
@@ -370,20 +370,29 @@ public class WarpManager {
      *            Indicates the start of the intervall
      * @param warpsPerPage
      *            How many warps are returned
+     * @param player
+     *            The command caller. Only warps are listed he can use
      * @return HashMap concerning the intervall. Returns null if the list is
      *         empty
      */
-    public HashMap<String, Warp> getWarpsForList(int pageNumber,
-            int warpsPerPage) {
+    public TreeMap<String, Warp> getWarpsForList(int pageNumber,
+            int warpsPerPage, Player player) {
 
-        HashMap<String, Warp> warpList = new HashMap<String, Warp>();
-        String[] keys = new String[warps.size()];
-        keys = warps.keySet().toArray(keys);
+        TreeMap<String, Warp> warpList = new TreeMap<String, Warp>();
+        TreeMap<String, Warp> warpsPlayerCanUse = new TreeMap<String, Warp>();
+        
+        for (Entry<String,Warp> entry : warps.entrySet()) {
+            if (entry.getValue().canUse(player))
+                warpsPlayerCanUse.put(entry.getKey(), entry.getValue());
+        }
+        
+        String[] keys = new String[warpsPlayerCanUse.size()];
+        keys = warpsPlayerCanUse.keySet().toArray(keys);
 
         for (int i = 0; i < warpsPerPage
                 && (((pageNumber - 1) * warpsPerPage) + i) < keys.length; ++i) {
             String key = keys[((pageNumber - 1) * warpsPerPage) + i];
-            warpList.put(key, warps.get(key));
+            warpList.put(key, warpsPlayerCanUse.get(key));
         }
 
         return warpList.size() > 0 ? warpList : null;

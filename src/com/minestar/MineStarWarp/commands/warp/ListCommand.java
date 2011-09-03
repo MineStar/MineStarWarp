@@ -19,6 +19,7 @@
 package com.minestar.MineStarWarp.commands.warp;
 
 import java.util.HashMap;
+import java.util.TreeMap;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -54,7 +55,7 @@ public class ListCommand extends Command {
      */
     public void execute(String[] args, Player player) {
 
-        HashMap<String, Warp> warps;
+        TreeMap<String, Warp> warps;
         boolean showPlayersWarps = args.length != 0
                 && args[0].equalsIgnoreCase("my");
         if (showPlayersWarps) {
@@ -81,7 +82,7 @@ public class ListCommand extends Command {
             int pageNumber = args.length == 0 ? 1 : Integer.parseInt(args[0]);
             if (pageNumber <= maxPageNumber) {
                 warps = Main.warpManager.getWarpsForList(pageNumber,
-                        warpsPerPage);
+                        warpsPerPage,player);
                 player.sendMessage("------------------- Page " + pageNumber
                         + "/" + maxPageNumber + " -------------------");
                 showWarpList(player, warps);
@@ -101,7 +102,7 @@ public class ListCommand extends Command {
      * @param warps
      *            The warps to present
      */
-    private void showWarpList(Player player, HashMap<String, Warp> warps) {
+    private void showWarpList(Player player, TreeMap<String, Warp> warps) {
 
         for (String warpName : warps.keySet()) {
 
