@@ -59,17 +59,18 @@ public class HomeManager {
 
         // When the player has set a home once before just update it
         Location loc = player.getLocation();
-        if (homes.containsKey(player.getName())) {
+        String playerName = player.getName().toLowerCase();
+        if (homes.containsKey(playerName)) {
             if (dbManager.updateHome(player)) {
-                homes.put(player.getName(), loc);
+                homes.put(playerName, loc);
                 player.sendMessage(ChatColor.GRAY
                         + "Home set. use /home to teleport to this position!");
             }
             else {
                 player.sendMessage(ChatColor.RED
                         + "ERROR while setting home! Ask an admin! Your current home is unchanged!");
-                Main.writeToLog("ERROR! User" + player.getName()
-                        + " cannot set home at " + loc.getWorld().getName()
+                Main.writeToLog("ERROR! User " + player.getName()
+                        + " cannot update home at " + loc.getWorld().getName()
                         + " " + loc.getX() + " " + loc.getY() + " "
                         + loc.getZ());
             }
@@ -77,7 +78,7 @@ public class HomeManager {
         // If not, we have to create a new entry in the database
         else {
             if (dbManager.setHome(player)) {
-                homes.put(player.getName(), loc);
+                homes.put(playerName, loc);
                 player.sendMessage(ChatColor.GRAY
                         + "Home set. use /home to teleport to this position!");
             }
@@ -85,7 +86,7 @@ public class HomeManager {
                 player.sendMessage(ChatColor.RED
                         + "ERROR while setting home! Ask an admin!");
 
-                Main.writeToLog("ERROR! User" + player.getName()
+                Main.writeToLog("ERROR! User " + player.getName()
                         + " cannot set home at " + loc.getWorld().getName()
                         + " " + loc.getX() + " " + loc.getY() + " "
                         + loc.getZ());
