@@ -23,6 +23,3 @@ commands:
   setSpawn:
     description: Set the spawn for the world
     usage: /setSpawn
-  transfer:
-    description: bla
-    usage: /transfer
