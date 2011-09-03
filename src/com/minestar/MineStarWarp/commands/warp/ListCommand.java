@@ -18,7 +18,6 @@
 
 package com.minestar.MineStarWarp.commands.warp;
 
-import java.util.HashMap;
 import java.util.TreeMap;
 
 import org.bukkit.ChatColor;
