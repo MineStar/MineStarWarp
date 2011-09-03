@@ -102,6 +102,6 @@ public class HomeManager {
      * @return Null when the player didn't have a home
      */
     public Location getPlayersHome(Player player) {
-        return homes.get(player.getName());
+        return homes.get(player.getName().toLowerCase());
     }
 }

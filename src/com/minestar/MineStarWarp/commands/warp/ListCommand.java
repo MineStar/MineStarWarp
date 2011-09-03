@@ -37,7 +37,7 @@ public class ListCommand extends Command {
             Server server) {
         super(syntax, arguments, node, server);
         warpsPerPage = Main.config.getInt("warps.warpsPerPage", 8);
-        this.description = "List warps you have access to or have created";
+        this.description = "Mit '/warp list Zahl' kannst du dir seitenweise alle Warppunkte anschauen. Bsp: /warp list 1";
     }
 
     @Override

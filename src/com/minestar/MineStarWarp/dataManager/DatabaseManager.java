@@ -186,7 +186,7 @@ public class DatabaseManager {
                     "SELECT player,world,x,y,z,yaw,pitch FROM homes");
             while (rs.next()) {
 
-                String name = rs.getString(1);
+                String name = rs.getString(1).toLowerCase();
                 String world = rs.getString(2);
                 Location loc = new Location(server.getWorld(world),
                         rs.getDouble(3), rs.getInt(4), rs.getDouble(5),
@@ -279,7 +279,7 @@ public class DatabaseManager {
             Location loc = creator.getLocation();
             // INSERT INTO homes (player,world, x, y, z, yaw, pitch) VALUES
             // (?,?,?,?,?,?,?);
-            addHome.setString(1, creator.getName());
+            addHome.setString(1, creator.getName().toLowerCase());
             addHome.setString(2, creator.getWorld().getName());
             addHome.setDouble(3, loc.getX());
             addHome.setInt(4, loc.getBlockY());
@@ -343,7 +343,7 @@ public class DatabaseManager {
             updateHome.setDouble(4, loc.getZ());
             updateHome.setInt(5, Math.round(loc.getYaw()) % 360);
             updateHome.setInt(6, Math.round(loc.getPitch()) % 360);
-            updateHome.setString(7, player.getName());
+            updateHome.setString(7, player.getName().toLowerCase());
             updateHome.executeUpdate();
             con.commit();
         }
