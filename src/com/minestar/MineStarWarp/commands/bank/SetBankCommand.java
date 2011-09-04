@@ -44,7 +44,7 @@ public class SetBankCommand extends Command {
      */
     public void execute(String[] args, Player player) {
 
-        Main.bankManager.setBank(player, args[0], player.getLocation());
+        Main.bankManager.setBank(player, args[0].toLowerCase(), player.getLocation());
     }
 
 }
