@@ -49,6 +49,16 @@ public class PublicCommand extends Command {
 
         String warpName = args[0];
         Warp warp = Main.warpManager.getWarp(warpName);
+
+        if (warp == null) {
+            player.sendMessage(ChatColor.RED + "Warp named '" + args[0]
+                    + "' not found!");
+            if (Main.warpManager.getWarp(warpName.toLowerCase()) != null)
+                player.sendMessage(ChatColor.GRAY + "Maybe you meant '"
+                        + warpName.toLowerCase() + "' ?");
+            return;
+        }
+
         if (warp.canEdit(player)) {
             if (!warp.isPublic())
                 Main.warpManager.changeAccess(player, true, warpName);

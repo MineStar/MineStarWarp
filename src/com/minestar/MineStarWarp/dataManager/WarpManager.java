@@ -306,6 +306,11 @@ public class WarpManager {
         if (warp != null)
             return warp;
 
+        warp = warps.get(name.toLowerCase());
+
+        if (warp != null)
+            return warp;
+
         for (String tempName : warps.keySet())
             if (tempName.toLowerCase().startsWith(name.toLowerCase()))
                 return warps.get(tempName);
@@ -380,12 +385,12 @@ public class WarpManager {
 
         TreeMap<String, Warp> warpList = new TreeMap<String, Warp>();
         TreeMap<String, Warp> warpsPlayerCanUse = new TreeMap<String, Warp>();
-        
-        for (Entry<String,Warp> entry : warps.entrySet()) {
+
+        for (Entry<String, Warp> entry : warps.entrySet()) {
             if (entry.getValue().canUse(player))
                 warpsPlayerCanUse.put(entry.getKey(), entry.getValue());
         }
-        
+
         String[] keys = new String[warpsPlayerCanUse.size()];
         keys = warpsPlayerCanUse.keySet().toArray(keys);
 
