@@ -22,6 +22,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
+import com.gemo.utils.UtilPermissions;
 import com.minestar.MineStarWarp.PlayerUtil;
 import com.minestar.MineStarWarp.commands.ExtendedCommand;
 
@@ -56,6 +57,11 @@ public class TeleportToCommand extends ExtendedCommand {
     }
 
     private void teleportPlayerToPlayer(String[] args, Player player) {
+        
+        if (!UtilPermissions.playerCanUseCommand(player, "minestarwarp.command.tpPlayerTo")) {
+            player.sendMessage("You aren't allowed to use this command!");
+            return;
+        }
 
         Player playerToTeleport = PlayerUtil.getPlayer(server, args[0]);
         if (playerToTeleport == null) {
@@ -70,12 +76,19 @@ public class TeleportToCommand extends ExtendedCommand {
             return;
         }
         playerToTeleport.teleport(target.getLocation());
-        player.sendMessage(ChatColor.AQUA + "You was teleported to "+target.getName());
-        target.sendMessage(ChatColor.AQUA + player.getName()+ " was teleported to you");
+        player.sendMessage(ChatColor.AQUA + "You was teleported to "
+                + target.getName());
+        target.sendMessage(ChatColor.AQUA + player.getName()
+                + " was teleported to you");
     }
 
     private void teleportToPlayer(String[] args, Player player) {
 
+        if (!UtilPermissions.playerCanUseCommand(player, "minestarwarp.command.tpTo")) {
+            player.sendMessage("You aren't allowed to use this command!");
+            return;
+        }
+        
         Player target = server.getPlayer(args[0]);
         if (target == null) {
             player.sendMessage("Can't find player named " + args[0]
@@ -83,8 +96,18 @@ public class TeleportToCommand extends ExtendedCommand {
             return;
         }
         player.teleport(target.getLocation());
-        player.sendMessage(ChatColor.AQUA + "You was teleported to "+target.getName());
-        target.sendMessage(ChatColor.AQUA + player.getName()+ " has teleported to you");
+        player.sendMessage(ChatColor.AQUA + "You was teleported to "
+                + target.getName());
+        target.sendMessage(ChatColor.AQUA + player.getName()
+                + " has teleported to you");
+    }
+
+    @Override
+    protected boolean hasRights(Player player) {
+        return UtilPermissions.playerCanUseCommand(player,
+                "minestarwarp.command.tpPlayerTo")
+                || UtilPermissions.playerCanUseCommand(player,
+                        "minestarwarp.command.tpTo");
     }
 
 }

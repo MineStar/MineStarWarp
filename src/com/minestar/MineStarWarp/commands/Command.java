@@ -44,7 +44,7 @@ public abstract class Command {
     private String arguments;
     // Example : minestarwarp.create
     private String permissionNode;
-    
+
     private final int argumentCount;
 
     /**
@@ -105,7 +105,7 @@ public abstract class Command {
      *            The command caller
      * @return True when the player has enough rights to use the command
      */
-    public final boolean hasRights(Player player) {
+    protected boolean hasRights(Player player) {
         return UtilPermissions.playerCanUseCommand(player,
                 "minestarwarp.command." + getPermissionNode());
     }
@@ -133,7 +133,8 @@ public abstract class Command {
      * @return Syntax + Arguments + Description
      */
     public String getHelpMessage() {
-        return ChatColor.RED + getSyntax() + " " + getArguments() + " " + getDescription();
+        return ChatColor.RED + getSyntax() + " " + getArguments() + " "
+                + getDescription();
     }
 
     /**
@@ -160,8 +161,8 @@ public abstract class Command {
     public int getArgumentCount() {
         return argumentCount;
     }
-    
-    /**
+
+/**
      * @return The number of '<' in the argument String
      */
     private int countArguments() {
