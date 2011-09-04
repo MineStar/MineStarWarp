@@ -71,6 +71,11 @@ public class ListCommand extends ExtendedCommand {
                         + "You didn't have created a warp!");
         }
         else {
+            if (args.length != 0 && !args[0].matches("\\d*")) {
+                player.sendMessage(ChatColor.RED
+                        + "Use a number for pagenumber");
+                return;
+            }
             int maxPageNumber = (int) Math.ceil(Main.warpManager
                     .countWarpsCanUse(player) / (double) warpsPerPage);
             if (maxPageNumber == 0) {
@@ -81,7 +86,7 @@ public class ListCommand extends ExtendedCommand {
             int pageNumber = args.length == 0 ? 1 : Integer.parseInt(args[0]);
             if (pageNumber <= maxPageNumber) {
                 warps = Main.warpManager.getWarpsForList(pageNumber,
-                        warpsPerPage,player);
+                        warpsPerPage, player);
                 player.sendMessage("------------------- Page " + pageNumber
                         + "/" + maxPageNumber + " -------------------");
                 showWarpList(player, warps);
