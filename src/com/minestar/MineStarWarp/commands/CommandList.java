@@ -47,7 +47,7 @@ public class CommandList {
 
     // The commands are stored in this list. The key indicates the
     // commandssyntax and the argument counter
-    private HashMap<String, Command> commandList = new HashMap<String, Command>();
+    private HashMap<String, Command> commandList;
 
     /**
      * Creates an array where the commands are stored in and add them all to the
@@ -219,6 +219,7 @@ public class CommandList {
      *            The array list for commands
      */
     private void initCommandList(Command[] cmds) {
+        commandList = new HashMap<String, Command>(cmds.length, 1.0f);
         for (Command cmd : cmds) {
             String key = cmd.getSyntax() + "_"
                     + (cmd.getArguments().split("<").length - 1);
