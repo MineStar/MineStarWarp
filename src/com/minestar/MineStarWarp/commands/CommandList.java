@@ -1,5 +1,5 @@
 /*
-* Copyright (C) 2011 MineStar.de 
+ * Copyright (C) 2011 MineStar.de 
  * 
  * This file is part of MineStarWarp.
  * 
@@ -27,6 +27,8 @@ import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.minestar.MineStarWarp.commands.bank.BankCommand;
+import com.minestar.MineStarWarp.commands.bank.SetBankCommand;
 import com.minestar.MineStarWarp.commands.home.HomeCommand;
 import com.minestar.MineStarWarp.commands.home.SetHomeCommand;
 import com.minestar.MineStarWarp.commands.spawn.SetSpawnCommand;
@@ -73,28 +75,32 @@ public class CommandList {
                         server),
                 new SetSpawnCommand("/setspawn", "", "setSpawn", server),
 
+                // Bank
+                new BankCommand("/bank", "", "bank", server),
+                new SetBankCommand("/setbank", "<Player>", "setBank", server),
+
                 // Warp Command
                 new WarpToCommand("/warp", "<Name>", "warpTo", server,
                         new Command[] {
 
                                 // Warp Creation and Removing
-                                new CreateCommand("create", "<Name>",
-                                        "create", server),
+                                new CreateCommand("create", "<Name>", "create",
+                                        server),
                                 new CreateCommand("pcreate", "<Name>",
                                         "create", server),
-                                new DeleteCommand("delete", "<Name>",
-                                        "delete", server),
+                                new DeleteCommand("delete", "<Name>", "delete",
+                                        server),
 
                                 // Searching Warps
                                 new ListCommand("list", "", "list", server),
-                                new SearchCommand("search", "<Name>",
-                                        "search", server),
+                                new SearchCommand("search", "<Name>", "search",
+                                        server),
 
                                 // Modifiers
                                 new PrivateCommand("private", "<Name>",
                                         "private", server),
-                                new PublicCommand("public", "<Name>",
-                                        "public", server),
+                                new PublicCommand("public", "<Name>", "public",
+                                        server),
 
                                 // Guests
                                 new InviteCommand("invite",

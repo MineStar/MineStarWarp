@@ -23,3 +23,9 @@ commands:
   setSpawn:
     description: Set the spawn for the world
     usage: /setSpawn
+  bank:
+    description: Teleports player to the bank
+    usage: /bank
+  setBank:
+    description: Creates a bank for the player
+    usagen: /setBank

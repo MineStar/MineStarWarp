@@ -29,6 +29,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
 import com.minestar.MineStarWarp.commands.CommandList;
+import com.minestar.MineStarWarp.dataManager.BankManager;
 import com.minestar.MineStarWarp.dataManager.ConnectionManager;
 import com.minestar.MineStarWarp.dataManager.DatabaseManager;
 import com.minestar.MineStarWarp.dataManager.HomeManager;
@@ -45,6 +46,7 @@ public class Main extends JavaPlugin {
     public static WarpManager warpManager;
     public static HomeManager homeManager;
     public static SpawnManager spawnManager;
+    public static BankManager bankManager;
     private DatabaseManager dbManager;
 
     private CommandList commandList;
@@ -62,6 +64,7 @@ public class Main extends JavaPlugin {
         homeManager = null;
         spawnManager = null;
         dbManager = null;
+        bankManager = null;
         commandList = null;
         System.gc();
         writeToLog("disabled");
@@ -77,6 +80,7 @@ public class Main extends JavaPlugin {
             warpManager = new WarpManager(dbManager, config);
             homeManager = new HomeManager(dbManager);
             spawnManager = new SpawnManager(dbManager);
+            bankManager = new BankManager(dbManager);
 
             getServer().getPluginManager().registerEvent(Type.PLAYER_RESPAWN,
                     new PlayerRespawnListener(), Priority.Normal, this);

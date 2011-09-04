@@ -23,6 +23,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.TreeMap;
 
 import org.bukkit.Location;
@@ -48,6 +49,8 @@ public class DatabaseManager {
     private PreparedStatement convertToPublic = null;
     private PreparedStatement addSpawn = null;
     private PreparedStatement updateSpawn = null;
+    private PreparedStatement setBank = null;
+    private PreparedStatement updateBank = null;
 
     /**
      * Uses for all database transactions
@@ -89,6 +92,10 @@ public class DatabaseManager {
                 .prepareStatement("INSERT INTO spawns (world,x,y,z,yaw,pitch) VALUES (?,?,?,?,?,?)");
         updateSpawn = con
                 .prepareStatement("UPDATE spawns SET  x = ? , y = ? , z = ? , yaw = ? , pitch = ? WHERE world = ?");
+        setBank = con
+                .prepareStatement("INSERT INTO banks (player,world, x, y, z, yaw, pitch) VALUES (?,?,?,?,?,?,?);");
+        updateBank = con
+                .prepareStatement("UPDATE banks SET world = ? , x = ? , y = ? , z = ? , yaw = ? , pitch = ? WHERE player = ?;");
 
     }
 
@@ -124,10 +131,22 @@ public class DatabaseManager {
                         + "`pitch` smallint NOT NULL DEFAULT '0');");
         con.commit();
 
-        // create the table for storing the homes
+        // create the table for storing the spawns
         con.createStatement().executeUpdate(
                 "CREATE TABLE IF NOT EXISTS `spawns` ("
                         + "`world` varchar(32) PRIMARY KEY,"
+                        + "`x` DOUBLE NOT NULL DEFAULT '0',"
+                        + "`y` tinyint NOT NULL DEFAULT '0',"
+                        + "`z` DOUBLE NOT NULL DEFAULT '0',"
+                        + "`yaw` smallint NOT NULL DEFAULT '0',"
+                        + "`pitch` smallint NOT NULL DEFAULT '0');");
+        con.commit();
+
+        // create the table for storing the banks
+        con.createStatement().executeUpdate(
+                "CREATE TABLE IF NOT EXISTS `banks` ("
+                        + "`player` varchar(32) PRIMARY KEY,"
+                        + "`world` varchar(32) NOT NULL DEFAULT '0',"
                         + "`x` DOUBLE NOT NULL DEFAULT '0',"
                         + "`y` tinyint NOT NULL DEFAULT '0',"
                         + "`z` DOUBLE NOT NULL DEFAULT '0',"
@@ -228,6 +247,35 @@ public class DatabaseManager {
         Main.writeToLog("Loaded sucessfully " + spawns.size() + " Spawns");
         return spawns;
 
+    }
+
+    /**
+     * Load the homes from the database and put them into a TreeMap. This should
+     * only loaded onEnabled()
+     * 
+     * @return A TreeMap where the key the name of the player is
+     */
+    public HashMap<String, Location> loadBanksFromDatabase() {
+
+        HashMap<String, Location> banks = new HashMap<String, Location>();
+        try {
+            ResultSet rs = con.createStatement().executeQuery(
+                    "SELECT player,world,x,y,z,yaw,pitch FROM banks");
+            while (rs.next()) {
+
+                String name = rs.getString(1).toLowerCase();
+                String world = rs.getString(2);
+                Location loc = new Location(server.getWorld(world),
+                        rs.getDouble(3), rs.getInt(4), rs.getDouble(5),
+                        rs.getInt(6), rs.getInt(7));
+                banks.put(name, loc);
+            }
+        }
+        catch (Exception e) {
+            Main.writeToLog(e.getMessage());
+        }
+        Main.writeToLog("Loaded sucessfully " + banks.size() + " Banks");
+        return banks;
     }
 
     /**
@@ -345,6 +393,68 @@ public class DatabaseManager {
             updateHome.setInt(6, Math.round(loc.getPitch()) % 360);
             updateHome.setString(7, player.getName().toLowerCase());
             updateHome.executeUpdate();
+            con.commit();
+        }
+        catch (Exception e) {
+            Main.writeToLog(e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * When a bank isn't set for a player, this method will called. It stores a
+     * complete new entity to the bank table, where the player name is the
+     * primary key, because a player can have only one bank
+     * 
+     * @param playerName
+     *            The owner of the bank (not the caller!)
+     * @param bankLocation
+     *            Position of the command caller
+     * 
+     * @return True when the bank is sucessfully added into the database
+     */
+    public boolean setBank(String playerName, Location bankLocation) {
+        try {
+            // INSERT INTO banks (player,world, x, y, z, yaw, pitch) VALUES
+            // (?,?,?,?,?,?,?);
+            setBank.setString(1, playerName.toLowerCase());
+            setBank.setString(2, bankLocation.getWorld().getName());
+            setBank.setDouble(3, bankLocation.getX());
+            setBank.setInt(4, bankLocation.getBlockY());
+            setBank.setDouble(5, bankLocation.getZ());
+            setBank.setInt(6, Math.round(bankLocation.getYaw()) % 360);
+            setBank.setInt(7, Math.round(bankLocation.getPitch()) % 360);
+            setBank.executeUpdate();
+            con.commit();
+        }
+        catch (Exception e) {
+            Main.writeToLog(e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * When a bank is already set for a player, this method will called. It just
+     * updates the location and not create a new entity
+     * 
+     * @param player
+     *            The command caller
+     * @return True when the location of the bank is sucessfully updated
+     */
+    public boolean updateBank(String playerName, Location bankLocation) {
+        try {
+            // UPDATE banks SET world = ? , x = ? , y = ? , z = ? , yaw = ? ,
+            // pitch = ? WHERE name = ?;
+            updateBank.setString(1, bankLocation.getWorld().getName());
+            updateBank.setDouble(2, bankLocation.getX());
+            updateBank.setInt(3, bankLocation.getBlockY());
+            updateBank.setDouble(4, bankLocation.getZ());
+            updateBank.setInt(5, Math.round(bankLocation.getYaw()) % 360);
+            updateBank.setInt(6, Math.round(bankLocation.getPitch()) % 360);
+            updateBank.setString(7, playerName.toLowerCase());
+            updateBank.executeUpdate();
             con.commit();
         }
         catch (Exception e) {
