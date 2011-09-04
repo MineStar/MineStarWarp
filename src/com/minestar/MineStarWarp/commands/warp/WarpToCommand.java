@@ -25,12 +25,13 @@ import org.bukkit.entity.Player;
 import com.minestar.MineStarWarp.Main;
 import com.minestar.MineStarWarp.Warp;
 import com.minestar.MineStarWarp.commands.Command;
+import com.minestar.MineStarWarp.commands.SuperCommand;
 
-public class WarpToCommand extends Command {
+public class WarpToCommand extends SuperCommand {
 
     public WarpToCommand(String syntax, String arguments, String node,
-            Server server) {
-        super(syntax, arguments, node, server);
+            Server server, Command[] subCommands) {
+        super(syntax, arguments, node, server, subCommands);
         this.description = "Warps you to the warp.";
     }
 

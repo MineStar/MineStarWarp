@@ -27,9 +27,9 @@ import org.bukkit.entity.Player;
 
 import com.minestar.MineStarWarp.Main;
 import com.minestar.MineStarWarp.Warp;
-import com.minestar.MineStarWarp.commands.Command;
+import com.minestar.MineStarWarp.commands.ExtendedCommand;
 
-public class ListCommand extends Command {
+public class ListCommand extends ExtendedCommand {
 
     private final int warpsPerPage;
 

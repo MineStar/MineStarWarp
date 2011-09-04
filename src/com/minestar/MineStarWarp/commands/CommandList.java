@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 MineStar.de 
+* Copyright (C) 2011 MineStar.de 
  * 
  * This file is part of MineStarWarp.
  * 
@@ -18,8 +18,9 @@
 
 package com.minestar.MineStarWarp.commands;
 
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map.Entry;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -31,7 +32,6 @@ import com.minestar.MineStarWarp.commands.home.SetHomeCommand;
 import com.minestar.MineStarWarp.commands.spawn.SetSpawnCommand;
 import com.minestar.MineStarWarp.commands.spawn.SpawnCommand;
 import com.minestar.MineStarWarp.commands.teleport.TeleportHereCommand;
-import com.minestar.MineStarWarp.commands.teleport.TeleportPlayerToCommand;
 import com.minestar.MineStarWarp.commands.teleport.TeleportToCommand;
 import com.minestar.MineStarWarp.commands.warp.CreateCommand;
 import com.minestar.MineStarWarp.commands.warp.DeleteCommand;
@@ -61,32 +61,8 @@ public class CommandList {
         Command[] commands = new Command[] {
                 // Teleport Commands
                 new TeleportHereCommand("/tphere", "<Player>", "tphere", server),
-                new TeleportPlayerToCommand("/tp", "<Player> <Player>",
-                        "tpPlayerTo", server),
                 new TeleportToCommand("/tp", "<Player>", "tpTo", server),
 
-                // Warp Command
-                new WarpToCommand("/warp", "<Name>", "warpTo", server),
-
-                // Warp Creation and Removing
-                new CreateCommand("/warp create", "<Name>", "create", server),
-                new CreateCommand("/warp pcreate", "<Name>", "create", server),
-                new DeleteCommand("/warp delete", "<Name>", "delete", server),
-
-                // Searching Warps
-                new ListCommand("/warp list", "", "list", server),
-                new ListCommand("/warp list", "<Number or my>", "list", server),
-                new SearchCommand("/warp search", "<Name>", "search", server),
-
-                // Modifiers
-                new PrivateCommand("/warp private", "<Name>", "private", server),
-                new PublicCommand("/warp public", "<Name>", "public", server),
-
-                // Guests
-                new InviteCommand("/warp invite", "<PlayerName> <Warpname>",
-                        "invite", server),
-                new UninviteCommand("/warp uninvite",
-                        "<PlayerName> <Warpname>", "uninvite", server),
                 // Home
                 new SetHomeCommand("/sethome", "", "sethome", server),
                 new HomeCommand("/home", "", "home", server),
@@ -95,118 +71,80 @@ public class CommandList {
                 new SpawnCommand("/spawn", "", "spawn", server),
                 new SpawnCommand("/spawn", "<Worldname>", "spawnSpecific",
                         server),
-                new SetSpawnCommand("/setspawn", "", "setSpawn", server) };
+                new SetSpawnCommand("/setspawn", "", "setSpawn", server),
+
+                // Warp Command
+                new WarpToCommand("/warp", "<Name>", "warpTo", server,
+                        new Command[] {
+
+                                // Warp Creation and Removing
+                                new CreateCommand("create", "<Name>",
+                                        "create", server),
+                                new CreateCommand("pcreate", "<Name>",
+                                        "create", server),
+                                new DeleteCommand("delete", "<Name>",
+                                        "delete", server),
+
+                                // Searching Warps
+                                new ListCommand("list", "", "list", server),
+                                new SearchCommand("search", "<Name>",
+                                        "search", server),
+
+                                // Modifiers
+                                new PrivateCommand("private", "<Name>",
+                                        "private", server),
+                                new PublicCommand("public", "<Name>",
+                                        "public", server),
+
+                                // Guests
+                                new InviteCommand("invite",
+                                        "<PlayerName> <Warpname>", "invite",
+                                        server),
+                                new UninviteCommand("uninvite",
+                                        "<PlayerName> <Warpname>", "uninvite",
+                                        server) }) };
 
         // store the commands in the hash map
         initCommandList(commands);
     }
 
-    /**
-     * Call this method in onCommand() in the Main. It searchs for the command
-     * and runs it. If a command is not found it will recursively add an
-     * argument to the label until there are arguments. If no arguments left, it
-     * stops the recursive and say, that no command exists
-     * 
-     * @param sender
-     *            The instace should be a player, but not necessary
-     * @param label
-     *            The first word after the slash ( / )
-     * @param args
-     *            The words after the label seperated by an space
-     */
     public void handleCommand(CommandSender sender, String label, String[] args) {
+
+        if (!(sender instanceof Player))
+            return;
+
+        Player player = (Player) sender;
 
         if (!label.startsWith("/"))
             label = "/" + label;
 
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            // the keys in the CommandList are build by this:
-            // commandssyntax + _ + number of arguments
-            String key = label + "_" + (args != null ? args.length : 0);
-            Command com = commandList.get(key);
-            // a command was found
-            if (com != null) {
-                // looking for commands like /warp create without an argument
-                if (usesKeyWord(com, args))
-                    handleSimiliarCommand(player,
-                            label.concat(" ").concat(args[0]), args);
-                else
-                    com.run(args, player);
-            }
-            // a command was not found, go recursively try finding the command
-            else if (com == null && args != null && args.length >= 1) {
-                // add the first argument of the command to the syntax
-                label += " " + args[0];
-                if (args.length == 1)
-                    args = null;
-                else
-                    args = Arrays.copyOfRange(args, 1, args.length);
+        // looking for
+        Command cmd = commandList.get(label + "_" + args.length);
+        if (cmd != null)
+            cmd.run(args, player);
+        else {
+            cmd = commandList.get(label);
+            if (cmd != null)
+                cmd.run(args, player);
+            else {
+                player.sendMessage(ChatColor.RED
+                        + "Wrong Syntax for command: '" + label + "'");
 
-                handleCommand(sender, label, args);
-            }
-            else
-                handleSimiliarCommand(player, label, args);
-        }
-    }
+                // FIND RELATED COMMANDS
+                LinkedList<Command> cmdList = new LinkedList<Command>();
+                for (Entry<String, Command> entry : commandList.entrySet()) {
+                    if (entry.getKey().startsWith(label))
+                        cmdList.add(entry.getValue());
+                }
 
-    /**
-     * Looking for a command like /warp create without an argument(to run it,
-     * there should be an argument)
-     * 
-     * @param com
-     *            The command which is the top name of the sub command
-     * @param args
-     *            The possible sub command name
-     * @return True when the commands syntax + the argument is an subcommand
-     */
-    private boolean usesKeyWord(Command com, String[] args) {
-
-        if (args == null)
-            return false;
-
-        String syntax = com.getSyntax();
-        if (syntax.equals("/warp")) {
-            return args[0].equals("create") || args[0].equals("delete")
-                    || args[0].equals("invite") || args[0].equals("uninvite")
-                    || args[0].equals("list") || args[0].equals("private")
-                    || args[0].equals("public") || args[0].equals("search")
-                    || args[0].equals("uninvite");
-        }
-
-        return false;
-    }
-
-    /**
-     * Looking for commands that sounds similiar or the player has used not the
-     * right number of arguments and print out the description for the command.
-     * 
-     * @param player
-     *            The command caller
-     * @param label
-     *            The label of the command
-     * @param args
-     *            The arguments of the command
-     */
-    public void handleSimiliarCommand(Player player, String label, String[] args) {
-
-        for (Command com : commandList.values()) {
-            if (com.getSyntax().equals(label)) {
-                player.sendMessage(com.getHelpMessage());
-                return;
+                // PRINT SYNTAX
+                while (!cmdList.isEmpty()) {
+                    cmd = cmdList.removeFirst();
+                    player.sendMessage(ChatColor.GRAY + cmd.getSyntax() + " "
+                            + cmd.getArguments());
+                }
             }
         }
-        if (args != null) {
-            label += " " + args[0];
-            if (args.length == 1)
-                args = null;
-            else
-                args = Arrays.copyOfRange(args, 1, args.length);
-            handleSimiliarCommand(player, label, args);
-        }
-        else
-            player.sendMessage(ChatColor.RED + "Command '" + label
-                    + "' not found!");
     }
 
     /**
@@ -219,12 +157,20 @@ public class CommandList {
      *            The array list for commands
      */
     private void initCommandList(Command[] cmds) {
+
         commandList = new HashMap<String, Command>(cmds.length, 1.0f);
         for (Command cmd : cmds) {
-            String key = cmd.getSyntax() + "_"
-                    + (cmd.getArguments().split("<").length - 1);
-            commandList.put(key, cmd);
+            String key = "";
+            // when the command has a variable count of arguments or
+            // when the command has a function and sub commands
+            if (cmd instanceof ExtendedCommand || cmd instanceof SuperCommand)
+                key = cmd.getSyntax();
+            // a normal command(no subcommands/fix argument count)
+            else
+                key = cmd.getSyntax() + "_"
+                        + (cmd.getArguments().split("<").length - 1);
 
+            commandList.put(key, cmd);
         }
     }
 }

@@ -21,9 +21,10 @@ package com.minestar.MineStarWarp.commands.teleport;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
-import com.minestar.MineStarWarp.commands.Command;
+import com.minestar.MineStarWarp.PlayerUtil;
+import com.minestar.MineStarWarp.commands.ExtendedCommand;
 
-public class TeleportToCommand extends Command {
+public class TeleportToCommand extends ExtendedCommand {
 
     public TeleportToCommand(String syntax, String arguments, String node,
             Server server) {
@@ -34,15 +35,43 @@ public class TeleportToCommand extends Command {
     @Override
     /**
      * Representing the command <br>
-     * /tp PLAYERNAME <br>
-     * This teleports the command player to the target
+     * /tphere PLAYERNAME (TARGETSNAME) <br>
+     * This teleports first player to the other player
      * 
      * @param player
      *            Called the command
      * @param args
-     *            args[0] is the targets name
+     *            args[0] is the player to teleport OR addionatiol <br>
+     *            args[1] is the targets name
+     * 
      */
     public void execute(String[] args, Player player) {
+        if (args.length == 1)
+            teleportToPlayer(args, player);
+        else if (args.length == 2)
+            teleportPlayerToPlayer(args, player);
+        else
+            player.sendMessage(getHelpMessage());
+    }
+
+    private void teleportPlayerToPlayer(String[] args, Player player) {
+
+        Player playerToTeleport = PlayerUtil.getPlayer(server, args[0]);
+        if (playerToTeleport == null) {
+            player.sendMessage("Can't find player named " + args[0]
+                    + ". Maybe he is offline?");
+            return;
+        }
+        Player target = PlayerUtil.getPlayer(server, args[1]);
+        if (target == null) {
+            player.sendMessage("Can't find player named " + args[1]
+                    + ". Maybe he is offline?");
+            return;
+        }
+        playerToTeleport.teleport(target.getLocation());
+    }
+
+    private void teleportToPlayer(String[] args, Player player) {
 
         Player target = server.getPlayer(args[0]);
         if (target == null) {
@@ -52,4 +81,5 @@ public class TeleportToCommand extends Command {
         }
         player.teleport(target.getLocation());
     }
+
 }

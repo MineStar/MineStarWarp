@@ -18,6 +18,7 @@
 
 package com.minestar.MineStarWarp.commands;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
@@ -78,6 +79,11 @@ public abstract class Command {
             return;
         }
 
+        if (!hasCorrectSyntax(args)) {
+            player.sendMessage(getHelpMessage());
+            return;
+        }
+
         execute(args, player);
     }
 
@@ -109,7 +115,7 @@ public abstract class Command {
      *            The arguments of the command given by the command caller
      * @return True when both number of arugments are equal
      */
-    public final boolean hasCorrectSyntax(String[] args) {
+    protected boolean hasCorrectSyntax(String[] args) {
         return args.length == countArguments();
     }
 
@@ -124,10 +130,9 @@ public abstract class Command {
      * @return Syntax + Arguments + Description
      */
     public String getHelpMessage() {
-        return getSyntax() + " " + getArguments() + " "
-                + getDescription();
+        return ChatColor.RED + getSyntax() + " " + getArguments() + " " + getDescription();
     }
-    
+
     /**
      * @return The syntax (or label) of the Command
      */
@@ -135,7 +140,7 @@ public abstract class Command {
         return syntax;
     }
 
-    /**
+/**
      * @return The arguments in one string. Every argument is labeld in '<' and '>'
      */
     public String getArguments() {
@@ -149,10 +154,10 @@ public abstract class Command {
         return permissionNode;
     }
 
-    /**
+/**
      * @return The number of '<' in the argument String
      */
-    private int countArguments() {
+    protected int countArguments() {
 
         if (arguments.isEmpty())
             return 0;
