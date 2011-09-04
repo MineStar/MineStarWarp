@@ -135,7 +135,7 @@ public abstract class Command {
         return syntax;
     }
 
-/**
+    /**
      * @return The arguments in one string. Every argument is labeld in '<' and '>'
      */
     public String getArguments() {
