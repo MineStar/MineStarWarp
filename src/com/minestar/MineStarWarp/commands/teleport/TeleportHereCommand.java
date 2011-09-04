@@ -21,6 +21,7 @@ package com.minestar.MineStarWarp.commands.teleport;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
+import com.minestar.MineStarWarp.PlayerUtil;
 import com.minestar.MineStarWarp.commands.Command;
 
 public class TeleportHereCommand extends Command {
@@ -44,7 +45,7 @@ public class TeleportHereCommand extends Command {
      */
     public void execute(String[] args, Player player) {
 
-        Player target = server.getPlayer(args[0]);
+        Player target = PlayerUtil.getPlayer(server, args[0]);
         if (target == null) {
             player.sendMessage("Can't find player named " + args[0]
                     + ". Maybe he is offline?");

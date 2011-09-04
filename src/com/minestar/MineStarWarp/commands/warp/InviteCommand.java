@@ -23,6 +23,7 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 import com.minestar.MineStarWarp.Main;
+import com.minestar.MineStarWarp.PlayerUtil;
 import com.minestar.MineStarWarp.Warp;
 import com.minestar.MineStarWarp.commands.Command;
 
@@ -53,7 +54,7 @@ public class InviteCommand extends Command {
         Warp warp = Main.warpManager.getWarp(warpName);
         if (warp != null) {
             if (warp.canEdit(player)) {
-                Player guest = server.getPlayer(guestName);
+                Player guest = PlayerUtil.getPlayer(server, guestName);
                 if (guest != null)
                     guestName = guest.getName();
                 else
