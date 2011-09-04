@@ -49,7 +49,7 @@ public abstract class ExtendedCommand extends Command {
     @Override
     protected boolean hasCorrectSyntax(String[] args) {
 
-        return args.length >= super.countArguments();
+        return args.length >= super.getArgumentCount();
     }
 
 }

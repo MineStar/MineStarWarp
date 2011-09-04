@@ -44,6 +44,8 @@ public abstract class Command {
     private String arguments;
     // Example : minestarwarp.create
     private String permissionNode;
+    
+    private final int argumentCount;
 
     /**
      * Just call super() in the inhertited classes. <br>
@@ -60,6 +62,7 @@ public abstract class Command {
         this.arguments = arguments;
         this.server = server;
         this.permissionNode = node;
+        this.argumentCount = countArguments();
     }
 
     /**
@@ -116,7 +119,7 @@ public abstract class Command {
      * @return True when both number of arugments are equal
      */
     protected boolean hasCorrectSyntax(String[] args) {
-        return args.length == countArguments();
+        return args.length == argumentCount;
     }
 
     /**
@@ -154,10 +157,14 @@ public abstract class Command {
         return permissionNode;
     }
 
-/**
+    public int getArgumentCount() {
+        return argumentCount;
+    }
+    
+    /**
      * @return The number of '<' in the argument String
      */
-    protected int countArguments() {
+    private int countArguments() {
 
         if (arguments.isEmpty())
             return 0;
