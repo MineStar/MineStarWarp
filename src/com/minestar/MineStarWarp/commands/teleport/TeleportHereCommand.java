@@ -18,6 +18,7 @@
 
 package com.minestar.MineStarWarp.commands.teleport;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
@@ -51,6 +52,9 @@ public class TeleportHereCommand extends Command {
                     + ". Maybe he is offline?");
             return;
         }
+
+        player.sendMessage(ChatColor.AQUA + target.getName()+ " was teleported to you");
+        target.sendMessage(ChatColor.AQUA + "You was teleported to "+player.getName());
         target.teleport(player.getLocation());
     }
 }
