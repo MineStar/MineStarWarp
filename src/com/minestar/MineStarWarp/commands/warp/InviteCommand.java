@@ -55,14 +55,14 @@ public class InviteCommand extends Command {
         if (warp != null) {
             if (warp.canEdit(player)) {
                 Player guest = PlayerUtil.getPlayer(server, guestName);
-                if (guest != null)
+                if (guest != null) 
                     guestName = guest.getName();
                 else
                     player.sendMessage("Player " + guestName
                             + " maybe not exist(is offline), but it invited");
                 if (Main.warpManager.addGuest(player, warpName, guestName)
                         && guest != null)
-                    player.sendMessage("You were invited to the warp '"
+                    guest.sendMessage("You were invited to the warp '"
                             + warpName + "'");
             }
             else
