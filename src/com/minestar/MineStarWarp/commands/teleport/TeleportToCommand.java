@@ -59,7 +59,7 @@ public class TeleportToCommand extends ExtendedCommand {
     private void teleportPlayerToPlayer(String[] args, Player player) {
         
         if (!UtilPermissions.playerCanUseCommand(player, "minestarwarp.command.tpPlayerTo")) {
-            player.sendMessage("You aren't allowed to use this command!");
+            player.sendMessage(NO_RIGHT);
             return;
         }
 
@@ -85,7 +85,7 @@ public class TeleportToCommand extends ExtendedCommand {
     private void teleportToPlayer(String[] args, Player player) {
 
         if (!UtilPermissions.playerCanUseCommand(player, "minestarwarp.command.tpTo")) {
-            player.sendMessage("You aren't allowed to use this command!");
+            player.sendMessage(NO_RIGHT);
             return;
         }
         
