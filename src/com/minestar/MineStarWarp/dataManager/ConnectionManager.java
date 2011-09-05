@@ -76,7 +76,8 @@ public class ConnectionManager {
                 instance = null;
             }
             catch (Exception e) {
-                Main.log.printError("Error while closing the database connection!", e);
+                Main.log.printError(
+                        "Error while closing the database connection!", e);
             }
         }
     }

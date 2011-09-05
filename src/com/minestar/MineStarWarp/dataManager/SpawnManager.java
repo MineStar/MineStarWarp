@@ -112,7 +112,7 @@ public class SpawnManager {
     public Location getMainSpawn(Server server) {
 
         String mainWorldName = server.getWorlds().get(0).getName();
-        
+
         Location loc = spawns.get(mainWorldName);
         if (loc == null)
             Main.log.printWarning("The main world does not have a spawn location!");
