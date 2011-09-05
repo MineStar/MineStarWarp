@@ -26,7 +26,6 @@ public abstract class ExtendedCommand extends Command {
     public ExtendedCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
-        // TODO Auto-generated constructor stub
     }
 
     public abstract void execute(String[] args, Player player);
