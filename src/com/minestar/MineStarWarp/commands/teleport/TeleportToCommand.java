@@ -23,8 +23,8 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 import com.gemo.utils.UtilPermissions;
-import com.minestar.MineStarWarp.PlayerUtil;
 import com.minestar.MineStarWarp.commands.ExtendedCommand;
+import com.minestar.MineStarWarp.utils.PlayerUtil;
 
 public class TeleportToCommand extends ExtendedCommand {
 

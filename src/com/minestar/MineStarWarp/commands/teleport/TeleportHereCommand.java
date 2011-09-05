@@ -22,8 +22,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
-import com.minestar.MineStarWarp.PlayerUtil;
 import com.minestar.MineStarWarp.commands.Command;
+import com.minestar.MineStarWarp.utils.PlayerUtil;
 
 public class TeleportHereCommand extends Command {
 

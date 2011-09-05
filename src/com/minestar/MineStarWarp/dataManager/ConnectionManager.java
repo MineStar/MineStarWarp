@@ -58,7 +58,7 @@ public class ConnectionManager {
     public static boolean initialize() {
 
         if (instance != null) {
-            Main.writeToLog("Connection is already initialized! Check for double initiations!");
+            Main.log.printWarning("Connection is already initialized! Check for double initiations!");
             return false;
         }
         return createConnection();
@@ -76,7 +76,7 @@ public class ConnectionManager {
                 instance = null;
             }
             catch (Exception e) {
-                Main.writeToLog(e.getMessage());
+                Main.log.printError("Error while closing the database connection!", e);
             }
         }
     }
@@ -95,7 +95,7 @@ public class ConnectionManager {
             instance.setAutoCommit(false);
         }
         catch (Exception e) {
-            Main.writeToLog(e.getMessage());
+            Main.log.printError("Error while creating database connection!", e);
             return false;
         }
         return true;

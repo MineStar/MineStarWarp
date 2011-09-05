@@ -115,7 +115,7 @@ public class SpawnManager {
         
         Location loc = spawns.get(mainWorldName);
         if (loc == null)
-            Main.writeToLog("Error: The main world does not have a spawn location!");
+            Main.log.printWarning("The main world does not have a spawn location!");
         return loc;
     }
 }

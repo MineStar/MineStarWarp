@@ -16,7 +16,7 @@
  * along with MineStarWarp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.minestar.MineStarWarp;
+package com.minestar.MineStarWarp.utils;
 
 import org.bukkit.Server;
 import org.bukkit.entity.Player;

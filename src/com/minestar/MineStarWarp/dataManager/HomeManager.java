@@ -69,7 +69,7 @@ public class HomeManager {
             else {
                 player.sendMessage(ChatColor.RED
                         + "ERROR while setting home! Ask an admin! Your current home is unchanged!");
-                Main.writeToLog("ERROR! User " + player.getName()
+                Main.log.printWarning("User " + player.getName()
                         + " cannot update home at " + loc.getWorld().getName()
                         + " " + loc.getX() + " " + loc.getY() + " "
                         + loc.getZ());
@@ -86,7 +86,7 @@ public class HomeManager {
                 player.sendMessage(ChatColor.RED
                         + "ERROR while setting home! Ask an admin!");
 
-                Main.writeToLog("ERROR! User " + player.getName()
+                Main.log.printWarning("User " + player.getName()
                         + " cannot set home at " + loc.getWorld().getName()
                         + " " + loc.getX() + " " + loc.getY() + " "
                         + loc.getZ());

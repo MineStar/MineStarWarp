@@ -64,7 +64,7 @@ public class DatabaseManager {
             initiate();
         }
         catch (Exception e) {
-            Main.writeToLog(e.getMessage());
+            Main.log.printError("Error while initiate of DatabaseManager!", e);
         }
     }
 
@@ -185,9 +185,9 @@ public class DatabaseManager {
             }
         }
         catch (Exception e) {
-            Main.writeToLog(e.getMessage());
+            Main.log.printError("Error while loading warps from database!", e);
         }
-        Main.writeToLog("Loaded sucessfully " + warps.size() + " Warps");
+        Main.log.printInfo("Loaded sucessfully " + warps.size() + " Warps");
         return warps;
     }
 
@@ -214,9 +214,10 @@ public class DatabaseManager {
             }
         }
         catch (Exception e) {
-            Main.writeToLog(e.getMessage());
+            Main.log.printError("Error while loading the homes from database!",
+                    e);
         }
-        Main.writeToLog("Loaded sucessfully " + homes.size() + " Homes");
+        Main.log.printInfo("Loaded sucessfully " + homes.size() + " Homes");
         return homes;
     }
 
@@ -242,9 +243,9 @@ public class DatabaseManager {
             }
         }
         catch (Exception e) {
-            Main.writeToLog(e.getMessage());
+            Main.log.printError("Error while loading spawns from database!", e);
         }
-        Main.writeToLog("Loaded sucessfully " + spawns.size() + " Spawns");
+        Main.log.printInfo("Loaded sucessfully " + spawns.size() + " Spawns");
         return spawns;
 
     }
@@ -272,9 +273,9 @@ public class DatabaseManager {
             }
         }
         catch (Exception e) {
-            Main.writeToLog(e.getMessage());
+            Main.log.printError("Error while loading banks from database!", e);
         }
-        Main.writeToLog("Loaded sucessfully " + banks.size() + " Banks");
+        Main.log.printInfo("Loaded sucessfully " + banks.size() + " Banks");
         return banks;
     }
 
@@ -307,7 +308,7 @@ public class DatabaseManager {
             con.commit();
         }
         catch (Exception e) {
-            Main.writeToLog(e.getMessage());
+            Main.log.printError("Error while adding a new warp to database!", e);
             return false;
         }
         return true;
@@ -338,7 +339,7 @@ public class DatabaseManager {
             con.commit();
         }
         catch (Exception e) {
-            Main.writeToLog(e.getMessage());
+            Main.log.printError("Error while adding new home location to database!",e);
             return false;
         }
         return true;
@@ -366,7 +367,7 @@ public class DatabaseManager {
             con.commit();
         }
         catch (Exception e) {
-            Main.writeToLog(e.getMessage());
+            Main.log.printError("Error while adding new spawn location to database!",e);
             return false;
         }
         return true;
@@ -396,7 +397,7 @@ public class DatabaseManager {
             con.commit();
         }
         catch (Exception e) {
-            Main.writeToLog(e.getMessage());
+            Main.log.printError("Error while sending updated home location to database!",e);
             return false;
         }
         return true;
@@ -429,7 +430,7 @@ public class DatabaseManager {
             con.commit();
         }
         catch (Exception e) {
-            Main.writeToLog(e.getMessage());
+            Main.log.printError("Error while adding new bank location to database!",e);
             return false;
         }
         return true;
@@ -458,7 +459,7 @@ public class DatabaseManager {
             con.commit();
         }
         catch (Exception e) {
-            Main.writeToLog(e.getMessage());
+            Main.log.printError("Error while sending updated bank location to database!",e);
             return false;
         }
         return true;
@@ -485,7 +486,7 @@ public class DatabaseManager {
             con.commit();
         }
         catch (Exception e) {
-            Main.writeToLog(e.getMessage());
+            Main.log.printError("Error while sending updated spawn location to database!",e);
             return false;
         }
         return true;
@@ -507,7 +508,7 @@ public class DatabaseManager {
             con.commit();
         }
         catch (Exception e) {
-            Main.writeToLog(e.getMessage());
+            Main.log.printError("Error removing warp from database!",e);
             return false;
         }
         return true;
@@ -531,7 +532,7 @@ public class DatabaseManager {
             con.commit();
         }
         catch (Exception e) {
-            Main.writeToLog(e.getMessage());
+            Main.log.printError("Error while sending updated guest list to database!",e);
             return false;
         }
         return true;
@@ -577,7 +578,7 @@ public class DatabaseManager {
             con.commit();
         }
         catch (Exception e) {
-            Main.writeToLog(e.getMessage());
+            Main.log.printError("Error while deleting guest list from database!",e);
             return false;
         }
         return true;

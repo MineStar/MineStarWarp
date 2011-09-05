@@ -19,7 +19,6 @@
 package com.minestar.MineStarWarp;
 
 import java.io.File;
-import java.util.logging.Logger;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -36,12 +35,13 @@ import com.minestar.MineStarWarp.dataManager.HomeManager;
 import com.minestar.MineStarWarp.dataManager.SpawnManager;
 import com.minestar.MineStarWarp.dataManager.WarpManager;
 import com.minestar.MineStarWarp.listeners.PlayerRespawnListener;
+import com.minestar.MineStarWarp.utils.LogUnit;
 
 public class Main extends JavaPlugin {
 
-    private static Logger log = Logger.getLogger("Minecraft");
-
     private static final String PLUGIN_NAME = "MineStarWarp";
+
+    public static LogUnit log = LogUnit.getInstance(PLUGIN_NAME);
 
     public static WarpManager warpManager;
     public static HomeManager homeManager;
@@ -53,11 +53,6 @@ public class Main extends JavaPlugin {
 
     public static Configuration config;
 
-    public static void writeToLog(String info) {
-
-        log.info("[" + PLUGIN_NAME + "]:" + info);
-    }
-
     public void onDisable() {
         ConnectionManager.closeConnection();
         warpManager = null;
@@ -67,7 +62,7 @@ public class Main extends JavaPlugin {
         bankManager = null;
         commandList = null;
         System.gc();
-        writeToLog("disabled");
+        log.printInfo("disabled");
     }
 
     public void onEnable() {
@@ -85,10 +80,10 @@ public class Main extends JavaPlugin {
             getServer().getPluginManager().registerEvent(Type.PLAYER_RESPAWN,
                     new PlayerRespawnListener(), Priority.Normal, this);
 
-            writeToLog("enabled");
+            log.printInfo("enabled");
         }
         else {
-            writeToLog("Can't connect to database!");
+            log.printWarning("Can't connect to database!");
         }
 
     }

@@ -23,9 +23,9 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 import com.minestar.MineStarWarp.Main;
-import com.minestar.MineStarWarp.PlayerUtil;
 import com.minestar.MineStarWarp.Warp;
 import com.minestar.MineStarWarp.commands.Command;
+import com.minestar.MineStarWarp.utils.PlayerUtil;
 
 public class UninviteCommand extends Command {
 
