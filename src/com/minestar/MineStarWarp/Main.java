@@ -69,10 +69,10 @@ public class Main extends JavaPlugin {
     public void onEnable() {
 
         loadConfig();
-        commandList = new CommandList(getServer());
 
         if (ConnectionManager.initialize()) {
             localization = Localization.getInstance(config.getString("language","de"));
+            commandList = new CommandList(getServer());
             DatabaseManager dbManager = new DatabaseManager(getServer());
             warpManager = new WarpManager(dbManager, config);
             homeManager = new HomeManager(dbManager);
