@@ -22,6 +22,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
+import com.minestar.MineStarWarp.Main;
 import com.minestar.MineStarWarp.commands.Command;
 import com.minestar.MineStarWarp.utils.PlayerUtil;
 
@@ -30,7 +31,7 @@ public class TeleportHereCommand extends Command {
     public TeleportHereCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
-        this.description = "Teleports the player to your position";
+        this.description = Main.localization.get(TELEPORT_HERE_DESCRIPTION);
     }
 
     @Override
@@ -48,13 +49,17 @@ public class TeleportHereCommand extends Command {
 
         Player target = PlayerUtil.getPlayer(server, args[0]);
         if (target == null) {
-            player.sendMessage("Can't find player named " + args[0]
-                    + ". Maybe he is offline?");
+            player.sendMessage(ChatColor.RED
+                    + Main.localization.get(TELEPORT_HERE_PLAYER_NOT_FOUND,
+                            args[0]));
             return;
         }
-
-        player.sendMessage(ChatColor.AQUA + target.getName()+ " was teleported to you");
-        target.sendMessage(ChatColor.AQUA + "You was teleported to "+player.getName());
+        player.sendMessage(ChatColor.AQUA
+                + Main.localization.get(TELEPORT_HERE_TARGET_MESSAGE,
+                        target.getName()));
+        target.sendMessage(ChatColor.AQUA
+                + Main.localization.get(TELEPORT_HERE_TARGET_TELEPORTED,
+                        player.getName()));
         target.teleport(player.getLocation());
     }
 }

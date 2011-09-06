@@ -50,10 +50,11 @@ public class HomeCommand extends Command {
         Location homeLocation = Main.homeManager.getPlayersHome(player);
         if (homeLocation != null) {
             player.teleport(homeLocation);
-            player.sendMessage(ChatColor.GRAY + "Welcome home!");
+            player.sendMessage(ChatColor.GRAY
+                    + Main.localization.get(HOME_WELCOME));
         }
         else
             player.sendMessage(ChatColor.RED
-                    + "You didn't have set a home! Use /setHome to create one.");
+                    + Main.localization.get(HOME_NO_HOME));
     }
 }

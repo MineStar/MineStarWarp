@@ -31,7 +31,7 @@ public class PrivateCommand extends Command {
     public PrivateCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
-        this.description = "Changes a public warp to a private one";
+        this.description = Main.localization.get(PRIVATE_DESCRIPTION);
     }
 
     @Override
@@ -51,11 +51,12 @@ public class PrivateCommand extends Command {
         Warp warp = Main.warpManager.getWarp(warpName);
 
         if (warp == null) {
-            player.sendMessage(ChatColor.RED + "Warp named '" + args[0]
-                    + "' not found!");
+            player.sendMessage(ChatColor.RED
+                    + Main.localization.get(PRIVATE_NOT_EXISTING, args[0]));
             if (Main.warpManager.getWarp(warpName.toLowerCase()) != null)
-                player.sendMessage(ChatColor.GRAY + "Maybe you meant '"
-                        + warpName.toLowerCase() + "' ?");
+                player.sendMessage(ChatColor.GRAY
+                        + Main.localization.get(PRIVATE_POSSIBLE_WARP,
+                                warpName.toLowerCase()));
             return;
         }
 
@@ -63,11 +64,11 @@ public class PrivateCommand extends Command {
             if (warp.isPublic())
                 Main.warpManager.changeAccess(player, false, warpName);
             else
-                player.sendMessage(ChatColor.RED + "'" + warpName
-                        + "' is already private!");
+                player.sendMessage(ChatColor.RED
+                        + Main.localization.get(PRIVATE_IS_PRIVATE, warpName));
         }
         else
-            player.sendMessage(ChatColor.RED + "You are not allowed to edit '"
-                    + warpName + "'");
+            player.sendMessage(ChatColor.RED
+                    + Main.localization.get(PRIVATE_NOT_OWNER, warpName));
     }
 }

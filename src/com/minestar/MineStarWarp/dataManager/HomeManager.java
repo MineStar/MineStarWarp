@@ -25,6 +25,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import com.minestar.MineStarWarp.Main;
+import com.minestar.MineStarWarp.localization.LocalizationConstants;
 
 /**
  * Is responsible for handling all home commands.
@@ -32,7 +33,7 @@ import com.minestar.MineStarWarp.Main;
  * @author Meldanor
  * 
  */
-public class HomeManager {
+public class HomeManager implements LocalizationConstants {
 
     // Key = Username, so only one player can have a home
     private TreeMap<String, Location> homes;
@@ -64,11 +65,11 @@ public class HomeManager {
             if (dbManager.updateHome(player)) {
                 homes.put(playerName, loc);
                 player.sendMessage(ChatColor.GRAY
-                        + "Home set. use /home to teleport to this position!");
+                        + Main.localization.get(HOMEM_HOME_SET));
             }
             else {
                 player.sendMessage(ChatColor.RED
-                        + "ERROR while setting home! Ask an admin! Your current home is unchanged!");
+                        + Main.localization.get(HOMEMERROR));
                 Main.log.printWarning("User " + player.getName()
                         + " cannot update home at " + loc.getWorld().getName()
                         + " " + loc.getX() + " " + loc.getY() + " "
@@ -80,11 +81,11 @@ public class HomeManager {
             if (dbManager.setHome(player)) {
                 homes.put(playerName, loc);
                 player.sendMessage(ChatColor.GRAY
-                        + "Home set. use /home to teleport to this position!");
+                        + Main.localization.get(HOMEM_HOME_SET));
             }
             else {
                 player.sendMessage(ChatColor.RED
-                        + "ERROR while setting home! Ask an admin!");
+                        + Main.localization.get(HOMEMERROR));
 
                 Main.log.printWarning("User " + player.getName()
                         + " cannot set home at " + loc.getWorld().getName()

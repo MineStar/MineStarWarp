@@ -27,6 +27,7 @@ import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.minestar.MineStarWarp.Main;
 import com.minestar.MineStarWarp.commands.bank.BankCommand;
 import com.minestar.MineStarWarp.commands.bank.SetBankCommand;
 import com.minestar.MineStarWarp.commands.home.HomeCommand;
@@ -44,8 +45,9 @@ import com.minestar.MineStarWarp.commands.warp.PublicCommand;
 import com.minestar.MineStarWarp.commands.warp.SearchCommand;
 import com.minestar.MineStarWarp.commands.warp.UninviteCommand;
 import com.minestar.MineStarWarp.commands.warp.WarpToCommand;
+import com.minestar.MineStarWarp.localization.LocalizationConstants;
 
-public class CommandList {
+public class CommandList implements LocalizationConstants {
 
     // The commands are stored in this list. The key indicates the
     // commandssyntax and the argument counter
@@ -134,7 +136,8 @@ public class CommandList {
                 cmd.run(args, player);
             else {
                 player.sendMessage(ChatColor.RED
-                        + "Wrong Syntax for command: '" + label + "'");
+                        + Main.localization.get(COMMAND_LIST_WRONG_SYNTAX,
+                                label));
 
                 // FIND RELATED COMMANDS
                 LinkedList<Command> cmdList = new LinkedList<Command>();

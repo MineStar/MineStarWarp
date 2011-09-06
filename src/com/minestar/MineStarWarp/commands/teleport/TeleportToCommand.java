@@ -23,6 +23,7 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 import com.gemo.utils.UtilPermissions;
+import com.minestar.MineStarWarp.Main;
 import com.minestar.MineStarWarp.commands.ExtendedCommand;
 import com.minestar.MineStarWarp.utils.PlayerUtil;
 
@@ -31,7 +32,7 @@ public class TeleportToCommand extends ExtendedCommand {
     public TeleportToCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
-        this.description = "Teleports you to the player";
+        this.description = Main.localization.get(TELEPORT_TO_DESCRIPTION);
     }
 
     @Override
@@ -66,21 +67,23 @@ public class TeleportToCommand extends ExtendedCommand {
 
         Player playerToTeleport = PlayerUtil.getPlayer(server, args[0]);
         if (playerToTeleport == null) {
-            player.sendMessage("Can't find player named " + args[0]
-                    + ". Maybe he is offline?");
+            player.sendMessage(Main.localization.get(
+                    TELEPORT_TO_PLAYER_NOT_FOUND, args[0]));
             return;
         }
         Player target = PlayerUtil.getPlayer(server, args[1]);
         if (target == null) {
-            player.sendMessage("Can't find player named " + args[1]
-                    + ". Maybe he is offline?");
+            player.sendMessage(Main.localization.get(
+                    TELEPORT_TO_PLAYER_NOT_FOUND, args[1]));
             return;
         }
         playerToTeleport.teleport(target.getLocation());
-        player.sendMessage(ChatColor.AQUA + "You was teleported to "
-                + target.getName());
-        target.sendMessage(ChatColor.AQUA + player.getName()
-                + " was teleported to you");
+        player.sendMessage(ChatColor.AQUA
+                + Main.localization.get(TELEPORT_TO_TARGET_TELEPORTED,
+                        target.getName()));
+        target.sendMessage(ChatColor.AQUA
+                + Main.localization.get(TELEPORT_TO_TARGET_MESSAGE,
+                        player.getName()));
     }
 
     private void teleportToPlayer(String[] args, Player player) {
@@ -93,15 +96,17 @@ public class TeleportToCommand extends ExtendedCommand {
 
         Player target = server.getPlayer(args[0]);
         if (target == null) {
-            player.sendMessage("Can't find player named " + args[0]
-                    + ". Maybe he is offline?");
+            player.sendMessage(Main.localization.get(
+                    TELEPORT_TO_PLAYER_NOT_FOUND, args[0]));
             return;
         }
         player.teleport(target.getLocation());
-        player.sendMessage(ChatColor.AQUA + "You was teleported to "
-                + target.getName());
-        target.sendMessage(ChatColor.AQUA + player.getName()
-                + " has teleported to you");
+        player.sendMessage(ChatColor.AQUA
+                + Main.localization.get(TELEPORT_TO_TARGET_TELEPORTED,
+                        player.getName()));
+        target.sendMessage(ChatColor.AQUA
+                + Main.localization.get(TELEPORT_TO_TARGET_MESSAGE,
+                        target.getName()));
     }
 
     @Override
@@ -111,5 +116,4 @@ public class TeleportToCommand extends ExtendedCommand {
                 || UtilPermissions.playerCanUseCommand(player,
                         "minestarwarp.command.tpTo");
     }
-
 }

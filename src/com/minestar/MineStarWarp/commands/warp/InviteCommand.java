@@ -32,7 +32,7 @@ public class InviteCommand extends Command {
     public InviteCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
-        this.description = "Allows the player to use the private warp";
+        this.description = Main.localization.get(INVITE_DESCRIPTION);
     }
 
     @Override
@@ -55,22 +55,22 @@ public class InviteCommand extends Command {
         if (warp != null) {
             if (warp.canEdit(player)) {
                 Player guest = PlayerUtil.getPlayer(server, guestName);
-                if (guest != null) 
+                if (guest != null)
                     guestName = guest.getName();
                 else
-                    player.sendMessage("Player " + guestName
-                            + " maybe not exist(is offline), but it invited");
+                    player.sendMessage(Main.localization.get(
+                            INVITE_NOT_EXACT_PLAYER, guestName));
                 if (Main.warpManager.addGuest(player, warpName, guestName)
                         && guest != null)
-                    guest.sendMessage("You were invited to the warp '"
-                            + warpName + "'");
+                    guest.sendMessage(Main.localization.get(
+                            INVITE_GUEST_MESSAGE, warpName));
             }
             else
                 player.sendMessage(ChatColor.RED
-                        + "You are not allowed to edit '" + warpName + "'");
+                        + Main.localization.get(INVITE_NOT_OWNER, warpName));
         }
         else
-            player.sendMessage(ChatColor.RED + "'" + warpName
-                    + "' doesn't not exist!");
+            player.sendMessage(ChatColor.RED
+                    + Main.localization.get(INVITE_NOT_EXIST, warpName));
     }
 }

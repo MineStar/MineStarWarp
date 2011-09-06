@@ -31,7 +31,7 @@ public class PublicCommand extends Command {
     public PublicCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
-        this.description = "Changes a private warp to a public one";
+        this.description = Main.localization.get(PUBLIC_DESCRIPTION);
     }
 
     @Override
@@ -51,11 +51,12 @@ public class PublicCommand extends Command {
         Warp warp = Main.warpManager.getWarp(warpName);
 
         if (warp == null) {
-            player.sendMessage(ChatColor.RED + "Warp named '" + args[0]
-                    + "' not found!");
+            player.sendMessage(ChatColor.RED
+                    + Main.localization.get(PUBLIC_NOT_EXISTING, warpName));
             if (Main.warpManager.getWarp(warpName.toLowerCase()) != null)
-                player.sendMessage(ChatColor.GRAY + "Maybe you meant '"
-                        + warpName.toLowerCase() + "' ?");
+                player.sendMessage(ChatColor.GRAY
+                        + Main.localization.get(PUBLIC_POSSIBLE_WARP,
+                                warpName.toLowerCase()));
             return;
         }
 

@@ -31,7 +31,7 @@ public class CreateCommand extends Command {
     public CreateCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
-        this.description = "Creates a new private warp";
+        this.description = Main.localization.get(CREATE_DESCRIPTION);
     }
 
     @Override
@@ -51,8 +51,8 @@ public class CreateCommand extends Command {
 
         String warpName = args[0];
         if (isKeyWord(warpName.toLowerCase())) {
-            player.sendMessage(ChatColor.RED + "Sorry,the name " + warpName
-                    + " is a key word. Please use another name.");
+            player.sendMessage(ChatColor.RED
+                    + Main.localization.get(CREATE_KEY_WORD, warpName));
             return;
         }
         if (Main.warpManager.hasFreeWarps(player)) {
@@ -60,12 +60,11 @@ public class CreateCommand extends Command {
                 Main.warpManager.addWarp(player, warpName, new Warp(player));
             else
                 player.sendMessage(ChatColor.RED
-                        + "Sorry, there is already an warp named '" + warpName
-                        + "'");
+                        + Main.localization.get(CREATE_SAME_NAME, warpName));
         }
         else
             player.sendMessage(ChatColor.RED
-                    + "Sorry, you didn't have enough free warp slots to create one more. Please delete one warp of yours!");
+                    + Main.localization.get(CREATE_LIMIT_WARPS));
     }
 
     private boolean isKeyWord(String warpName) {
@@ -74,6 +73,5 @@ public class CreateCommand extends Command {
                 || warpName.equals("list") || warpName.equals("private")
                 || warpName.equals("public") || warpName.equals("search")
                 || warpName.equals("uninvite");
-
     }
 }

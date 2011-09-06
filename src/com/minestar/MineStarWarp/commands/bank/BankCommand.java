@@ -53,11 +53,11 @@ public class BankCommand extends ExtendedCommand {
             bank = Main.bankManager.getBank(player.getName());
             if (bank != null) {
                 player.teleport(bank);
-                player.sendMessage("Welcome to your bank!");
+                player.sendMessage(Main.localization.get(BANK_WELCOME));
             }
             else {
                 player.sendMessage(ChatColor.RED
-                        + "Sorry, you don't have a bank!");
+                        + Main.localization.get(BANK_TELEPORT_NOT_FOUND));
             }
         }
         else {
@@ -70,12 +70,12 @@ public class BankCommand extends ExtendedCommand {
             bank = Main.bankManager.getBank(args[0]);
             if (bank != null) {
                 player.teleport(bank);
-                player.sendMessage("You teleported to bank of '" + args[0]
-                        + "'");
+                player.sendMessage(Main.localization.get(BANK_TELEPORTED,
+                        args[0]));
             }
             else {
                 player.sendMessage(ChatColor.RED
-                        + "Sorry, no bank was found for '" + args[0] + "'");
+                        + Main.localization.get(BANK_TELEPORT_NOT_FOUND,args[0]));
             }
         }
     }

@@ -32,7 +32,7 @@ public class UninviteCommand extends Command {
     public UninviteCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
-        this.description = "Disallows the player to use the private warp";
+        this.description = Main.localization.get(UNINVITE_DESCRIPTION);
     }
 
     @Override
@@ -58,21 +58,20 @@ public class UninviteCommand extends Command {
                 if (guest != null)
                     guestName = guest.getName();
                 else
-                    player.sendMessage("Player " + guestName
-                            + " maybe not exist(is offline), but it uninvited");
+                    player.sendMessage(Main.localization.get(
+                            UNINVITE_NOT_EXACT_PLAYER, args));
                 if (Main.warpManager.removeGuest(player, warpName, guestName)
                         && guest != null)
-                    guest.sendMessage("You were removed from the warp '"
-                            + warpName + "'");
-
+                    guest.sendMessage(ChatColor.RED
+                            + Main.localization.get(UNINVITE_GUEST_MESSAGE,
+                                    warpName));
             }
-
             else
                 player.sendMessage(ChatColor.RED
-                        + "You are not allowed to edit " + warpName);
+                        + Main.localization.get(UNINVITE_NOT_OWNER, warpName));
         }
         else
-            player.sendMessage(ChatColor.RED + "'" + warpName
-                    + "' doesn't not exist!");
+            player.sendMessage(ChatColor.RED
+                    + Main.localization.get(INVITE_NOT_EXIST, warpName));
     }
 }

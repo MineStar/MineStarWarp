@@ -25,7 +25,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-public class BankManager {
+import com.minestar.MineStarWarp.Main;
+import com.minestar.MineStarWarp.localization.LocalizationConstants;
+
+public class BankManager implements LocalizationConstants {
 
     private HashMap<String, Location> banks;
 
@@ -58,8 +61,7 @@ public class BankManager {
         if (banks.containsKey(playerName)) {
             if (dbManager.updateBank(playerName, bankLocation)) {
                 player.sendMessage(ChatColor.AQUA
-                        + "Bank was sucessfully updated for player '"
-                        + playerName + "'");
+                        + Main.localization.get(BANKM_UPDATED_BANK, playerName));
                 banks.put(playerName, bankLocation);
                 return;
             }
@@ -71,8 +73,7 @@ public class BankManager {
         else {
             if (dbManager.setBank(playerName, bankLocation)) {
                 player.sendMessage(ChatColor.AQUA
-                        + "Bank was sucessfully created for player '"
-                        + playerName + "'");
+                        + Main.localization.get(BANKM_UPDATED_BANK, playerName));
                 banks.put(playerName, bankLocation);
                 return;
             }

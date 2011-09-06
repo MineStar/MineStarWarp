@@ -53,31 +53,32 @@ public class SpawnCommand extends Command {
             if (loc != null) {
                 player.teleport(loc);
                 player.sendMessage(ChatColor.AQUA
-                        + "Welcome to the main spawn.");
+                        + Main.localization.get(SPAWN_WELCOME_MAIN));
             }
             else
                 player.sendMessage(ChatColor.RED
-                        + "Sorry, there is no spawn set! Please contact an admin!");
+                        + Main.localization.get(SPAWN_NO_MAIN_SPAWN));
         }
         else {
             String worldName = args[0].toLowerCase();
 
             if (!UtilPermissions.playerCanUseCommand(player,
                     "minestarwarp.command.spawnSpecific." + worldName)) {
-                player.sendMessage("Sorry, you can not use the spawn of the world '"
-                        + worldName + "'!");
+                player.sendMessage(ChatColor.RED
+                        + Main.localization.get(SPAWN_NOT_ALLOWED, worldName));
                 return;
             }
 
             Location loc = Main.spawnManager.getSpawn(worldName);
             if (loc != null) {
                 player.teleport(loc);
-                player.sendMessage(ChatColor.AQUA + "Welcome to the spawn of '"
-                        + loc.getWorld().getName() + "'.");
+                player.sendMessage(ChatColor.AQUA
+                        + Main.localization.get(SPAWN_WELCOME, loc.getWorld()
+                                .getName()));
             }
             else
                 player.sendMessage(ChatColor.RED
-                        + "Sorry, the world name was not found!");
+                        + Main.localization.get(SPAWN_NOT_FOUND, worldName));
         }
     }
 }

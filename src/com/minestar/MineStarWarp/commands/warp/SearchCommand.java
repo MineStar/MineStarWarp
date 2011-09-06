@@ -33,7 +33,7 @@ public class SearchCommand extends Command {
     public SearchCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
-        this.description = "Searches for a warp contains the word";
+        this.description = Main.localization.get(SEARCH_DESCRIPTION);
     }
 
     @Override
@@ -58,7 +58,8 @@ public class SearchCommand extends Command {
         // When at least one warp is found
         if (matchingWarps != null) {
             player.sendMessage(ChatColor.YELLOW
-                    + "Partial matches for search: " + ChatColor.GRAY + query);
+                    + Main.localization.get(SEARCH_MATCHES,
+                            ChatColor.GRAY.toString(), query));
             // Sending all warps per Line to the player
             for (String warpName : matchingWarps.keySet()) {
                 Warp warp = matchingWarps.get(warpName);
@@ -93,7 +94,8 @@ public class SearchCommand extends Command {
         }
         // When no warp was found
         else
-            player.sendMessage(ChatColor.RED + "No warp matches for search: "
-                    + ChatColor.GRAY + query);
+            player.sendMessage(ChatColor.RED
+                    + Main.localization.get(SEARCH_MATCHES,
+                            ChatColor.GRAY.toString(), query));
     }
 }

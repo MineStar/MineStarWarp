@@ -35,6 +35,7 @@ import com.minestar.MineStarWarp.dataManager.HomeManager;
 import com.minestar.MineStarWarp.dataManager.SpawnManager;
 import com.minestar.MineStarWarp.dataManager.WarpManager;
 import com.minestar.MineStarWarp.listeners.PlayerRespawnListener;
+import com.minestar.MineStarWarp.localization.Localization;
 import com.minestar.MineStarWarp.utils.LogUnit;
 
 public class Main extends JavaPlugin {
@@ -47,7 +48,7 @@ public class Main extends JavaPlugin {
     public static HomeManager homeManager;
     public static SpawnManager spawnManager;
     public static BankManager bankManager;
-    private DatabaseManager dbManager;
+    public static Localization localization;
 
     private CommandList commandList;
 
@@ -58,9 +59,9 @@ public class Main extends JavaPlugin {
         warpManager = null;
         homeManager = null;
         spawnManager = null;
-        dbManager = null;
         bankManager = null;
         commandList = null;
+        localization = null;
         System.gc();
         log.printInfo("disabled");
     }
@@ -71,7 +72,8 @@ public class Main extends JavaPlugin {
         commandList = new CommandList(getServer());
 
         if (ConnectionManager.initialize()) {
-            dbManager = new DatabaseManager(getServer());
+            localization = Localization.getInstance(config.getString("language","de"));
+            DatabaseManager dbManager = new DatabaseManager(getServer());
             warpManager = new WarpManager(dbManager, config);
             homeManager = new HomeManager(dbManager);
             spawnManager = new SpawnManager(dbManager);
@@ -80,6 +82,7 @@ public class Main extends JavaPlugin {
             getServer().getPluginManager().registerEvent(Type.PLAYER_RESPAWN,
                     new PlayerRespawnListener(), Priority.Normal, this);
 
+            
             log.printInfo("enabled");
         }
         else {
@@ -123,6 +126,7 @@ public class Main extends JavaPlugin {
         config.setProperty("warps.free", 5);
         config.setProperty("warps.pay", 9);
         config.setProperty("warps.warpsPerPage", 8);
+        config.setProperty("language", "de");
         config.save();
     }
 }

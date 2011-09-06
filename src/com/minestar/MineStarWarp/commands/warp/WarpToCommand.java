@@ -32,7 +32,7 @@ public class WarpToCommand extends SuperCommand {
     public WarpToCommand(String syntax, String arguments, String node,
             Server server, Command[] subCommands) {
         super(syntax, arguments, node, server, subCommands);
-        this.description = "Warps you to the warp.";
+        this.description = Main.localization.get(WARP_TO_DESCRIPTION);
     }
 
     @Override
@@ -53,15 +53,15 @@ public class WarpToCommand extends SuperCommand {
         if (warp != null) {
             if (warp.canUse(player)) {
                 player.teleport(warp.getLoc());
-                player.sendMessage(ChatColor.AQUA + "Welcome to '" + warpName
-                        + "'");
+                player.sendMessage(ChatColor.AQUA
+                        + Main.localization.get(WARP_TO_WELCOME, warpName));
             }
             else
                 player.sendMessage(ChatColor.RED
-                        + "Sorry, you can't use the warp '" + warpName + "' !");
+                        + Main.localization.get(WARP_TO_NO_RIGHT, warpName));
         }
         else
-            player.sendMessage(ChatColor.RED + "'" + warpName + "'"
-                    + " doesn't not exist!");
+            player.sendMessage(ChatColor.RED
+                    + Main.localization.get(WARP_TO_NOT_EXISTING, warpName));
     }
 }

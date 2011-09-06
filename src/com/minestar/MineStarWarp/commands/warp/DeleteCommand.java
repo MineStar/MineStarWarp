@@ -31,7 +31,7 @@ public class DeleteCommand extends Command {
     public DeleteCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
-        this.description = "Deletes a warp you are owning";
+        this.description = Main.localization.get(DELETE_DESCRIPTION);
     }
 
     @Override
@@ -54,11 +54,10 @@ public class DeleteCommand extends Command {
                 Main.warpManager.deleteWarp(player, warpName);
             else
                 player.sendMessage(ChatColor.RED
-                        + "You are not allowed to edit '" + warpName + "'");
+                        + Main.localization.get(DELETE_NOT_OWNER, warpName));
         }
         else
-            player.sendMessage(ChatColor.RED + "'" + warpName
-                    + "' doesn't not exist!");
-
+            player.sendMessage(ChatColor.RED
+                    + Main.localization.get(DELETE_NOT_EXIST, warpName));
     }
 }

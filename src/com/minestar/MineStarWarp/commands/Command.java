@@ -23,6 +23,8 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 import com.gemo.utils.UtilPermissions;
+import com.minestar.MineStarWarp.Main;
+import com.minestar.MineStarWarp.localization.LocalizationConstants;
 
 /**
  * Inhertitates from this class to create a new command. Just implement the
@@ -31,9 +33,9 @@ import com.gemo.utils.UtilPermissions;
  * @author Meldanor
  * 
  */
-public abstract class Command {
+public abstract class Command implements LocalizationConstants {
 
-    public final static String NO_RIGHT = "You aren't allowed to use this command!";
+    public final static String NO_RIGHT = Main.localization.get(COMMAND_NO_PERMISSIONS);
     public final Server server;
 
     // Add this in every command to add an description

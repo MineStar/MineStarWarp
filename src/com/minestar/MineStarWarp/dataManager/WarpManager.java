@@ -27,7 +27,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.config.Configuration;
 
 import com.gemo.utils.UtilPermissions;
+import com.minestar.MineStarWarp.Main;
 import com.minestar.MineStarWarp.Warp;
+import com.minestar.MineStarWarp.localization.LocalizationConstants;
 
 /**
  * This class handels all data changes and data calls for the warps. <br>
@@ -38,7 +40,7 @@ import com.minestar.MineStarWarp.Warp;
  * 
  * @author Meldanor
  */
-public class WarpManager {
+public class WarpManager implements LocalizationConstants {
 
     // Key = Name of Warp
     private TreeMap<String, Warp> warps;
@@ -102,12 +104,12 @@ public class WarpManager {
 
         if (dbManager.addWarp(creator, name, warp)) {
             warps.put(name, warp);
-            creator.sendMessage(ChatColor.AQUA + "Warp " + name
-                    + " was sucessfully created!");
+            creator.sendMessage(ChatColor.AQUA
+                    + Main.localization.get(WARPM_CREATE, name));
         }
         else {
             creator.sendMessage(ChatColor.RED
-                    + "ERROR! Can't save the warp in the database! The warp was not created! Contact an admin!");
+                    + Main.localization.get(WARPM_ERROR_CREATE));
         }
     }
 
@@ -126,13 +128,13 @@ public class WarpManager {
     public void deleteWarp(Player player, String name) {
 
         if (dbManager.deleteWarp(name)) {
-            player.sendMessage(ChatColor.AQUA + "Warp " + name
-                    + " was sucessfully deleted!");
+            player.sendMessage(ChatColor.AQUA
+                    + Main.localization.get(WARPM_DELETE, name));
             warps.remove(name);
         }
         else
             player.sendMessage(ChatColor.RED
-                    + "ERROR! Can't delete the warp from the database! Warp was not deleted! Contact an admin!");
+                    + Main.localization.get(WARPM_ERROR_DELETE));
     }
 
     /**
@@ -155,19 +157,16 @@ public class WarpManager {
         Warp warp = warps.get(warpName);
         warp.invitePlayer(guest);
         if (dbManager.changeGuestList(warp.getGuestsAsString(), warpName))
-            player.sendMessage(ChatColor.AQUA + guest
-                    + " was sucessfully invited into '" + warpName + "'");
+            player.sendMessage(ChatColor.AQUA
+                    + Main.localization.get(WARPM_INVITE, guest, warpName));
         else {
             warp.uninvitePlayer(guest);
             player.sendMessage(ChatColor.RED
-                    + "ERROR! Can't add "
-                    + guest
-                    + " as an guest to the database! He was not invited! Contact an admin!");
+                    + Main.localization.get(WARPM_ERROR_INVITE, guest));
             return false;
         }
 
         return true;
-
     }
 
     /**
@@ -191,14 +190,12 @@ public class WarpManager {
         warp.uninvitePlayer(guest);
         if (dbManager.changeGuestList(warp.getGuestsAsString(), warpName))
             player.sendMessage(ChatColor.AQUA + guest
-                    + " was sucessfully uninvited from '" + warpName + "'");
+                    + Main.localization.get(WARPM_UNINVITE, warpName));
 
         else {
             warp.invitePlayer(guest);
             player.sendMessage(ChatColor.RED
-                    + "ERROR! Can't remove "
-                    + guest
-                    + " as an guest to the database! He was not uninvited! Contact an admin!");
+                    + Main.localization.get(WARPM_ERROR_UNINVITE, guest));
             return false;
         }
 
@@ -424,26 +421,25 @@ public class WarpManager {
 
         if (toPublic) {
             if (dbManager.removeGuestsList(warpName)) {
-                player.sendMessage(ChatColor.AQUA + "Warp '" + warpName + "'"
-                        + " is now public!");
+                player.sendMessage(ChatColor.AQUA
+                        + Main.localization.get(WARPM_PUBLIC, warpName));
                 warps.get(warpName).setAccess(toPublic);
             }
             else
                 player.sendMessage(ChatColor.RED
-                        + "ERROR! Can't change access in the database! The access is not changed! Contact an admin!");
+                        + Main.localization.get(WARPM_ERROR_ACCESS_CHANGE));
         }
         else {
             if (dbManager.changeGuestList("", warpName)) {
-                player.sendMessage(ChatColor.AQUA + "Warp '" + warpName + "'"
-                        + " is now private.!");
                 player.sendMessage(ChatColor.AQUA
-                        + "Use /warp invite <Player> " + warpName
-                        + " to invite the player to this warp!");
+                        + Main.localization.get(WARPM_PRIVATE, warpName));
+                player.sendMessage(ChatColor.AQUA
+                        + Main.localization.get(WARPM_INVITE_MESSAGE, warpName));
                 warps.get(warpName).setAccess(toPublic);
             }
             else
                 player.sendMessage(ChatColor.RED
-                        + "ERROR! Can't change access in the database! The access is not changed! Contact an admin!");
+                        + Main.localization.get(WARPM_ERROR_ACCESS_CHANGE));
         }
     }
 
