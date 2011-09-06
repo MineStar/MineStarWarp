@@ -2,7 +2,7 @@
 welcome = Wilkommen in deiner Bank.
 notFound = Du hast keine Bank!
 teleportToBank = Du bist in der Bank von '%s'.
-teleportNotFound = Keine Bank für '%s' gefunden!
+teleportNotFound = Keine Bank fÃ¼r '%s' gefunden!
 
 #homeCommand
 welcome = Wilkommen zu Hause.
@@ -31,16 +31,16 @@ targetTeleported = '%s' wurde zu dir teleportiert.
 description = Erstellt einen privaten Warp.
 keyWord = Der Name '%s' kann nicht verwendet werden. Bitte nutz einen anderen!
 sameName = Es existiert bereits ein Warp names '%s'!
-limitWarps = Du hast zu viele private Warps erstellt, um einen neuen erstellen zu können. Lösche bitte einen alten.
+limitWarps = Du hast zu viele private Warps erstellt, um einen neuen erstellen zu kÃ¶nnen. LÃ¶sche bitte einen alten.
 
 #deleteCommand
-description = Löscht einen deiner Warps.
-notOwner = Du darfst diesen Warp nicht löschen!
+description = LÃ¶scht einen deiner Warps.
+notOwner = Du darfst diesen Warp nicht lÃ¶schen!
 notExisting = '%s' exisiert nicht!
 
 #inviteCommand
 description = Erlaubt dem Spieler den Warp zu nutzen.
-notExactPlayer = Spieler mit dem Namen '%s' nicht gefunden(offline?). Wurde dennoch hinzugefügt.
+notExactPlayer = Spieler mit dem Namen '%s' nicht gefunden(offline?). Wurde dennoch hinzugefÃ¼gt.
 guestMessage = Du wurdest zu dem Warp '%s' eingeladen.
 notOwner = Du darfst zu diesem Warp niemanden einladen!
 notExisting = '%s' exisiert nicht!
@@ -49,29 +49,29 @@ notExisting = '%s' exisiert nicht!
 description = Listet alle Warps, die du benutzen kannst, nach Seiten gegliedert, auf.
 usedSlots = Du hast %s freie Slots benutzt
 noMyWarp = Du hast keinen Warp erstellt!
-pageNumber = Benutze eine Zahl für die Seite
+pageNumber = Benutze eine Zahl fÃ¼r die Seite
 noWarps = Du kannst keinen einzigen Warp benutzen!
 pageHead = ------------------- Seite %s/%s -------------------
 highPage = Benutze nur Zahlen von 1 bis %s
 
 #privateCommand
-description = Macht aus einem öffentlichen Warp einen privaten
+description = Macht aus einem Ã¶ffentlichen Warp einen privaten
 notExisting = '%s' exisiert nicht!
 possibleWarp = Vielleicht meintest du %s ?
 isPrivate = '%s' ist bereits privat!
 notOwner = Du kannst diesen Warp nicht privat machen!
 
 #publicCommand
-description = Macht aus einem privaten Warp einen öffentlichen
+description = Macht aus einem privaten Warp einen Ã¶ffentlichen
 notExisting = '%s' exisiert nicht!
 possibleWarp = Vielleicht meintest du %s ?
-isPublic = '%s' ist bereits öffentlich!
-notOwner = Du kannst diesen Warp nicht öffentlich machen!
+isPublic = '%s' ist bereits Ã¶ffentlich!
+notOwner = Du kannst diesen Warp nicht Ã¶ffentlich machen!
 
 #searchCommand
 description = Gibt Warps aus, die das Suchwort beinhalten
-matches = Treffer für %s
-noMatches = Keine Treffer gefunden für %s
+matches = Treffer fÃ¼r %s
+noMatches = Keine Treffer gefunden fÃ¼r %s
 
 #uninivteCommand
 description = Der Spieler kann den Warp nicht mehr nutzen
@@ -90,31 +90,31 @@ notExisting = '%s' exisiert nicht!
 noPermission = Du darfst diesen Befehl nicht benutzen!
 
 #commandList
-wrongSyntax = Falsche Syntax für '%s'!
+wrongSyntax = Falsche Syntax fÃ¼r '%s'!
 
 #bankManager
-updatedBank = Bankposition wurde für '%s' aktualisiert.
-setBank = Eine Bankposition wurde für '%s' erstellt.
+updatedBank = Bankposition wurde fÃ¼r '%s' aktualisiert.
+setBank = Eine Bankposition wurde fÃ¼r '%s' erstellt.
 
 #homeManager
 homeSet = Zuhause gesetzt. Nutze '/home' um dich hier her zu teleportieren!
 error = Fehler! Das Zuhause konnte nicht gesetzt werden! Wende dich an einen Admin!
 
 #spawnManager
-spawnUpdated = Spawnposition für Welt '%s' wurde aktualisiert!
-spawnSet = Spawnposition für Welt '%s' gesetzt!
+spawnUpdated = Spawnposition fÃ¼r Welt '%s' wurde aktualisiert!
+spawnSet = Spawnposition fÃ¼r Welt '%s' gesetzt!
 error = Fehler! Spawnposition konnte nicht gesetzt werden!
 
 #warpManager
 created = Warp '%s' erstellt.
 errorCreate = Fehler! Warp '%s' konnte in der Datenbank gespeichert werden! Wende dich an einen Admin!
-deleted = Warp '%s' gelöscht.
-errorDelete = Fehler! Warp '%s' konnte aus der Datenbank gelöscht werden! Wende dich an einen Admin!
+deleted = Warp '%s' gelÃ¶scht.
+errorDelete = Fehler! Warp '%s' konnte aus der Datenbank gelÃ¶scht werden! Wende dich an einen Admin!
 invited = Spieler '%s' wurde zum Warp '%s' eingeladen!
 errorInvite = Fehler! Konnte nicht '%s' in Warp '%s' einladen! Wende dich bitte an einen Admin!
 uninvited = Spieler '%s' wurde vom Warp '%s' ausgeladen!
 errorUninvite = Fehler! Konnte nicht '%s' vom Warp '%s' ausladen! Wende dich bitte an einen Admin!
-public = '%s' ist nun öffentlich!
-accessError = '%s' Konnte Warp '%s' Zugriffsmodifikator nicht in der Datenbank ändern! Wende dich bitte an einen Admin!
+public = '%s' ist nun Ã¶ffentlich!
+accessError = Konnte Warp '%s' Zugriffsmodifikator nicht in der Datenbank Ã¤ndern! Wende dich bitte an einen Admin!
 private = '%s' ist nun privat!
 inviteMessage = Nutze '/warp invite <PlayerName> <%s> um den Spieler zum Warp einzuladen!
