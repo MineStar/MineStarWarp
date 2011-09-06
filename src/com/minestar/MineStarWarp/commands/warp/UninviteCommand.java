@@ -59,7 +59,7 @@ public class UninviteCommand extends Command {
                     guestName = guest.getName();
                 else
                     player.sendMessage(Main.localization.get(
-                            UNINVITE_NOT_EXACT_PLAYER, args));
+                            UNINVITE_NOT_EXACT_PLAYER, args[0]));
                 if (Main.warpManager.removeGuest(player, warpName, guestName)
                         && guest != null)
                     guest.sendMessage(ChatColor.RED

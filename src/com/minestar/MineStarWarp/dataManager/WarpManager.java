@@ -189,8 +189,8 @@ public class WarpManager implements LocalizationConstants {
         Warp warp = warps.get(warpName);
         warp.uninvitePlayer(guest);
         if (dbManager.changeGuestList(warp.getGuestsAsString(), warpName))
-            player.sendMessage(ChatColor.AQUA + guest
-                    + Main.localization.get(WARPM_UNINVITE, warpName));
+            player.sendMessage(ChatColor.AQUA
+                    + Main.localization.get(WARPM_UNINVITE, guest, warpName));
 
         else {
             warp.invitePlayer(guest);
