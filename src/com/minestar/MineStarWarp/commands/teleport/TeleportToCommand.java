@@ -57,8 +57,9 @@ public class TeleportToCommand extends ExtendedCommand {
     }
 
     private void teleportPlayerToPlayer(String[] args, Player player) {
-        
-        if (!UtilPermissions.playerCanUseCommand(player, "minestarwarp.command.tpPlayerTo")) {
+
+        if (!UtilPermissions.playerCanUseCommand(player,
+                "minestarwarp.command.tpPlayerTo")) {
             player.sendMessage(NO_RIGHT);
             return;
         }
@@ -84,11 +85,12 @@ public class TeleportToCommand extends ExtendedCommand {
 
     private void teleportToPlayer(String[] args, Player player) {
 
-        if (!UtilPermissions.playerCanUseCommand(player, "minestarwarp.command.tpTo")) {
+        if (!UtilPermissions.playerCanUseCommand(player,
+                "minestarwarp.command.tpTo")) {
             player.sendMessage(NO_RIGHT);
             return;
         }
-        
+
         Player target = server.getPlayer(args[0]);
         if (target == null) {
             player.sendMessage("Can't find player named " + args[0]
