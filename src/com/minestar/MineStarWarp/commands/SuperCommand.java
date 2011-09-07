@@ -44,6 +44,11 @@ public abstract class SuperCommand extends Command {
 
     @Override
     public void run(String[] args, Player player) {
+        if (args == null || args.length == 0) {
+            player.sendMessage(getHelpMessage());
+            return;
+        }
+
         if (!runSubCommand(args, player))
             super.run(args, player);
     }

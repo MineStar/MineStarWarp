@@ -135,7 +135,7 @@ public abstract class Command implements LocalizationConstants {
      * @return Syntax + Arguments + Description
      */
     public String getHelpMessage() {
-        return ChatColor.RED + getSyntax() + " " + getArguments() + " "
+        return ChatColor.BLUE + getSyntax() + " " + getArguments() + " "
                 + getDescription();
     }
 

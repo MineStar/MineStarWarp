@@ -37,8 +37,6 @@ public class Localization implements LocalizationConstants {
 
     private void loadtexts(String language) {
 
-        Main.log.printInfo("Start loading texts for language " + language);
-
         File temp = new File("plugins/MineStarWarp/localization/" + language
                 + ".txt");
 
