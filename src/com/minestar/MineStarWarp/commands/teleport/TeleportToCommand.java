@@ -103,7 +103,7 @@ public class TeleportToCommand extends ExtendedCommand {
         player.teleport(target.getLocation());
         player.sendMessage(ChatColor.AQUA
                 + Main.localization.get(TELEPORT_TO_TARGET_MESSAGE,
-                        player.getName()));
+                        target.getName()));
     }
 
     @Override
