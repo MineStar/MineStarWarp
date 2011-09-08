@@ -29,3 +29,6 @@ commands:
   setBank:
     description: Creates a bank for the player
     usage: /setBank
+  back:
+    description: Teleports you back
+    usage: /back

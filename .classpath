@@ -3,7 +3,8 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Bukkit"/>
-	<classpathentry kind="lib" path="C:/Program Files (x86)/MineCraft Server/pluginsd/FalseBookCore.jar"/>
-	<classpathentry kind="lib" path="E:/Projekte/Minecraft/Librarries/sqlite.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Lorenz/Desktop/Bukkit server/neuer server/lib/sqlitejdbc-v056.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Lorenz/Desktop/Bukkit server/neuer server/plugins/FalseBookCore.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Lorenz/Desktop/Bukkit server/neuer server/craftbukkit-0.0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

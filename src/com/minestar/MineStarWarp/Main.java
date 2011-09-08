@@ -19,15 +19,14 @@
 package com.minestar.MineStarWarp;
 
 import java.io.File;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
-
 import com.minestar.MineStarWarp.commands.CommandList;
+import com.minestar.MineStarWarp.dataManager.BackManager;
 import com.minestar.MineStarWarp.dataManager.BankManager;
 import com.minestar.MineStarWarp.dataManager.ConnectionManager;
 import com.minestar.MineStarWarp.dataManager.DatabaseManager;
@@ -35,99 +34,98 @@ import com.minestar.MineStarWarp.dataManager.HomeManager;
 import com.minestar.MineStarWarp.dataManager.SpawnManager;
 import com.minestar.MineStarWarp.dataManager.WarpManager;
 import com.minestar.MineStarWarp.listeners.PlayerRespawnListener;
+import com.minestar.MineStarWarp.listeners.PlayerTeleportListener;
 import com.minestar.MineStarWarp.localization.Localization;
 import com.minestar.MineStarWarp.utils.LogUnit;
 
 public class Main extends JavaPlugin {
 
-    private static final String PLUGIN_NAME = "MineStarWarp";
+	private static final String PLUGIN_NAME = "MineStarWarp";
 
-    public static LogUnit log = LogUnit.getInstance(PLUGIN_NAME);
+	public static LogUnit log = LogUnit.getInstance(PLUGIN_NAME);
 
-    public static WarpManager warpManager;
-    public static HomeManager homeManager;
-    public static SpawnManager spawnManager;
-    public static BankManager bankManager;
-    public static Localization localization;
+	public static WarpManager warpManager;
+	public static HomeManager homeManager;
+	public static SpawnManager spawnManager;
+	public static BankManager bankManager;
+	public static BackManager backManager;
+	public static Localization localization;
 
-    private CommandList commandList;
+	private CommandList commandList;
 
-    public static Configuration config;
+	public static Configuration config;
 
-    public void onDisable() {
-        ConnectionManager.closeConnection();
-        warpManager = null;
-        homeManager = null;
-        spawnManager = null;
-        bankManager = null;
-        commandList = null;
-        localization = null;
-        System.gc();
-        log.printInfo("disabled");
-    }
+	public void onDisable() {
+		ConnectionManager.closeConnection();
+		warpManager = null;
+		homeManager = null;
+		spawnManager = null;
+		bankManager = null;
+		commandList = null;
+		localization = null;
+		backManager = null;
+		System.gc();
+		log.printInfo("disabled");
+	}
 
-    public void onEnable() {
+	public void onEnable() {
 
-        loadConfig();
+		loadConfig();
 
-        if (ConnectionManager.initialize()) {
-            localization = Localization.getInstance(config.getString(
-                    "language", "de"));
-            commandList = new CommandList(getServer());
-            DatabaseManager dbManager = new DatabaseManager(getServer());
-            warpManager = new WarpManager(dbManager, config);
-            homeManager = new HomeManager(dbManager);
-            spawnManager = new SpawnManager(dbManager);
-            bankManager = new BankManager(dbManager);
+		if (ConnectionManager.initialize()) {
+			localization = Localization.getInstance(config.getString("language", "de"));
+			commandList = new CommandList(getServer());
+			DatabaseManager dbManager = new DatabaseManager(getServer());
+			warpManager = new WarpManager(dbManager, config);
+			homeManager = new HomeManager(dbManager);
+			spawnManager = new SpawnManager(dbManager);
+			bankManager = new BankManager(dbManager);
+			backManager = new BackManager();
 
-            getServer().getPluginManager().registerEvent(Type.PLAYER_RESPAWN,
-                    new PlayerRespawnListener(), Priority.Normal, this);
+			getServer().getPluginManager().registerEvent(Type.PLAYER_RESPAWN, new PlayerRespawnListener(), Priority.Normal, this);
+			getServer().getPluginManager().registerEvent(Type.PLAYER_TELEPORT, new PlayerTeleportListener(), Priority.Normal, this);
 
-            log.printInfo("enabled");
-        }
-        else {
-            log.printWarning("Can't connect to database!");
-        }
+			log.printInfo("enabled");
+		} else {
+			log.printWarning("Can't connect to database!");
+		}
 
-    }
+	}
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command,
-            String label, String[] args) {
-        commandList.handleCommand(sender, label, args);
-        return true;
-    }
+	@Override
+	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+		commandList.handleCommand(sender, label, args);
+		return true;
+	}
 
-    /**
-     * Load the properties from the configFile. If the configFile not exists it
-     * create ones
-     */
-    public void loadConfig() {
-        File pluginDir = getDataFolder();
-        if (!pluginDir.exists())
-            pluginDir.mkdirs();
-        File configFile = new File(pluginDir.getAbsolutePath().concat(
-                "/config.yml"));
-        config = new Configuration(new File(pluginDir.getAbsolutePath().concat(
-                "/config.yml")));
-        if (!configFile.exists())
-            createConfig();
-        else
-            config.load();
-    }
+	/**
+	 * Load the properties from the configFile. If the configFile not exists it
+	 * create ones
+	 */
+	public void loadConfig() {
+		File pluginDir = getDataFolder();
+		if (!pluginDir.exists())
+			pluginDir.mkdirs();
+		File configFile = new File(pluginDir.getAbsolutePath().concat("/config.yml"));
+		config = new Configuration(new File(pluginDir.getAbsolutePath().concat("/config.yml")));
+		if (!configFile.exists())
+			createConfig();
+		else
+			config.load();
+	}
 
-    /**
-     * Creates a config and use default values for it. They are stored in a yml
-     * format.
-     */
-    public void createConfig() {
+	/**
+	 * Creates a config and use default values for it. They are stored in a yml
+	 * format.
+	 */
+	public void createConfig() {
 
-        config.setProperty("warps.default", 0);
-        config.setProperty("warps.proble", 2);
-        config.setProperty("warps.free", 5);
-        config.setProperty("warps.pay", 9);
-        config.setProperty("warps.warpsPerPage", 8);
-        config.setProperty("language", "de");
-        config.save();
-    }
+		config.setProperty("warps.default", 0);
+		config.setProperty("warps.proble", 2);
+		config.setProperty("warps.free", 5);
+		config.setProperty("warps.pay", 9);
+		config.setProperty("warps.warpsPerPage", 8);
+		config.setProperty("language", "de");
+		config.save();
+	}
 }
