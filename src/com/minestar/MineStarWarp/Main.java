@@ -71,7 +71,8 @@ public class Main extends JavaPlugin {
         loadConfig();
 
         if (ConnectionManager.initialize()) {
-            localization = Localization.getInstance(config.getString("language","de"));
+            localization = Localization.getInstance(config.getString(
+                    "language", "de"));
             commandList = new CommandList(getServer());
             DatabaseManager dbManager = new DatabaseManager(getServer());
             warpManager = new WarpManager(dbManager, config);
@@ -82,7 +83,6 @@ public class Main extends JavaPlugin {
             getServer().getPluginManager().registerEvent(Type.PLAYER_RESPAWN,
                     new PlayerRespawnListener(), Priority.Normal, this);
 
-            
             log.printInfo("enabled");
         }
         else {
@@ -121,6 +121,7 @@ public class Main extends JavaPlugin {
      * format.
      */
     public void createConfig() {
+
         config.setProperty("warps.default", 0);
         config.setProperty("warps.proble", 2);
         config.setProperty("warps.free", 5);

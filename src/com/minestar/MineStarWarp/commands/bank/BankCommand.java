@@ -19,6 +19,7 @@
 package com.minestar.MineStarWarp.commands.bank;
 
 import org.bukkit.ChatColor;
+
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -57,7 +58,7 @@ public class BankCommand extends ExtendedCommand {
             }
             else {
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get(BANK_TELEPORT_NOT_FOUND));
+                        + Main.localization.get(BANK_NOT_FOUND));
             }
         }
         else {
@@ -75,7 +76,8 @@ public class BankCommand extends ExtendedCommand {
             }
             else {
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get(BANK_TELEPORT_NOT_FOUND,args[0]));
+                        + Main.localization.get(BANK_TELEPORT_NOT_FOUND,
+                                args[0]));
             }
         }
     }

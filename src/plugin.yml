@@ -28,4 +28,4 @@ commands:
     usage: /bank
   setBank:
     description: Creates a bank for the player
-    usagen: /setBank
+    usage: /setBank
