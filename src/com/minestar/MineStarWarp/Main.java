@@ -128,6 +128,7 @@ public class Main extends JavaPlugin {
         config.setProperty("warps.pay", 9);
         config.setProperty("warps.warpsPerPage", 8);
         config.setProperty("language", "de");
+        config.setProperty("banks.banksPerPage", 10);
         config.save();
     }
 }

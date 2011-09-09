@@ -120,4 +120,10 @@ public interface LocalizationConstants {
     final static int WARPM_ERROR_ACCESS_CHANGE = 78;
     final static int WARPM_PRIVATE = 79;
     final static int WARPM_INVITE_MESSAGE = 80;
+
+    final static int BANK_LIST_DESCRIPTION = 81;
+    final static int BANK_LIST_PAGE_NUMBER = 82;
+    final static int BANK_LIST_NO_BANKS = 83;
+    final static int BANK_LIST_PAGE_HEAD = 84;
+    final static int BANK_LIST_HIGH_PAGE = 85;
 }

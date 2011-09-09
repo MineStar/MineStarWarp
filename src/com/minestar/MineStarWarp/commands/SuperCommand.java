@@ -63,7 +63,11 @@ public abstract class SuperCommand extends Command {
      *            The command caller
      * @return True when a sub command is found, false if not
      */
-    private boolean runSubCommand(String[] args, Player player) {
+    protected boolean runSubCommand(String[] args, Player player) {
+
+        if (args != null && args.length == 0)
+            return false;
+
         for (Command com : subCommands) {
             if (com.getSyntax().equalsIgnoreCase(args[0])) {
                 com.run(Arrays.copyOfRange(args, 1, args.length), player);

@@ -20,6 +20,7 @@ package com.minestar.MineStarWarp.dataManager;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -81,5 +82,44 @@ public class BankManager implements LocalizationConstants {
                 player.sendMessage(ChatColor.RED
                         + "An error occurs while updating database! Check the log for further information!");
         }
+    }
+
+    /**
+     * This is used for the command /bank list (#) . <br>
+     * It iterates through the TreeMaps' keys and adding an intervall to a new
+     * HashMap that is returned by this method. <br>
+     * <code>(pageNumber-1)*banksPerPage</code> <br>
+     * indicates the start of the intervall and adds as much warps as high
+     * banksPerPage is.
+     * 
+     * @param pageNumber
+     *            Indicates the start of the intervall
+     * @param banksPerPage
+     *            How many banks are returned
+     * @return HashMap banks concerning the intervall. Returns null if the list
+     *         is empty
+     */
+    public TreeMap<String, Location> getBanksForList(int pageNumber,
+            int banksPerPage) {
+
+        TreeMap<String, Location> bankList = new TreeMap<String, Location>();
+
+        String[] keys = new String[banks.size()];
+        keys = banks.keySet().toArray(keys);
+
+        for (int i = 0; i < banksPerPage
+                && (((pageNumber - 1) * banksPerPage) + i) < keys.length; ++i) {
+            String key = keys[((pageNumber - 1) * banksPerPage) + i];
+            bankList.put(key, banks.get(key));
+        }
+
+        return bankList.size() > 0 ? bankList : null;
+    }
+    
+    /**
+     * @return Size of banks
+     */
+    public int countBanks() {
+        return banks.size();
     }
 }

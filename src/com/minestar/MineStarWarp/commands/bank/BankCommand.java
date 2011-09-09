@@ -19,20 +19,37 @@
 package com.minestar.MineStarWarp.commands.bank;
 
 import org.bukkit.ChatColor;
-
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 import com.gemo.utils.UtilPermissions;
 import com.minestar.MineStarWarp.Main;
-import com.minestar.MineStarWarp.commands.ExtendedCommand;
+import com.minestar.MineStarWarp.commands.Command;
+import com.minestar.MineStarWarp.commands.SuperCommand;
 
-public class BankCommand extends ExtendedCommand {
+public class BankCommand extends SuperCommand {
 
     public BankCommand(String syntax, String arguments, String node,
-            Server server) {
-        super(syntax, arguments, node, server);
+            Server server, Command... commands) {
+        super(syntax, arguments, node, server, commands);
+    }
+
+    @Override
+    public void run(String[] args, Player player) {
+        if (!super.runSubCommand(args, player)) {
+            if (!hasRights(player)) {
+                player.sendMessage(NO_RIGHT);
+                return;
+            }
+
+            if (!hasCorrectSyntax(args)) {
+                player.sendMessage(getHelpMessage());
+                return;
+            }
+
+            execute(args, player);
+        }
     }
 
     @Override

@@ -118,3 +118,10 @@ public = '%s' ist nun öffentlich!
 accessError = Konnte Warp '%s' Zugriffsmodifikator nicht in der Datenbank ändern! Wende dich bitte an einen Admin!
 private = '%s' ist nun privat!
 inviteMessage = Nutze '/warp invite <PlayerName> <%s> um den Spieler zum Warp einzuladen!
+
+#bankListCommand
+description = Listet alle Banken auf.
+pageNumber = Benutze eine Zahl für die Seite
+noBanks = Es existiert keine einzige Bank!
+pageHead = ------------------- Seite %s/%s -------------------
+highPage = Benutze nur Zahlen von 1 bis %s
