@@ -35,7 +35,8 @@ import com.minestar.MineStarWarp.localization.LocalizationConstants;
  */
 public abstract class Command implements LocalizationConstants {
 
-    public final static String NO_RIGHT = Main.localization.get(COMMAND_NO_PERMISSIONS);
+    public final static String NO_RIGHT = Main.localization
+            .get(COMMAND_NO_PERMISSIONS);
     public final Server server;
 
     // Add this in every command to add an description

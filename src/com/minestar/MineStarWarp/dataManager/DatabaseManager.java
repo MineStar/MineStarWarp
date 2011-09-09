@@ -339,7 +339,8 @@ public class DatabaseManager {
             con.commit();
         }
         catch (Exception e) {
-            Main.log.printError("Error while adding new home location to database!",e);
+            Main.log.printError(
+                    "Error while adding new home location to database!", e);
             return false;
         }
         return true;
@@ -367,7 +368,8 @@ public class DatabaseManager {
             con.commit();
         }
         catch (Exception e) {
-            Main.log.printError("Error while adding new spawn location to database!",e);
+            Main.log.printError(
+                    "Error while adding new spawn location to database!", e);
             return false;
         }
         return true;
@@ -397,7 +399,8 @@ public class DatabaseManager {
             con.commit();
         }
         catch (Exception e) {
-            Main.log.printError("Error while sending updated home location to database!",e);
+            Main.log.printError(
+                    "Error while sending updated home location to database!", e);
             return false;
         }
         return true;
@@ -430,7 +433,8 @@ public class DatabaseManager {
             con.commit();
         }
         catch (Exception e) {
-            Main.log.printError("Error while adding new bank location to database!",e);
+            Main.log.printError(
+                    "Error while adding new bank location to database!", e);
             return false;
         }
         return true;
@@ -459,7 +463,8 @@ public class DatabaseManager {
             con.commit();
         }
         catch (Exception e) {
-            Main.log.printError("Error while sending updated bank location to database!",e);
+            Main.log.printError(
+                    "Error while sending updated bank location to database!", e);
             return false;
         }
         return true;
@@ -486,7 +491,9 @@ public class DatabaseManager {
             con.commit();
         }
         catch (Exception e) {
-            Main.log.printError("Error while sending updated spawn location to database!",e);
+            Main.log.printError(
+                    "Error while sending updated spawn location to database!",
+                    e);
             return false;
         }
         return true;
@@ -508,7 +515,7 @@ public class DatabaseManager {
             con.commit();
         }
         catch (Exception e) {
-            Main.log.printError("Error removing warp from database!",e);
+            Main.log.printError("Error removing warp from database!", e);
             return false;
         }
         return true;
@@ -532,7 +539,8 @@ public class DatabaseManager {
             con.commit();
         }
         catch (Exception e) {
-            Main.log.printError("Error while sending updated guest list to database!",e);
+            Main.log.printError(
+                    "Error while sending updated guest list to database!", e);
             return false;
         }
         return true;
@@ -578,7 +586,8 @@ public class DatabaseManager {
             con.commit();
         }
         catch (Exception e) {
-            Main.log.printError("Error while deleting guest list from database!",e);
+            Main.log.printError(
+                    "Error while deleting guest list from database!", e);
             return false;
         }
         return true;

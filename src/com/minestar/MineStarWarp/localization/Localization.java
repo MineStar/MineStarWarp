@@ -75,7 +75,7 @@ public class Localization implements LocalizationConstants {
             instance = new Localization(language);
         return instance;
     }
-    
+
     public String get(int index) {
         if (index < 0 || index >= texts.length)
             return null;
@@ -87,6 +87,6 @@ public class Localization implements LocalizationConstants {
         if (index < 0 || index >= texts.length)
             return null;
         else
-            return String.format(texts[index], (Object[])args);
+            return String.format(texts[index], (Object[]) args);
     }
 }

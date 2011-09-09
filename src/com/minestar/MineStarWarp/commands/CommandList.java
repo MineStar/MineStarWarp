@@ -28,6 +28,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.minestar.MineStarWarp.Main;
+import com.minestar.MineStarWarp.commands.back.BackCommand;
 import com.minestar.MineStarWarp.commands.bank.BankCommand;
 import com.minestar.MineStarWarp.commands.bank.BankListCommand;
 import com.minestar.MineStarWarp.commands.bank.SetBankCommand;
@@ -82,6 +83,9 @@ public class CommandList implements LocalizationConstants {
                 new BankCommand("/bank", "", "bank", server,
                         new BankListCommand("list", "", "bankList", server)),
                 new SetBankCommand("/setbank", "<Player>", "setBank", server),
+
+                // Back
+                new BackCommand("/back", "", "back", server),
 
                 // Warp Command
                 new WarpToCommand("/warp", "<Name>", "warpTo", server,

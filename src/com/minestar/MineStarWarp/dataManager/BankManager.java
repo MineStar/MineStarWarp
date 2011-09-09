@@ -115,7 +115,7 @@ public class BankManager implements LocalizationConstants {
 
         return bankList.size() > 0 ? bankList : null;
     }
-    
+
     /**
      * @return Size of banks
      */

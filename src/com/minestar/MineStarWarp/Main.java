@@ -28,6 +28,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
 import com.minestar.MineStarWarp.commands.CommandList;
+import com.minestar.MineStarWarp.dataManager.BackManager;
 import com.minestar.MineStarWarp.dataManager.BankManager;
 import com.minestar.MineStarWarp.dataManager.ConnectionManager;
 import com.minestar.MineStarWarp.dataManager.DatabaseManager;
@@ -35,6 +36,7 @@ import com.minestar.MineStarWarp.dataManager.HomeManager;
 import com.minestar.MineStarWarp.dataManager.SpawnManager;
 import com.minestar.MineStarWarp.dataManager.WarpManager;
 import com.minestar.MineStarWarp.listeners.PlayerRespawnListener;
+import com.minestar.MineStarWarp.listeners.PlayerTeleportListener;
 import com.minestar.MineStarWarp.localization.Localization;
 import com.minestar.MineStarWarp.utils.LogUnit;
 
@@ -49,6 +51,7 @@ public class Main extends JavaPlugin {
     public static SpawnManager spawnManager;
     public static BankManager bankManager;
     public static Localization localization;
+    public static BackManager backManager;
 
     private CommandList commandList;
 
@@ -62,6 +65,7 @@ public class Main extends JavaPlugin {
         bankManager = null;
         commandList = null;
         localization = null;
+        backManager = null;
         System.gc();
         log.printInfo("disabled");
     }
@@ -79,9 +83,12 @@ public class Main extends JavaPlugin {
             homeManager = new HomeManager(dbManager);
             spawnManager = new SpawnManager(dbManager);
             bankManager = new BankManager(dbManager);
+            backManager = new BackManager();
 
             getServer().getPluginManager().registerEvent(Type.PLAYER_RESPAWN,
                     new PlayerRespawnListener(), Priority.Normal, this);
+            getServer().getPluginManager().registerEvent(Type.PLAYER_TELEPORT,
+                    new PlayerTeleportListener(), Priority.Normal, this);
 
             log.printInfo("enabled");
         }
