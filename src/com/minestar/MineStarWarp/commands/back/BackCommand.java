@@ -18,6 +18,7 @@
 
 package com.minestar.MineStarWarp.commands.back;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -31,10 +32,23 @@ public class BackCommand extends Command {
         super(syntax, arguments, node, server);
     }
 
+    @Override
+    /**
+     * Representing the command <br>
+     * /back <br>
+     * This teleports a player back to the location befor the last teleport.
+     * 
+     * @param player
+     *            Called the command
+     * @param args
+     *            Hasn't any effect on the Command
+     */
     public void execute(String[] args, Player player) {
-        Location loc = null;
-        loc = Main.backManager.getBack(player);
+        Location loc = Main.backManager.getBack(player);
         if (loc != null)
             player.teleport(loc);
+        else
+            player.sendMessage(ChatColor.RED
+                    + Main.localization.get(BACK_NOT_EXIST));
     }
 }

@@ -37,9 +37,6 @@ public class BackManager {
     }
 
     public Location getBack(Player player) {
-        String playername = player.getName().toLowerCase();
-        if (backs.containsKey(playername))
-            return backs.get(playername);
-        return null;
+        return backs.get(player.getName().toLowerCase());
     }
 }

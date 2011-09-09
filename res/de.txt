@@ -125,3 +125,6 @@ pageNumber = Benutze eine Zahl für die Seite
 noBanks = Es existiert keine einzige Bank!
 pageHead = ------------------- Seite %s/%s -------------------
 highPage = Benutze nur Zahlen von 1 bis %s
+
+#backCommand
+backNotExist = Es gibt keine Punkt zum zurueckwarpen.

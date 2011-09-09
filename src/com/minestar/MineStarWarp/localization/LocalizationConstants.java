@@ -126,4 +126,6 @@ public interface LocalizationConstants {
     final static int BANK_LIST_NO_BANKS = 83;
     final static int BANK_LIST_PAGE_HEAD = 84;
     final static int BANK_LIST_HIGH_PAGE = 85;
+    
+    final static int BACK_NOT_EXIST = 86;
 }
