@@ -26,8 +26,7 @@ import com.minestar.MineStarWarp.commands.Command;
 
 public class SetBankCommand extends Command {
 
-    public SetBankCommand(String syntax, String arguments, String node,
-            Server server) {
+    public SetBankCommand(String syntax, String arguments, String node, Server server) {
         super(syntax, arguments, node, server);
     }
 

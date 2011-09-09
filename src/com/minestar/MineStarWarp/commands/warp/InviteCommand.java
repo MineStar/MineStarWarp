@@ -29,8 +29,7 @@ import com.minestar.MineStarWarp.utils.PlayerUtil;
 
 public class InviteCommand extends Command {
 
-    public InviteCommand(String syntax, String arguments, String node,
-            Server server) {
+    public InviteCommand(String syntax, String arguments, String node, Server server) {
         super(syntax, arguments, node, server);
         this.description = Main.localization.get(INVITE_DESCRIPTION);
     }
@@ -58,19 +57,12 @@ public class InviteCommand extends Command {
                 if (guest != null)
                     guestName = guest.getName();
                 else
-                    player.sendMessage(Main.localization.get(
-                            INVITE_NOT_EXACT_PLAYER, guestName));
-                if (Main.warpManager.addGuest(player, warpName, guestName)
-                        && guest != null)
-                    guest.sendMessage(Main.localization.get(
-                            INVITE_GUEST_MESSAGE, warpName));
-            }
-            else
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get(INVITE_NOT_OWNER, warpName));
-        }
-        else
-            player.sendMessage(ChatColor.RED
-                    + Main.localization.get(INVITE_NOT_EXIST, warpName));
+                    player.sendMessage(Main.localization.get(INVITE_NOT_EXACT_PLAYER, guestName));
+                if (Main.warpManager.addGuest(player, warpName, guestName) && guest != null)
+                    guest.sendMessage(Main.localization.get(INVITE_GUEST_MESSAGE, warpName));
+            } else
+                player.sendMessage(ChatColor.RED + Main.localization.get(INVITE_NOT_OWNER, warpName));
+        } else
+            player.sendMessage(ChatColor.RED + Main.localization.get(INVITE_NOT_EXIST, warpName));
     }
 }

@@ -26,14 +26,14 @@ import com.minestar.MineStarWarp.commands.Command;
 
 public class BackCommand extends Command {
 
-	public BackCommand(String syntax, String arguments, String node, Server server) {
-		super(syntax, arguments, node, server);
-	}
+    public BackCommand(String syntax, String arguments, String node, Server server) {
+        super(syntax, arguments, node, server);
+    }
 
-	public void execute(String[] args, Player player) {
-		Location loc = null;
-		loc = Main.backManager.getBack(player);
-		if (loc != null)
-			player.teleport(loc);
-	}
+    public void execute(String[] args, Player player) {
+        Location loc = null;
+        loc = Main.backManager.getBack(player);
+        if (loc != null)
+            player.teleport(loc);
+    }
 }

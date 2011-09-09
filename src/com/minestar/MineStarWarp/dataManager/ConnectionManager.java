@@ -74,10 +74,8 @@ public class ConnectionManager {
             try {
                 instance.close();
                 instance = null;
-            }
-            catch (Exception e) {
-                Main.log.printError(
-                        "Error while closing the database connection!", e);
+            } catch (Exception e) {
+                Main.log.printError("Error while closing the database connection!", e);
             }
         }
     }
@@ -91,11 +89,9 @@ public class ConnectionManager {
 
         try {
             Class.forName("org.sqlite.JDBC");
-            instance = DriverManager
-                    .getConnection("jdbc:sqlite:plugins/MineStarWarp/warps.db");
+            instance = DriverManager.getConnection("jdbc:sqlite:plugins/MineStarWarp/warps.db");
             instance.setAutoCommit(false);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Main.log.printError("Error while creating database connection!", e);
             return false;
         }

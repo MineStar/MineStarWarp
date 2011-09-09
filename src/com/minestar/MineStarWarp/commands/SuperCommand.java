@@ -33,8 +33,7 @@ public abstract class SuperCommand extends Command {
 
     private Command[] subCommands;
 
-    public SuperCommand(String syntax, String arguments, String node,
-            Server server, Command[] subCommands) {
+    public SuperCommand(String syntax, String arguments, String node, Server server, Command[] subCommands) {
         super(syntax, arguments, node, server);
         this.subCommands = subCommands;
     }

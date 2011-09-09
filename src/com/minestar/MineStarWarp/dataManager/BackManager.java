@@ -23,22 +23,22 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class BackManager {
-	private TreeMap<String, Location> backs;
+    private TreeMap<String, Location> backs;
 
-	public BackManager() {
-		backs = new TreeMap<String, Location>();
-	}
+    public BackManager() {
+        backs = new TreeMap<String, Location>();
+    }
 
-	public void setBack(Player player) {
-		String playername = player.getName().toLowerCase();
-		Location loc = player.getLocation();
-		backs.put(playername, loc);
-	}
+    public void setBack(Player player) {
+        String playername = player.getName().toLowerCase();
+        Location loc = player.getLocation();
+        backs.put(playername, loc);
+    }
 
-	public Location getBack(Player player) {
-		String playername = player.getName().toLowerCase();
-		if (backs.containsKey(playername))
-			return backs.get(playername);
-		return null;
-	}
+    public Location getBack(Player player) {
+        String playername = player.getName().toLowerCase();
+        if (backs.containsKey(playername))
+            return backs.get(playername);
+        return null;
+    }
 }

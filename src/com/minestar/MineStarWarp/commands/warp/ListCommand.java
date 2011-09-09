@@ -33,8 +33,7 @@ public class ListCommand extends ExtendedCommand {
 
     private final int warpsPerPage;
 
-    public ListCommand(String syntax, String arguments, String node,
-            Server server) {
+    public ListCommand(String syntax, String arguments, String node, Server server) {
         super(syntax, arguments, node, server);
         warpsPerPage = Main.config.getInt("warps.warpsPerPage", 8);
         this.description = Main.localization.get(LIST_DESCRIPTION);
@@ -55,47 +54,33 @@ public class ListCommand extends ExtendedCommand {
     public void execute(String[] args, Player player) {
 
         TreeMap<String, Warp> warps;
-        boolean showPlayersWarps = args.length != 0
-                && args[0].equalsIgnoreCase("my");
+        boolean showPlayersWarps = args.length != 0 && args[0].equalsIgnoreCase("my");
         if (showPlayersWarps) {
             warps = Main.warpManager.getWarpsPlayerIsOwner(player.getName());
             if (warps != null) {
-                player.sendMessage(ChatColor.AQUA
-                        + Main.localization.get(LIST_USED_SLOTS,
-                                Main.warpManager.usedWarpSlots(player)));
+                player.sendMessage(ChatColor.AQUA + Main.localization.get(LIST_USED_SLOTS, Main.warpManager.usedWarpSlots(player)));
                 showWarpList(player, warps);
             }
 
             else
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get(LIST_NO_MY_WARPS));
-        }
-        else {
+                player.sendMessage(ChatColor.RED + Main.localization.get(LIST_NO_MY_WARPS));
+        } else {
             if (args.length != 0 && !args[0].matches("\\d*")) {
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get(LIST_PAGE_NUMBER));
+                player.sendMessage(ChatColor.RED + Main.localization.get(LIST_PAGE_NUMBER));
                 return;
             }
-            int maxPageNumber = (int) Math.ceil(Main.warpManager
-                    .countWarpsCanUse(player) / (double) warpsPerPage);
+            int maxPageNumber = (int) Math.ceil(Main.warpManager.countWarpsCanUse(player) / (double) warpsPerPage);
             if (maxPageNumber == 0) {
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get(LIST_NO_WARPS));
+                player.sendMessage(ChatColor.RED + Main.localization.get(LIST_NO_WARPS));
                 return;
             }
             int pageNumber = args.length == 0 ? 1 : Integer.parseInt(args[0]);
             if (pageNumber <= maxPageNumber) {
-                warps = Main.warpManager.getWarpsForList(pageNumber,
-                        warpsPerPage, player);
-                player.sendMessage(Main.localization.get(LIST_PAGE_HEAD,
-                        Integer.toString(pageNumber),
-                        Integer.toString(maxPageNumber)));
+                warps = Main.warpManager.getWarpsForList(pageNumber, warpsPerPage, player);
+                player.sendMessage(Main.localization.get(LIST_PAGE_HEAD, Integer.toString(pageNumber), Integer.toString(maxPageNumber)));
                 showWarpList(player, warps);
-            }
-            else
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get(LIST_HIGH_PAGE,
-                                Integer.toString(maxPageNumber)));
+            } else
+                player.sendMessage(ChatColor.RED + Main.localization.get(LIST_HIGH_PAGE, Integer.toString(maxPageNumber)));
 
         }
     }
@@ -129,10 +114,8 @@ public class ListCommand extends ExtendedCommand {
                 color = ChatColor.RED;
 
             String location = " @(" + x + ", " + y + ", " + z + ")";
-            String creatorString = (warp.isPublic() ? "(+)" : "(-)") + " by "
-                    + creator;
-            player.sendMessage(color + "'" + warpName + "'" + ChatColor.WHITE
-                    + creatorString + location);
+            String creatorString = (warp.isPublic() ? "(+)" : "(-)") + " by " + creator;
+            player.sendMessage(color + "'" + warpName + "'" + ChatColor.WHITE + creatorString + location);
         }
     }
 }

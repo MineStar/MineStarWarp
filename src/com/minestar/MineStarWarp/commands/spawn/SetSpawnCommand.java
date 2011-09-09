@@ -26,8 +26,7 @@ import com.minestar.MineStarWarp.commands.Command;
 
 public class SetSpawnCommand extends Command {
 
-    public SetSpawnCommand(String syntax, String arguments, String node,
-            Server server) {
+    public SetSpawnCommand(String syntax, String arguments, String node, Server server) {
         super(syntax, arguments, node, server);
     }
 

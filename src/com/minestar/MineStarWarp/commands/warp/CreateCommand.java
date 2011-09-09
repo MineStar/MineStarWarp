@@ -28,8 +28,7 @@ import com.minestar.MineStarWarp.commands.Command;
 
 public class CreateCommand extends Command {
 
-    public CreateCommand(String syntax, String arguments, String node,
-            Server server) {
+    public CreateCommand(String syntax, String arguments, String node, Server server) {
         super(syntax, arguments, node, server);
         this.description = Main.localization.get(CREATE_DESCRIPTION);
     }
@@ -51,27 +50,19 @@ public class CreateCommand extends Command {
 
         String warpName = args[0];
         if (isKeyWord(warpName.toLowerCase())) {
-            player.sendMessage(ChatColor.RED
-                    + Main.localization.get(CREATE_KEY_WORD, warpName));
+            player.sendMessage(ChatColor.RED + Main.localization.get(CREATE_KEY_WORD, warpName));
             return;
         }
         if (Main.warpManager.hasFreeWarps(player)) {
             if (!Main.warpManager.isWarpExisting(warpName))
                 Main.warpManager.addWarp(player, warpName, new Warp(player));
             else
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get(CREATE_SAME_NAME, warpName));
-        }
-        else
-            player.sendMessage(ChatColor.RED
-                    + Main.localization.get(CREATE_LIMIT_WARPS));
+                player.sendMessage(ChatColor.RED + Main.localization.get(CREATE_SAME_NAME, warpName));
+        } else
+            player.sendMessage(ChatColor.RED + Main.localization.get(CREATE_LIMIT_WARPS));
     }
 
     private boolean isKeyWord(String warpName) {
-        return warpName.equals("create") || warpName.equals("delete")
-                || warpName.equals("invite") || warpName.equals("uninvite")
-                || warpName.equals("list") || warpName.equals("private")
-                || warpName.equals("public") || warpName.equals("search")
-                || warpName.equals("uninvite");
+        return warpName.equals("create") || warpName.equals("delete") || warpName.equals("invite") || warpName.equals("uninvite") || warpName.equals("list") || warpName.equals("private") || warpName.equals("public") || warpName.equals("search") || warpName.equals("uninvite");
     }
 }

@@ -28,8 +28,7 @@ import com.minestar.MineStarWarp.commands.Command;
 
 public class HomeCommand extends Command {
 
-    public HomeCommand(String syntax, String arguments, String node,
-            Server server) {
+    public HomeCommand(String syntax, String arguments, String node, Server server) {
         super(syntax, arguments, node, server);
     }
 
@@ -50,11 +49,8 @@ public class HomeCommand extends Command {
         Location homeLocation = Main.homeManager.getPlayersHome(player);
         if (homeLocation != null) {
             player.teleport(homeLocation);
-            player.sendMessage(ChatColor.GRAY
-                    + Main.localization.get(HOME_WELCOME));
-        }
-        else
-            player.sendMessage(ChatColor.RED
-                    + Main.localization.get(HOME_NO_HOME));
+            player.sendMessage(ChatColor.GRAY + Main.localization.get(HOME_WELCOME));
+        } else
+            player.sendMessage(ChatColor.RED + Main.localization.get(HOME_NO_HOME));
     }
 }

@@ -60,26 +60,19 @@ public class BankManager implements LocalizationConstants {
 
         if (banks.containsKey(playerName)) {
             if (dbManager.updateBank(playerName, bankLocation)) {
-                player.sendMessage(ChatColor.AQUA
-                        + Main.localization.get(BANKM_UPDATED_BANK, playerName));
+                player.sendMessage(ChatColor.AQUA + Main.localization.get(BANKM_UPDATED_BANK, playerName));
                 banks.put(playerName, bankLocation);
                 return;
+            } else {
+                player.sendMessage(ChatColor.RED + "An error occurs updating database! Check the log for further information!");
             }
-            else {
-                player.sendMessage(ChatColor.RED
-                        + "An error occurs updating database! Check the log for further information!");
-            }
-        }
-        else {
+        } else {
             if (dbManager.setBank(playerName, bankLocation)) {
-                player.sendMessage(ChatColor.AQUA
-                        + Main.localization.get(BANKM_UPDATED_BANK, playerName));
+                player.sendMessage(ChatColor.AQUA + Main.localization.get(BANKM_UPDATED_BANK, playerName));
                 banks.put(playerName, bankLocation);
                 return;
-            }
-            else
-                player.sendMessage(ChatColor.RED
-                        + "An error occurs while updating database! Check the log for further information!");
+            } else
+                player.sendMessage(ChatColor.RED + "An error occurs while updating database! Check the log for further information!");
         }
     }
 }

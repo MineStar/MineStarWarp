@@ -108,8 +108,7 @@ public abstract class Command implements LocalizationConstants {
      * @return True when the player has enough rights to use the command
      */
     protected boolean hasRights(Player player) {
-        return UtilPermissions.playerCanUseCommand(player,
-                "minestarwarp.command." + getPermissionNode());
+        return UtilPermissions.playerCanUseCommand(player, "minestarwarp.command." + getPermissionNode());
     }
 
     /**
@@ -135,8 +134,7 @@ public abstract class Command implements LocalizationConstants {
      * @return Syntax + Arguments + Description
      */
     public String getHelpMessage() {
-        return ChatColor.BLUE + getSyntax() + " " + getArguments() + " "
-                + getDescription();
+        return ChatColor.BLUE + getSyntax() + " " + getArguments() + " " + getDescription();
     }
 
     /**

@@ -30,8 +30,7 @@ import com.minestar.MineStarWarp.commands.ExtendedCommand;
 
 public class BankCommand extends ExtendedCommand {
 
-    public BankCommand(String syntax, String arguments, String node,
-            Server server) {
+    public BankCommand(String syntax, String arguments, String node, Server server) {
         super(syntax, arguments, node, server);
     }
 
@@ -55,15 +54,11 @@ public class BankCommand extends ExtendedCommand {
             if (bank != null) {
                 player.teleport(bank);
                 player.sendMessage(Main.localization.get(BANK_WELCOME));
+            } else {
+                player.sendMessage(ChatColor.RED + Main.localization.get(BANK_NOT_FOUND));
             }
-            else {
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get(BANK_NOT_FOUND));
-            }
-        }
-        else {
-            if (!UtilPermissions.playerCanUseCommand(player,
-                    "minestarwarp.commands.bankSpecific")) {
+        } else {
+            if (!UtilPermissions.playerCanUseCommand(player, "minestarwarp.commands.bankSpecific")) {
                 player.sendMessage(NO_RIGHT);
                 return;
             }
@@ -71,13 +66,9 @@ public class BankCommand extends ExtendedCommand {
             bank = Main.bankManager.getBank(args[0]);
             if (bank != null) {
                 player.teleport(bank);
-                player.sendMessage(Main.localization.get(BANK_TELEPORTED,
-                        args[0]));
-            }
-            else {
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get(BANK_TELEPORT_NOT_FOUND,
-                                args[0]));
+                player.sendMessage(Main.localization.get(BANK_TELEPORTED, args[0]));
+            } else {
+                player.sendMessage(ChatColor.RED + Main.localization.get(BANK_TELEPORT_NOT_FOUND, args[0]));
             }
         }
     }

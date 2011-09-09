@@ -1,5 +1,4 @@
 /*
- * Copyright (C) 2011 MineStar.de 
  * 
  * This file is part of MineStarWarp.
  * 
@@ -28,8 +27,7 @@ import com.minestar.MineStarWarp.utils.PlayerUtil;
 
 public class TeleportHereCommand extends Command {
 
-    public TeleportHereCommand(String syntax, String arguments, String node,
-            Server server) {
+    public TeleportHereCommand(String syntax, String arguments, String node, Server server) {
         super(syntax, arguments, node, server);
         this.description = Main.localization.get(TELEPORT_HERE_DESCRIPTION);
     }
@@ -49,17 +47,11 @@ public class TeleportHereCommand extends Command {
 
         Player target = PlayerUtil.getPlayer(server, args[0]);
         if (target == null) {
-            player.sendMessage(ChatColor.RED
-                    + Main.localization.get(TELEPORT_HERE_PLAYER_NOT_FOUND,
-                            args[0]));
+            player.sendMessage(ChatColor.RED + Main.localization.get(TELEPORT_HERE_PLAYER_NOT_FOUND, args[0]));
             return;
         }
-        player.sendMessage(ChatColor.AQUA
-                + Main.localization.get(TELEPORT_HERE_TARGET_MESSAGE,
-                        target.getName()));
-        target.sendMessage(ChatColor.AQUA
-                + Main.localization.get(TELEPORT_HERE_TARGET_TELEPORTED,
-                        player.getName()));
+        player.sendMessage(ChatColor.AQUA + Main.localization.get(TELEPORT_HERE_TARGET_MESSAGE, target.getName()));
+        target.sendMessage(ChatColor.AQUA + Main.localization.get(TELEPORT_HERE_TARGET_TELEPORTED, player.getName()));
         target.teleport(player.getLocation());
     }
 }

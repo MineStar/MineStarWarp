@@ -65,56 +65,34 @@ public class CommandList implements LocalizationConstants {
         // Add an command to this list to register it in the plugin
         Command[] commands = new Command[] {
                 // Teleport Commands
-                new TeleportHereCommand("/tphere", "<Player>", "tphere", server),
-                new TeleportToCommand("/tp", "<Player>", "tpTo", server),
+        new TeleportHereCommand("/tphere", "<Player>", "tphere", server), new TeleportToCommand("/tp", "<Player>", "tpTo", server),
 
                 // Home
-                new SetHomeCommand("/sethome", "", "sethome", server),
-                new HomeCommand("/home", "", "home", server),
+        new SetHomeCommand("/sethome", "", "sethome", server), new HomeCommand("/home", "", "home", server),
 
                 // Spawn
-                new SpawnCommand("/spawn", "", "spawn", server),
-                new SpawnCommand("/spawn", "<Worldname>", "spawnSpecific",
-                        server),
-                new SetSpawnCommand("/setspawn", "", "setSpawn", server),
+        new SpawnCommand("/spawn", "", "spawn", server), new SpawnCommand("/spawn", "<Worldname>", "spawnSpecific", server), new SetSpawnCommand("/setspawn", "", "setSpawn", server),
 
                 // Bank
-                new BankCommand("/bank", "", "bank", server),
-                new SetBankCommand("/setbank", "<Player>", "setBank", server),
-                
+        new BankCommand("/bank", "", "bank", server), new SetBankCommand("/setbank", "<Player>", "setBank", server),
+
                 // Back
-                new BackCommand("/back", "","back", server),
+        new BackCommand("/back", "", "back", server),
 
                 // Warp Command
-                new WarpToCommand("/warp", "<Name>", "warpTo", server,
-                        new Command[] {
+        new WarpToCommand("/warp", "<Name>", "warpTo", server, new Command[] {
 
-                                // Warp Creation and Removing
-                                new CreateCommand("create", "<Name>", "create",
-                                        server),
-                                new CreateCommand("pcreate", "<Name>",
-                                        "create", server),
-                                new DeleteCommand("delete", "<Name>", "delete",
-                                        server),
+                // Warp Creation and Removing
+        new CreateCommand("create", "<Name>", "create", server), new CreateCommand("pcreate", "<Name>", "create", server), new DeleteCommand("delete", "<Name>", "delete", server),
 
-                                // Searching Warps
-                                new ListCommand("list", "", "list", server),
-                                new SearchCommand("search", "<Name>", "search",
-                                        server),
+                // Searching Warps
+        new ListCommand("list", "", "list", server), new SearchCommand("search", "<Name>", "search", server),
 
-                                // Modifiers
-                                new PrivateCommand("private", "<Name>",
-                                        "private", server),
-                                new PublicCommand("public", "<Name>", "public",
-                                        server),
+                // Modifiers
+        new PrivateCommand("private", "<Name>", "private", server), new PublicCommand("public", "<Name>", "public", server),
 
-                                // Guests
-                                new InviteCommand("invite",
-                                        "<PlayerName> <Warpname>", "invite",
-                                        server),
-                                new UninviteCommand("uninvite",
-                                        "<PlayerName> <Warpname>", "uninvite",
-                                        server) }) };
+                // Guests
+        new InviteCommand("invite", "<PlayerName> <Warpname>", "invite", server), new UninviteCommand("uninvite", "<PlayerName> <Warpname>", "uninvite", server) }) };
 
         // store the commands in the hash map
         initCommandList(commands);
@@ -139,9 +117,7 @@ public class CommandList implements LocalizationConstants {
             if (cmd != null)
                 cmd.run(args, player);
             else {
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get(COMMAND_LIST_WRONG_SYNTAX,
-                                label));
+                player.sendMessage(ChatColor.RED + Main.localization.get(COMMAND_LIST_WRONG_SYNTAX, label));
 
                 // FIND RELATED COMMANDS
                 LinkedList<Command> cmdList = new LinkedList<Command>();
@@ -153,8 +129,7 @@ public class CommandList implements LocalizationConstants {
                 // PRINT SYNTAX
                 while (!cmdList.isEmpty()) {
                     cmd = cmdList.removeFirst();
-                    player.sendMessage(ChatColor.GRAY + cmd.getSyntax() + " "
-                            + cmd.getArguments());
+                    player.sendMessage(ChatColor.GRAY + cmd.getSyntax() + " " + cmd.getArguments());
                 }
             }
         }
@@ -180,8 +155,7 @@ public class CommandList implements LocalizationConstants {
                 key = cmd.getSyntax();
             // a normal command(no subcommands/fix argument count)
             else
-                key = cmd.getSyntax() + "_"
-                        + (cmd.getArguments().split("<").length - 1);
+                key = cmd.getSyntax() + "_" + (cmd.getArguments().split("<").length - 1);
 
             commandList.put(key, cmd);
         }

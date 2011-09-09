@@ -98,8 +98,7 @@ public class Warp {
      * @return True if the player is allowed to use it
      */
     public boolean canUse(Player player) {
-        return isPublic() || canEdit(player)
-                || guests.contains(player.getName().toLowerCase());
+        return isPublic() || canEdit(player) || guests.contains(player.getName().toLowerCase());
 
     }
 

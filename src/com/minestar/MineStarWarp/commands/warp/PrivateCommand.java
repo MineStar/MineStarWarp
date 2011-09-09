@@ -28,8 +28,7 @@ import com.minestar.MineStarWarp.commands.Command;
 
 public class PrivateCommand extends Command {
 
-    public PrivateCommand(String syntax, String arguments, String node,
-            Server server) {
+    public PrivateCommand(String syntax, String arguments, String node, Server server) {
         super(syntax, arguments, node, server);
         this.description = Main.localization.get(PRIVATE_DESCRIPTION);
     }
@@ -51,12 +50,9 @@ public class PrivateCommand extends Command {
         Warp warp = Main.warpManager.getWarp(warpName);
 
         if (warp == null) {
-            player.sendMessage(ChatColor.RED
-                    + Main.localization.get(PRIVATE_NOT_EXISTING, args[0]));
+            player.sendMessage(ChatColor.RED + Main.localization.get(PRIVATE_NOT_EXISTING, args[0]));
             if (Main.warpManager.getWarp(warpName.toLowerCase()) != null)
-                player.sendMessage(ChatColor.GRAY
-                        + Main.localization.get(PRIVATE_POSSIBLE_WARP,
-                                warpName.toLowerCase()));
+                player.sendMessage(ChatColor.GRAY + Main.localization.get(PRIVATE_POSSIBLE_WARP, warpName.toLowerCase()));
             return;
         }
 
@@ -64,11 +60,8 @@ public class PrivateCommand extends Command {
             if (warp.isPublic())
                 Main.warpManager.changeAccess(player, false, warpName);
             else
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get(PRIVATE_IS_PRIVATE, warpName));
-        }
-        else
-            player.sendMessage(ChatColor.RED
-                    + Main.localization.get(PRIVATE_NOT_OWNER, warpName));
+                player.sendMessage(ChatColor.RED + Main.localization.get(PRIVATE_IS_PRIVATE, warpName));
+        } else
+            player.sendMessage(ChatColor.RED + Main.localization.get(PRIVATE_NOT_OWNER, warpName));
     }
 }

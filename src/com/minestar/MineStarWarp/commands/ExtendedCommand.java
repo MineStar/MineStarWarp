@@ -23,8 +23,7 @@ import org.bukkit.entity.Player;
 
 public abstract class ExtendedCommand extends Command {
 
-    public ExtendedCommand(String syntax, String arguments, String node,
-            Server server) {
+    public ExtendedCommand(String syntax, String arguments, String node, Server server) {
         super(syntax, arguments, node, server);
     }
 

@@ -62,8 +62,7 @@ public class DatabaseManager {
         try {
             // create tables if not exists and compile the prepare Statements
             initiate();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Main.log.printError("Error while initiate of DatabaseManager!", e);
         }
     }
@@ -77,25 +76,16 @@ public class DatabaseManager {
     private void initiate() throws Exception {
         // check the database structure
         createTables();
-        addWarp = con
-                .prepareStatement("INSERT INTO warps (name, creator, world, x, y, z, yaw, pitch) VALUES (?,?,?,?,?,?,?,?);");
+        addWarp = con.prepareStatement("INSERT INTO warps (name, creator, world, x, y, z, yaw, pitch) VALUES (?,?,?,?,?,?,?,?);");
         deleteWarp = con.prepareStatement("DELETE FROM warps WHERE name = ?;");
-        changeGuestList = con
-                .prepareStatement("UPDATE warps SET permissions = ? WHERE name = ?;");
-        addHome = con
-                .prepareStatement("INSERT INTO homes (player,world, x, y, z, yaw, pitch) VALUES (?,?,?,?,?,?,?);");
-        updateHome = con
-                .prepareStatement("UPDATE homes SET world = ? , x = ? , y = ? , z = ? , yaw = ? , pitch = ? WHERE player = ?;");
-        convertToPublic = con
-                .prepareStatement("UPDATE warps SET permissions = null WHERE name = ?");
-        addSpawn = con
-                .prepareStatement("INSERT INTO spawns (world,x,y,z,yaw,pitch) VALUES (?,?,?,?,?,?)");
-        updateSpawn = con
-                .prepareStatement("UPDATE spawns SET  x = ? , y = ? , z = ? , yaw = ? , pitch = ? WHERE world = ?");
-        setBank = con
-                .prepareStatement("INSERT INTO banks (player,world, x, y, z, yaw, pitch) VALUES (?,?,?,?,?,?,?);");
-        updateBank = con
-                .prepareStatement("UPDATE banks SET world = ? , x = ? , y = ? , z = ? , yaw = ? , pitch = ? WHERE player = ?;");
+        changeGuestList = con.prepareStatement("UPDATE warps SET permissions = ? WHERE name = ?;");
+        addHome = con.prepareStatement("INSERT INTO homes (player,world, x, y, z, yaw, pitch) VALUES (?,?,?,?,?,?,?);");
+        updateHome = con.prepareStatement("UPDATE homes SET world = ? , x = ? , y = ? , z = ? , yaw = ? , pitch = ? WHERE player = ?;");
+        convertToPublic = con.prepareStatement("UPDATE warps SET permissions = null WHERE name = ?");
+        addSpawn = con.prepareStatement("INSERT INTO spawns (world,x,y,z,yaw,pitch) VALUES (?,?,?,?,?,?)");
+        updateSpawn = con.prepareStatement("UPDATE spawns SET  x = ? , y = ? , z = ? , yaw = ? , pitch = ? WHERE world = ?");
+        setBank = con.prepareStatement("INSERT INTO banks (player,world, x, y, z, yaw, pitch) VALUES (?,?,?,?,?,?,?);");
+        updateBank = con.prepareStatement("UPDATE banks SET world = ? , x = ? , y = ? , z = ? , yaw = ? , pitch = ? WHERE player = ?;");
 
     }
 
@@ -104,54 +94,19 @@ public class DatabaseManager {
      */
     private void createTables() throws Exception {
         // create the table for storing the warps
-        con.createStatement().executeUpdate(
-                "CREATE TABLE IF NOT EXISTS `warps` ("
-                        + "`id` INTEGER PRIMARY KEY,"
-                        + "`name` varchar(32) NOT NULL DEFAULT 'warp',"
-                        + "`creator` varchar(32) NOT NULL DEFAULT 'Player',"
-                        + "`world` varchar(32) NOT NULL DEFAULT '0',"
-                        + "`x` DOUBLE NOT NULL DEFAULT '0',"
-                        + "`y` tinyint NOT NULL DEFAULT '0',"
-                        + "`z` DOUBLE NOT NULL DEFAULT '0',"
-                        + "`yaw` smallint NOT NULL DEFAULT '0',"
-                        + "`pitch` smallint NOT NULL DEFAULT '0',"
-                        + "`publicAll` boolean NOT NULL DEFAULT '1',"
-                        + "`permissions` text DEFAULT null);");
+        con.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `warps` (" + "`id` INTEGER PRIMARY KEY," + "`name` varchar(32) NOT NULL DEFAULT 'warp'," + "`creator` varchar(32) NOT NULL DEFAULT 'Player'," + "`world` varchar(32) NOT NULL DEFAULT '0'," + "`x` DOUBLE NOT NULL DEFAULT '0'," + "`y` tinyint NOT NULL DEFAULT '0'," + "`z` DOUBLE NOT NULL DEFAULT '0'," + "`yaw` smallint NOT NULL DEFAULT '0'," + "`pitch` smallint NOT NULL DEFAULT '0'," + "`publicAll` boolean NOT NULL DEFAULT '1'," + "`permissions` text DEFAULT null);");
         con.commit();
 
         // create the table for storing the homes
-        con.createStatement().executeUpdate(
-                "CREATE TABLE IF NOT EXISTS `homes` ("
-                        + "`player` varchar(32) PRIMARY KEY,"
-                        + "`world` varchar(32) NOT NULL DEFAULT '0',"
-                        + "`x` DOUBLE NOT NULL DEFAULT '0',"
-                        + "`y` tinyint NOT NULL DEFAULT '0',"
-                        + "`z` DOUBLE NOT NULL DEFAULT '0',"
-                        + "`yaw` smallint NOT NULL DEFAULT '0',"
-                        + "`pitch` smallint NOT NULL DEFAULT '0');");
+        con.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `homes` (" + "`player` varchar(32) PRIMARY KEY," + "`world` varchar(32) NOT NULL DEFAULT '0'," + "`x` DOUBLE NOT NULL DEFAULT '0'," + "`y` tinyint NOT NULL DEFAULT '0'," + "`z` DOUBLE NOT NULL DEFAULT '0'," + "`yaw` smallint NOT NULL DEFAULT '0'," + "`pitch` smallint NOT NULL DEFAULT '0');");
         con.commit();
 
         // create the table for storing the spawns
-        con.createStatement().executeUpdate(
-                "CREATE TABLE IF NOT EXISTS `spawns` ("
-                        + "`world` varchar(32) PRIMARY KEY,"
-                        + "`x` DOUBLE NOT NULL DEFAULT '0',"
-                        + "`y` tinyint NOT NULL DEFAULT '0',"
-                        + "`z` DOUBLE NOT NULL DEFAULT '0',"
-                        + "`yaw` smallint NOT NULL DEFAULT '0',"
-                        + "`pitch` smallint NOT NULL DEFAULT '0');");
+        con.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `spawns` (" + "`world` varchar(32) PRIMARY KEY," + "`x` DOUBLE NOT NULL DEFAULT '0'," + "`y` tinyint NOT NULL DEFAULT '0'," + "`z` DOUBLE NOT NULL DEFAULT '0'," + "`yaw` smallint NOT NULL DEFAULT '0'," + "`pitch` smallint NOT NULL DEFAULT '0');");
         con.commit();
 
         // create the table for storing the banks
-        con.createStatement().executeUpdate(
-                "CREATE TABLE IF NOT EXISTS `banks` ("
-                        + "`player` varchar(32) PRIMARY KEY,"
-                        + "`world` varchar(32) NOT NULL DEFAULT '0',"
-                        + "`x` DOUBLE NOT NULL DEFAULT '0',"
-                        + "`y` tinyint NOT NULL DEFAULT '0',"
-                        + "`z` DOUBLE NOT NULL DEFAULT '0',"
-                        + "`yaw` smallint NOT NULL DEFAULT '0',"
-                        + "`pitch` smallint NOT NULL DEFAULT '0');");
+        con.createStatement().executeUpdate("CREATE TABLE IF NOT EXISTS `banks` (" + "`player` varchar(32) PRIMARY KEY," + "`world` varchar(32) NOT NULL DEFAULT '0'," + "`x` DOUBLE NOT NULL DEFAULT '0'," + "`y` tinyint NOT NULL DEFAULT '0'," + "`z` DOUBLE NOT NULL DEFAULT '0'," + "`yaw` smallint NOT NULL DEFAULT '0'," + "`pitch` smallint NOT NULL DEFAULT '0');");
         con.commit();
 
     }
@@ -166,25 +121,18 @@ public class DatabaseManager {
 
         TreeMap<String, Warp> warps = new TreeMap<String, Warp>();
         try {
-            ResultSet rs = con
-                    .createStatement()
-                    .executeQuery(
-                            "SELECT name,creator,world,x,y,z,yaw,pitch,permissions FROM warps");
+            ResultSet rs = con.createStatement().executeQuery("SELECT name,creator,world,x,y,z,yaw,pitch,permissions FROM warps");
             while (rs.next()) {
 
                 String name = rs.getString(1);
                 String creator = rs.getString(2);
                 String world = rs.getString(3);
-                Location loc = new Location(server.getWorld(world),
-                        rs.getDouble(4), rs.getInt(5), rs.getDouble(6),
-                        rs.getInt(7), rs.getInt(8));
+                Location loc = new Location(server.getWorld(world), rs.getDouble(4), rs.getInt(5), rs.getDouble(6), rs.getInt(7), rs.getInt(8));
                 String guestsList = rs.getString(9);
-                Warp warp = new Warp(creator, loc,
-                        this.convertsGuestsToList(guestsList));
+                Warp warp = new Warp(creator, loc, this.convertsGuestsToList(guestsList));
                 warps.put(name, warp);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Main.log.printError("Error while loading warps from database!", e);
         }
         Main.log.printInfo("Loaded sucessfully " + warps.size() + " Warps");
@@ -201,21 +149,16 @@ public class DatabaseManager {
 
         TreeMap<String, Location> homes = new TreeMap<String, Location>();
         try {
-            ResultSet rs = con.createStatement().executeQuery(
-                    "SELECT player,world,x,y,z,yaw,pitch FROM homes");
+            ResultSet rs = con.createStatement().executeQuery("SELECT player,world,x,y,z,yaw,pitch FROM homes");
             while (rs.next()) {
 
                 String name = rs.getString(1).toLowerCase();
                 String world = rs.getString(2);
-                Location loc = new Location(server.getWorld(world),
-                        rs.getDouble(3), rs.getInt(4), rs.getDouble(5),
-                        rs.getInt(6), rs.getInt(7));
+                Location loc = new Location(server.getWorld(world), rs.getDouble(3), rs.getInt(4), rs.getDouble(5), rs.getInt(6), rs.getInt(7));
                 homes.put(name, loc);
             }
-        }
-        catch (Exception e) {
-            Main.log.printError("Error while loading the homes from database!",
-                    e);
+        } catch (Exception e) {
+            Main.log.printError("Error while loading the homes from database!", e);
         }
         Main.log.printInfo("Loaded sucessfully " + homes.size() + " Homes");
         return homes;
@@ -231,18 +174,14 @@ public class DatabaseManager {
 
         TreeMap<String, Location> spawns = new TreeMap<String, Location>();
         try {
-            ResultSet rs = con.createStatement().executeQuery(
-                    "SELECT world,x,y,z,yaw,pitch FROM spawns");
+            ResultSet rs = con.createStatement().executeQuery("SELECT world,x,y,z,yaw,pitch FROM spawns");
             while (rs.next()) {
 
                 String world = rs.getString(1);
-                Location loc = new Location(server.getWorld(world),
-                        rs.getDouble(2), rs.getInt(3), rs.getDouble(4),
-                        rs.getInt(5), rs.getInt(6));
+                Location loc = new Location(server.getWorld(world), rs.getDouble(2), rs.getInt(3), rs.getDouble(4), rs.getInt(5), rs.getInt(6));
                 spawns.put(world, loc);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Main.log.printError("Error while loading spawns from database!", e);
         }
         Main.log.printInfo("Loaded sucessfully " + spawns.size() + " Spawns");
@@ -260,19 +199,15 @@ public class DatabaseManager {
 
         HashMap<String, Location> banks = new HashMap<String, Location>();
         try {
-            ResultSet rs = con.createStatement().executeQuery(
-                    "SELECT player,world,x,y,z,yaw,pitch FROM banks");
+            ResultSet rs = con.createStatement().executeQuery("SELECT player,world,x,y,z,yaw,pitch FROM banks");
             while (rs.next()) {
 
                 String name = rs.getString(1).toLowerCase();
                 String world = rs.getString(2);
-                Location loc = new Location(server.getWorld(world),
-                        rs.getDouble(3), rs.getInt(4), rs.getDouble(5),
-                        rs.getInt(6), rs.getInt(7));
+                Location loc = new Location(server.getWorld(world), rs.getDouble(3), rs.getInt(4), rs.getDouble(5), rs.getInt(6), rs.getInt(7));
                 banks.put(name, loc);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Main.log.printError("Error while loading banks from database!", e);
         }
         Main.log.printInfo("Loaded sucessfully " + banks.size() + " Banks");
@@ -306,8 +241,7 @@ public class DatabaseManager {
             addWarp.setInt(8, Math.round(loc.getPitch()) % 360);
             addWarp.executeUpdate();
             con.commit();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Main.log.printError("Error while adding a new warp to database!", e);
             return false;
         }
@@ -337,9 +271,8 @@ public class DatabaseManager {
             addHome.setInt(7, Math.round(loc.getPitch()) % 360);
             addHome.executeUpdate();
             con.commit();
-        }
-        catch (Exception e) {
-            Main.log.printError("Error while adding new home location to database!",e);
+        } catch (Exception e) {
+            Main.log.printError("Error while adding new home location to database!", e);
             return false;
         }
         return true;
@@ -365,9 +298,8 @@ public class DatabaseManager {
             addSpawn.setInt(6, Math.round(loc.getPitch()) % 360);
             addSpawn.executeUpdate();
             con.commit();
-        }
-        catch (Exception e) {
-            Main.log.printError("Error while adding new spawn location to database!",e);
+        } catch (Exception e) {
+            Main.log.printError("Error while adding new spawn location to database!", e);
             return false;
         }
         return true;
@@ -395,9 +327,8 @@ public class DatabaseManager {
             updateHome.setString(7, player.getName().toLowerCase());
             updateHome.executeUpdate();
             con.commit();
-        }
-        catch (Exception e) {
-            Main.log.printError("Error while sending updated home location to database!",e);
+        } catch (Exception e) {
+            Main.log.printError("Error while sending updated home location to database!", e);
             return false;
         }
         return true;
@@ -428,9 +359,8 @@ public class DatabaseManager {
             setBank.setInt(7, Math.round(bankLocation.getPitch()) % 360);
             setBank.executeUpdate();
             con.commit();
-        }
-        catch (Exception e) {
-            Main.log.printError("Error while adding new bank location to database!",e);
+        } catch (Exception e) {
+            Main.log.printError("Error while adding new bank location to database!", e);
             return false;
         }
         return true;
@@ -457,9 +387,8 @@ public class DatabaseManager {
             updateBank.setString(7, playerName.toLowerCase());
             updateBank.executeUpdate();
             con.commit();
-        }
-        catch (Exception e) {
-            Main.log.printError("Error while sending updated bank location to database!",e);
+        } catch (Exception e) {
+            Main.log.printError("Error while sending updated bank location to database!", e);
             return false;
         }
         return true;
@@ -484,9 +413,8 @@ public class DatabaseManager {
             updateSpawn.setString(6, loc.getWorld().getName());
             updateSpawn.executeUpdate();
             con.commit();
-        }
-        catch (Exception e) {
-            Main.log.printError("Error while sending updated spawn location to database!",e);
+        } catch (Exception e) {
+            Main.log.printError("Error while sending updated spawn location to database!", e);
             return false;
         }
         return true;
@@ -506,9 +434,8 @@ public class DatabaseManager {
             deleteWarp.setString(1, name);
             deleteWarp.executeUpdate();
             con.commit();
-        }
-        catch (Exception e) {
-            Main.log.printError("Error removing warp from database!",e);
+        } catch (Exception e) {
+            Main.log.printError("Error removing warp from database!", e);
             return false;
         }
         return true;
@@ -530,9 +457,8 @@ public class DatabaseManager {
             changeGuestList.setString(2, name);
             changeGuestList.executeUpdate();
             con.commit();
-        }
-        catch (Exception e) {
-            Main.log.printError("Error while sending updated guest list to database!",e);
+        } catch (Exception e) {
+            Main.log.printError("Error while sending updated guest list to database!", e);
             return false;
         }
         return true;
@@ -576,9 +502,8 @@ public class DatabaseManager {
             convertToPublic.setString(1, name);
             convertToPublic.executeUpdate();
             con.commit();
-        }
-        catch (Exception e) {
-            Main.log.printError("Error while deleting guest list from database!",e);
+        } catch (Exception e) {
+            Main.log.printError("Error while deleting guest list from database!", e);
             return false;
         }
         return true;

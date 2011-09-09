@@ -37,8 +37,7 @@ public class Localization implements LocalizationConstants {
 
     private void loadtexts(String language) {
 
-        File temp = new File("plugins/MineStarWarp/localization/" + language
-                + ".txt");
+        File temp = new File("plugins/MineStarWarp/localization/" + language + ".txt");
 
         if (!temp.exists()) {
             Main.log.printWarning("No localization found! Please insert one into the localized folder!");
@@ -60,8 +59,7 @@ public class Localization implements LocalizationConstants {
             texts = list.toArray(texts);
             bReader.close();
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Main.log.printError("Error while loading the localized texts", e);
             Main.log.printWarning(line);
         }
@@ -75,7 +73,7 @@ public class Localization implements LocalizationConstants {
             instance = new Localization(language);
         return instance;
     }
-    
+
     public String get(int index) {
         if (index < 0 || index >= texts.length)
             return null;
@@ -87,6 +85,6 @@ public class Localization implements LocalizationConstants {
         if (index < 0 || index >= texts.length)
             return null;
         else
-            return String.format(texts[index], (Object[])args);
+            return String.format(texts[index], (Object[]) args);
     }
 }

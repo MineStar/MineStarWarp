@@ -29,8 +29,7 @@ import com.minestar.MineStarWarp.commands.Command;
 
 public class SpawnCommand extends Command {
 
-    public SpawnCommand(String syntax, String arguments, String node,
-            Server server) {
+    public SpawnCommand(String syntax, String arguments, String node, Server server) {
         super(syntax, arguments, node, server);
     }
 
@@ -52,33 +51,23 @@ public class SpawnCommand extends Command {
             Location loc = Main.spawnManager.getMainSpawn(server);
             if (loc != null) {
                 player.teleport(loc);
-                player.sendMessage(ChatColor.AQUA
-                        + Main.localization.get(SPAWN_WELCOME_MAIN));
-            }
-            else
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get(SPAWN_NO_MAIN_SPAWN));
-        }
-        else {
+                player.sendMessage(ChatColor.AQUA + Main.localization.get(SPAWN_WELCOME_MAIN));
+            } else
+                player.sendMessage(ChatColor.RED + Main.localization.get(SPAWN_NO_MAIN_SPAWN));
+        } else {
             String worldName = args[0].toLowerCase();
 
-            if (!UtilPermissions.playerCanUseCommand(player,
-                    "minestarwarp.command.spawnSpecific." + worldName)) {
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get(SPAWN_NOT_ALLOWED, worldName));
+            if (!UtilPermissions.playerCanUseCommand(player, "minestarwarp.command.spawnSpecific." + worldName)) {
+                player.sendMessage(ChatColor.RED + Main.localization.get(SPAWN_NOT_ALLOWED, worldName));
                 return;
             }
 
             Location loc = Main.spawnManager.getSpawn(worldName);
             if (loc != null) {
                 player.teleport(loc);
-                player.sendMessage(ChatColor.AQUA
-                        + Main.localization.get(SPAWN_WELCOME, loc.getWorld()
-                                .getName()));
-            }
-            else
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get(SPAWN_NOT_FOUND, worldName));
+                player.sendMessage(ChatColor.AQUA + Main.localization.get(SPAWN_WELCOME, loc.getWorld().getName()));
+            } else
+                player.sendMessage(ChatColor.RED + Main.localization.get(SPAWN_NOT_FOUND, worldName));
         }
     }
 }

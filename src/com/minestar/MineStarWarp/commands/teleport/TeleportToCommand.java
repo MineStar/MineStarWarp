@@ -29,8 +29,7 @@ import com.minestar.MineStarWarp.utils.PlayerUtil;
 
 public class TeleportToCommand extends ExtendedCommand {
 
-    public TeleportToCommand(String syntax, String arguments, String node,
-            Server server) {
+    public TeleportToCommand(String syntax, String arguments, String node, Server server) {
         super(syntax, arguments, node, server);
         this.description = Main.localization.get(TELEPORT_TO_DESCRIPTION);
     }
@@ -59,58 +58,44 @@ public class TeleportToCommand extends ExtendedCommand {
 
     private void teleportPlayerToPlayer(String[] args, Player player) {
 
-        if (!UtilPermissions.playerCanUseCommand(player,
-                "minestarwarp.command.tpPlayerTo")) {
+        if (!UtilPermissions.playerCanUseCommand(player, "minestarwarp.command.tpPlayerTo")) {
             player.sendMessage(NO_RIGHT);
             return;
         }
 
         Player playerToTeleport = PlayerUtil.getPlayer(server, args[0]);
         if (playerToTeleport == null) {
-            player.sendMessage(Main.localization.get(
-                    TELEPORT_TO_PLAYER_NOT_FOUND, args[0]));
+            player.sendMessage(Main.localization.get(TELEPORT_TO_PLAYER_NOT_FOUND, args[0]));
             return;
         }
         Player target = PlayerUtil.getPlayer(server, args[1]);
         if (target == null) {
-            player.sendMessage(Main.localization.get(
-                    TELEPORT_TO_PLAYER_NOT_FOUND, args[1]));
+            player.sendMessage(Main.localization.get(TELEPORT_TO_PLAYER_NOT_FOUND, args[1]));
             return;
         }
         playerToTeleport.teleport(target.getLocation());
-        player.sendMessage(ChatColor.AQUA
-                + Main.localization.get(TELEPORT_TO_TARGET_MESSAGE,
-                        target.getName()));
-        target.sendMessage(ChatColor.AQUA
-                + Main.localization.get(TELEPORT_TO_TARGET_TELEPORTED,
-                        player.getName()));
+        player.sendMessage(ChatColor.AQUA + Main.localization.get(TELEPORT_TO_TARGET_MESSAGE, target.getName()));
+        target.sendMessage(ChatColor.AQUA + Main.localization.get(TELEPORT_TO_TARGET_TELEPORTED, player.getName()));
     }
 
     private void teleportToPlayer(String[] args, Player player) {
 
-        if (!UtilPermissions.playerCanUseCommand(player,
-                "minestarwarp.command.tpTo")) {
+        if (!UtilPermissions.playerCanUseCommand(player, "minestarwarp.command.tpTo")) {
             player.sendMessage(NO_RIGHT);
             return;
         }
 
         Player target = server.getPlayer(args[0]);
         if (target == null) {
-            player.sendMessage(Main.localization.get(
-                    TELEPORT_TO_PLAYER_NOT_FOUND, args[0]));
+            player.sendMessage(Main.localization.get(TELEPORT_TO_PLAYER_NOT_FOUND, args[0]));
             return;
         }
         player.teleport(target.getLocation());
-        player.sendMessage(ChatColor.AQUA
-                + Main.localization.get(TELEPORT_TO_TARGET_MESSAGE,
-                        player.getName()));
+        player.sendMessage(ChatColor.AQUA + Main.localization.get(TELEPORT_TO_TARGET_MESSAGE, player.getName()));
     }
 
     @Override
     protected boolean hasRights(Player player) {
-        return UtilPermissions.playerCanUseCommand(player,
-                "minestarwarp.command.tpPlayerTo")
-                || UtilPermissions.playerCanUseCommand(player,
-                        "minestarwarp.command.tpTo");
+        return UtilPermissions.playerCanUseCommand(player, "minestarwarp.command.tpPlayerTo") || UtilPermissions.playerCanUseCommand(player, "minestarwarp.command.tpTo");
     }
 }

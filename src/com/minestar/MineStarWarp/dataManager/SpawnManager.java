@@ -53,29 +53,18 @@ public class SpawnManager implements LocalizationConstants {
         if (spawns.containsKey(worldName)) {
             if (dbManager.updateSpawn(loc)) {
                 spawns.put(worldName, loc);
-                player.sendMessage(ChatColor.AQUA
-                        + Main.localization.get(SPAWNM_SPAWN_UPDATED, loc
-                                .getWorld().getName()));
-                loc.getWorld().setSpawnLocation(loc.getBlockX(),
-                        loc.getBlockY(), loc.getBlockZ());
-            }
-            else
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get(SPAWNM_ERROR));
-        }
-        else {
+                player.sendMessage(ChatColor.AQUA + Main.localization.get(SPAWNM_SPAWN_UPDATED, loc.getWorld().getName()));
+                loc.getWorld().setSpawnLocation(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+            } else
+                player.sendMessage(ChatColor.RED + Main.localization.get(SPAWNM_ERROR));
+        } else {
             if (dbManager.addSpawn(loc)) {
                 spawns.put(worldName, loc);
-                player.sendMessage(ChatColor.AQUA
-                        + Main.localization.get(SPAWNM_SPAWN_SET, loc
-                                .getWorld().getName()));
+                player.sendMessage(ChatColor.AQUA + Main.localization.get(SPAWNM_SPAWN_SET, loc.getWorld().getName()));
 
-                loc.getWorld().setSpawnLocation(loc.getBlockX(),
-                        loc.getBlockY(), loc.getBlockZ());
-            }
-            else
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get(SPAWNM_ERROR));
+                loc.getWorld().setSpawnLocation(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+            } else
+                player.sendMessage(ChatColor.RED + Main.localization.get(SPAWNM_ERROR));
         }
     }
 
@@ -95,8 +84,7 @@ public class SpawnManager implements LocalizationConstants {
             return loc;
         else {
             for (Entry<String, Location> entry : spawns.entrySet())
-                if (entry.getKey().toLowerCase()
-                        .startsWith(worldName.toLowerCase()))
+                if (entry.getKey().toLowerCase().startsWith(worldName.toLowerCase()))
                     return entry.getValue();
         }
         return null;

@@ -64,33 +64,21 @@ public class HomeManager implements LocalizationConstants {
         if (homes.containsKey(playerName)) {
             if (dbManager.updateHome(player)) {
                 homes.put(playerName, loc);
-                player.sendMessage(ChatColor.GRAY
-                        + Main.localization.get(HOMEM_HOME_SET));
-            }
-            else {
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get(HOMEMERROR));
-                Main.log.printWarning("User " + player.getName()
-                        + " cannot update home at " + loc.getWorld().getName()
-                        + " " + loc.getX() + " " + loc.getY() + " "
-                        + loc.getZ());
+                player.sendMessage(ChatColor.GRAY + Main.localization.get(HOMEM_HOME_SET));
+            } else {
+                player.sendMessage(ChatColor.RED + Main.localization.get(HOMEMERROR));
+                Main.log.printWarning("User " + player.getName() + " cannot update home at " + loc.getWorld().getName() + " " + loc.getX() + " " + loc.getY() + " " + loc.getZ());
             }
         }
         // If not, we have to create a new entry in the database
         else {
             if (dbManager.setHome(player)) {
                 homes.put(playerName, loc);
-                player.sendMessage(ChatColor.GRAY
-                        + Main.localization.get(HOMEM_HOME_SET));
-            }
-            else {
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get(HOMEMERROR));
+                player.sendMessage(ChatColor.GRAY + Main.localization.get(HOMEM_HOME_SET));
+            } else {
+                player.sendMessage(ChatColor.RED + Main.localization.get(HOMEMERROR));
 
-                Main.log.printWarning("User " + player.getName()
-                        + " cannot set home at " + loc.getWorld().getName()
-                        + " " + loc.getX() + " " + loc.getY() + " "
-                        + loc.getZ());
+                Main.log.printWarning("User " + player.getName() + " cannot set home at " + loc.getWorld().getName() + " " + loc.getX() + " " + loc.getY() + " " + loc.getZ());
             }
         }
     }

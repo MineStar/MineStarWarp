@@ -29,8 +29,7 @@ import com.minestar.MineStarWarp.utils.PlayerUtil;
 
 public class UninviteCommand extends Command {
 
-    public UninviteCommand(String syntax, String arguments, String node,
-            Server server) {
+    public UninviteCommand(String syntax, String arguments, String node, Server server) {
         super(syntax, arguments, node, server);
         this.description = Main.localization.get(UNINVITE_DESCRIPTION);
     }
@@ -58,20 +57,12 @@ public class UninviteCommand extends Command {
                 if (guest != null)
                     guestName = guest.getName();
                 else
-                    player.sendMessage(Main.localization.get(
-                            UNINVITE_NOT_EXACT_PLAYER, args[0]));
-                if (Main.warpManager.removeGuest(player, warpName, guestName)
-                        && guest != null)
-                    guest.sendMessage(ChatColor.RED
-                            + Main.localization.get(UNINVITE_GUEST_MESSAGE,
-                                    warpName));
-            }
-            else
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get(UNINVITE_NOT_OWNER, warpName));
-        }
-        else
-            player.sendMessage(ChatColor.RED
-                    + Main.localization.get(INVITE_NOT_EXIST, warpName));
+                    player.sendMessage(Main.localization.get(UNINVITE_NOT_EXACT_PLAYER, args[0]));
+                if (Main.warpManager.removeGuest(player, warpName, guestName) && guest != null)
+                    guest.sendMessage(ChatColor.RED + Main.localization.get(UNINVITE_GUEST_MESSAGE, warpName));
+            } else
+                player.sendMessage(ChatColor.RED + Main.localization.get(UNINVITE_NOT_OWNER, warpName));
+        } else
+            player.sendMessage(ChatColor.RED + Main.localization.get(INVITE_NOT_EXIST, warpName));
     }
 }

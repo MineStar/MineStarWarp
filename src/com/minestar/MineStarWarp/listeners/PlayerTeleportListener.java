@@ -25,8 +25,8 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import com.minestar.MineStarWarp.Main;
 
 public class PlayerTeleportListener extends PlayerListener {
-	public void onPlayerTeleport(PlayerTeleportEvent event) {
-		Player player = event.getPlayer();
-		Main.backManager.setBack(player);
-	}
+    public void onPlayerTeleport(PlayerTeleportEvent event) {
+        Player player = event.getPlayer();
+        Main.backManager.setBack(player);
+    }
 }

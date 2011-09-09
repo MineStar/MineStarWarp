@@ -29,8 +29,7 @@ import com.minestar.MineStarWarp.commands.SuperCommand;
 
 public class WarpToCommand extends SuperCommand {
 
-    public WarpToCommand(String syntax, String arguments, String node,
-            Server server, Command[] subCommands) {
+    public WarpToCommand(String syntax, String arguments, String node, Server server, Command[] subCommands) {
         super(syntax, arguments, node, server, subCommands);
         this.description = Main.localization.get(WARP_TO_DESCRIPTION);
     }
@@ -53,15 +52,10 @@ public class WarpToCommand extends SuperCommand {
         if (warp != null) {
             if (warp.canUse(player)) {
                 player.teleport(warp.getLoc());
-                player.sendMessage(ChatColor.AQUA
-                        + Main.localization.get(WARP_TO_WELCOME, warpName));
-            }
-            else
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get(WARP_TO_NO_RIGHT, warpName));
-        }
-        else
-            player.sendMessage(ChatColor.RED
-                    + Main.localization.get(WARP_TO_NOT_EXISTING, warpName));
+                player.sendMessage(ChatColor.AQUA + Main.localization.get(WARP_TO_WELCOME, warpName));
+            } else
+                player.sendMessage(ChatColor.RED + Main.localization.get(WARP_TO_NO_RIGHT, warpName));
+        } else
+            player.sendMessage(ChatColor.RED + Main.localization.get(WARP_TO_NOT_EXISTING, warpName));
     }
 }

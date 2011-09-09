@@ -104,12 +104,9 @@ public class WarpManager implements LocalizationConstants {
 
         if (dbManager.addWarp(creator, name, warp)) {
             warps.put(name, warp);
-            creator.sendMessage(ChatColor.AQUA
-                    + Main.localization.get(WARPM_CREATE, name));
-        }
-        else {
-            creator.sendMessage(ChatColor.RED
-                    + Main.localization.get(WARPM_ERROR_CREATE));
+            creator.sendMessage(ChatColor.AQUA + Main.localization.get(WARPM_CREATE, name));
+        } else {
+            creator.sendMessage(ChatColor.RED + Main.localization.get(WARPM_ERROR_CREATE));
         }
     }
 
@@ -128,13 +125,10 @@ public class WarpManager implements LocalizationConstants {
     public void deleteWarp(Player player, String name) {
 
         if (dbManager.deleteWarp(name)) {
-            player.sendMessage(ChatColor.AQUA
-                    + Main.localization.get(WARPM_DELETE, name));
+            player.sendMessage(ChatColor.AQUA + Main.localization.get(WARPM_DELETE, name));
             warps.remove(name);
-        }
-        else
-            player.sendMessage(ChatColor.RED
-                    + Main.localization.get(WARPM_ERROR_DELETE));
+        } else
+            player.sendMessage(ChatColor.RED + Main.localization.get(WARPM_ERROR_DELETE));
     }
 
     /**
@@ -157,12 +151,10 @@ public class WarpManager implements LocalizationConstants {
         Warp warp = warps.get(warpName);
         warp.invitePlayer(guest);
         if (dbManager.changeGuestList(warp.getGuestsAsString(), warpName))
-            player.sendMessage(ChatColor.AQUA
-                    + Main.localization.get(WARPM_INVITE, guest, warpName));
+            player.sendMessage(ChatColor.AQUA + Main.localization.get(WARPM_INVITE, guest, warpName));
         else {
             warp.uninvitePlayer(guest);
-            player.sendMessage(ChatColor.RED
-                    + Main.localization.get(WARPM_ERROR_INVITE, guest));
+            player.sendMessage(ChatColor.RED + Main.localization.get(WARPM_ERROR_INVITE, guest));
             return false;
         }
 
@@ -189,13 +181,11 @@ public class WarpManager implements LocalizationConstants {
         Warp warp = warps.get(warpName);
         warp.uninvitePlayer(guest);
         if (dbManager.changeGuestList(warp.getGuestsAsString(), warpName))
-            player.sendMessage(ChatColor.AQUA
-                    + Main.localization.get(WARPM_UNINVITE, guest, warpName));
+            player.sendMessage(ChatColor.AQUA + Main.localization.get(WARPM_UNINVITE, guest, warpName));
 
         else {
             warp.invitePlayer(guest);
-            player.sendMessage(ChatColor.RED
-                    + Main.localization.get(WARPM_ERROR_UNINVITE, guest));
+            player.sendMessage(ChatColor.RED + Main.localization.get(WARPM_ERROR_UNINVITE, guest));
             return false;
         }
 
@@ -377,8 +367,7 @@ public class WarpManager implements LocalizationConstants {
      * @return HashMap concerning the intervall. Returns null if the list is
      *         empty
      */
-    public TreeMap<String, Warp> getWarpsForList(int pageNumber,
-            int warpsPerPage, Player player) {
+    public TreeMap<String, Warp> getWarpsForList(int pageNumber, int warpsPerPage, Player player) {
 
         TreeMap<String, Warp> warpList = new TreeMap<String, Warp>();
         TreeMap<String, Warp> warpsPlayerCanUse = new TreeMap<String, Warp>();
@@ -391,8 +380,7 @@ public class WarpManager implements LocalizationConstants {
         String[] keys = new String[warpsPlayerCanUse.size()];
         keys = warpsPlayerCanUse.keySet().toArray(keys);
 
-        for (int i = 0; i < warpsPerPage
-                && (((pageNumber - 1) * warpsPerPage) + i) < keys.length; ++i) {
+        for (int i = 0; i < warpsPerPage && (((pageNumber - 1) * warpsPerPage) + i) < keys.length; ++i) {
             String key = keys[((pageNumber - 1) * warpsPerPage) + i];
             warpList.put(key, warpsPlayerCanUse.get(key));
         }
@@ -421,25 +409,17 @@ public class WarpManager implements LocalizationConstants {
 
         if (toPublic) {
             if (dbManager.removeGuestsList(warpName)) {
-                player.sendMessage(ChatColor.AQUA
-                        + Main.localization.get(WARPM_PUBLIC, warpName));
+                player.sendMessage(ChatColor.AQUA + Main.localization.get(WARPM_PUBLIC, warpName));
                 warps.get(warpName).setAccess(toPublic);
-            }
-            else
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get(WARPM_ERROR_ACCESS_CHANGE));
-        }
-        else {
+            } else
+                player.sendMessage(ChatColor.RED + Main.localization.get(WARPM_ERROR_ACCESS_CHANGE));
+        } else {
             if (dbManager.changeGuestList("", warpName)) {
-                player.sendMessage(ChatColor.AQUA
-                        + Main.localization.get(WARPM_PRIVATE, warpName));
-                player.sendMessage(ChatColor.AQUA
-                        + Main.localization.get(WARPM_INVITE_MESSAGE, warpName));
+                player.sendMessage(ChatColor.AQUA + Main.localization.get(WARPM_PRIVATE, warpName));
+                player.sendMessage(ChatColor.AQUA + Main.localization.get(WARPM_INVITE_MESSAGE, warpName));
                 warps.get(warpName).setAccess(toPublic);
-            }
-            else
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get(WARPM_ERROR_ACCESS_CHANGE));
+            } else
+                player.sendMessage(ChatColor.RED + Main.localization.get(WARPM_ERROR_ACCESS_CHANGE));
         }
     }
 
