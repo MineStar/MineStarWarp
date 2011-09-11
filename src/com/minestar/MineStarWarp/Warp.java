@@ -28,7 +28,7 @@ public class Warp {
     /** Is able to edit , use the warp and invite other player to it */
     private final String owner;
     /** The position to warp to */
-    private final Location loc;
+    private Location loc;
     /** When the warp is a public warp, the value is null */
     private ArrayList<String> guests = null;
 
@@ -65,6 +65,10 @@ public class Warp {
      */
     public Warp(Player creator) {
         this(creator.getName(), creator.getLocation(), new ArrayList<String>());
+    }
+
+    public void moveWarp(Location loc) {
+        this.loc = loc;
     }
 
     /**

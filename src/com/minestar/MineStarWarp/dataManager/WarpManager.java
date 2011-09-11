@@ -137,6 +137,14 @@ public class WarpManager implements LocalizationConstants {
                     + Main.localization.get(WARPM_ERROR_DELETE));
     }
 
+    public void updateWarp(Player player, String name) {
+        if (dbManager.updateWarp(name, player.getLocation())) {
+            player.sendMessage(ChatColor.AQUA
+                    + Main.localization.get(WARPM_MOVE, name));
+            warps.get(name).moveWarp(player.getLocation());
+        }
+    }
+
     /**
      * The invited player is giving the right to also use the warp. <br>
      * The changed guest list will stored in the database. If no error occurs it

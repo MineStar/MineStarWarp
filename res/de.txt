@@ -80,6 +80,10 @@ guestMessage = Du wurdest von dem Warp '%s' ausgeladen.
 notOwner = Du darfst zu diesem Warp niemanden einladen!
 notExisting = '%s' exisiert nicht!
 
+#moveCommand
+notExisting = '%s' exestiert nicht!
+notOwner = Du kannst diesen Warp nicht verschieben!
+
 #warpToCommand
 description = Teleportiert dich zum angegebenden Warp
 welcome = Wilkommen beim Warp '%s'!
@@ -118,6 +122,7 @@ public = '%s' ist nun öffentlich!
 accessError = Konnte Warp '%s' Zugriffsmodifikator nicht in der Datenbank ändern! Wende dich bitte an einen Admin!
 private = '%s' ist nun privat!
 inviteMessage = Nutze '/warp invite <PlayerName> <%s> um den Spieler zum Warp einzuladen!
+move = Warp '%s' wurde erfolgreich verschoben!
 
 #bankListCommand
 description = Listet alle Banken auf.

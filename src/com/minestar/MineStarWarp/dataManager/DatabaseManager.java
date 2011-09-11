@@ -44,6 +44,7 @@ public class DatabaseManager {
     private PreparedStatement addWarp = null;
     private PreparedStatement deleteWarp = null;
     private PreparedStatement changeGuestList = null;
+    private PreparedStatement updateWarp = null;
     private PreparedStatement addHome = null;
     private PreparedStatement updateHome = null;
     private PreparedStatement convertToPublic = null;
@@ -82,6 +83,8 @@ public class DatabaseManager {
         deleteWarp = con.prepareStatement("DELETE FROM warps WHERE name = ?;");
         changeGuestList = con
                 .prepareStatement("UPDATE warps SET permissions = ? WHERE name = ?;");
+        updateWarp = con
+                .prepareStatement("UPDATE warps SET world = ? , x = ? , y = ? , z = ? , yaw = ? , pitch = ? WHERE name = ?;");
         addHome = con
                 .prepareStatement("INSERT INTO homes (player,world, x, y, z, yaw, pitch) VALUES (?,?,?,?,?,?,?);");
         updateHome = con
@@ -541,6 +544,37 @@ public class DatabaseManager {
         catch (Exception e) {
             Main.log.printError(
                     "Error while sending updated guest list to database!", e);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Updates the location of the warp.
+     * 
+     * @param warpName
+     *            The name of the warp
+     * @param loc
+     *            The new location of the warp.
+     * @return True when the location sucessfully changed.
+     */
+    public boolean updateWarp(String warpName, Location loc) {
+        try {
+            // "UPDATE warps SET world = ? , x = ? , y = ? , z = ? , yaw = ? ,
+            // pitch = ?, WHERE name = ?;"
+            updateWarp.setString(1, loc.getWorld().getName());
+            updateWarp.setDouble(2, loc.getX());
+            updateWarp.setInt(3, loc.getBlockY());
+            updateWarp.setDouble(4, loc.getZ());
+            updateWarp.setInt(5, Math.round(loc.getYaw() % 360));
+            updateWarp.setInt(6, Math.round(loc.getPitch() % 360));
+            updateWarp.setString(7, warpName);
+            updateWarp.executeUpdate();
+            con.commit();
+        }
+        catch (Exception e) {
+            Main.log.printError("Error while sending update warp to database!",
+                    e);
             return false;
         }
         return true;
