@@ -42,6 +42,12 @@ public class RenameCommand extends Command {
         if (args.length == 2) {
             if (Main.warpManager.isWarpExisting(args[0])) {
                 if (!Main.warpManager.isWarpExisting(args[1])) {
+                    if (CreateCommand.isKeyWord(args[1])) {
+                        player.sendMessage(ChatColor.RED
+                                + Main.localization
+                                        .get(RENAME_KEYWORD, args[1]));
+                        return;
+                    }
                     if (Main.warpManager.getWarp(args[0]).canEdit(player)) {
                         Main.warpManager.renameWarp(player, args[0], args[1]);
                     }

@@ -67,11 +67,12 @@ public class CreateCommand extends Command {
                     + Main.localization.get(CREATE_LIMIT_WARPS));
     }
 
-    private boolean isKeyWord(String warpName) {
+    public static boolean isKeyWord(String warpName) {
         return warpName.equals("create") || warpName.equals("delete")
                 || warpName.equals("invite") || warpName.equals("uninvite")
                 || warpName.equals("list") || warpName.equals("private")
                 || warpName.equals("public") || warpName.equals("search")
-                || warpName.equals("uninvite");
+                || warpName.equals("uninvite") || warpName.equals("move")
+                || warpName.equals("rename");
     }
 }
