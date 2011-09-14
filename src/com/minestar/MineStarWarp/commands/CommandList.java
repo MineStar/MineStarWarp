@@ -45,6 +45,7 @@ import com.minestar.MineStarWarp.commands.warp.ListCommand;
 import com.minestar.MineStarWarp.commands.warp.MoveCommand;
 import com.minestar.MineStarWarp.commands.warp.PrivateCommand;
 import com.minestar.MineStarWarp.commands.warp.PublicCommand;
+import com.minestar.MineStarWarp.commands.warp.RenameCommand;
 import com.minestar.MineStarWarp.commands.warp.SearchCommand;
 import com.minestar.MineStarWarp.commands.warp.UninviteCommand;
 import com.minestar.MineStarWarp.commands.warp.WarpToCommand;
@@ -92,7 +93,8 @@ public class CommandList implements LocalizationConstants {
                 new WarpToCommand("/warp", "<Name>", "warpTo", server,
 
                         new Command[] {
-                                // Warp Creation, Removing and moving
+                                // Warp Creation, Removing, Moving and
+                                // Renameing.
                                 new CreateCommand("create", "<Name>", "create",
                                         server),
                                 new CreateCommand("pcreate", "<Name>",
@@ -101,6 +103,9 @@ public class CommandList implements LocalizationConstants {
                                         server),
                                 new MoveCommand("move", "<Name>", ",move",
                                         server),
+                                new RenameCommand("rename",
+                                        "<Oldname> <Newname>",
+                                        "rename", server),
 
                                 // Searching Warps
                                 new ListCommand("list", "", "list", server),

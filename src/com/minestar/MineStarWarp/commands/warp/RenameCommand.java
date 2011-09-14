@@ -23,39 +23,43 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 import com.minestar.MineStarWarp.Main;
-import com.minestar.MineStarWarp.Warp;
 import com.minestar.MineStarWarp.commands.Command;
 
-public class MoveCommand extends Command {
-    public MoveCommand(String syntax, String arguments, String node,
+public class RenameCommand extends Command {
+    public RenameCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
-        this.description = Main.localization.get(MOVE_DESCRIPTION);
+        this.description = Main.localization.get(RENAME_DESCRIPTION);
     }
 
     @Override
     /**
      * Representing the command <br>
-     * /warp move <br>
-     * Change the Location of a warp.
+     * /warp rename<br>
+     * Chance the name of a warp.
      */
     public void execute(String[] args, Player player) {
-        if (args.length == 1) {
+        if (args.length == 2) {
             if (Main.warpManager.isWarpExisting(args[0])) {
-                Warp warp = Main.warpManager.getWarp(args[0]);
-                if (warp.canEdit(player)) {
-                    Main.warpManager.updateWarp(player, args[0]);
+                if (!Main.warpManager.isWarpExisting(args[1])) {
+                    if (Main.warpManager.getWarp(args[0]).canEdit(player)) {
+                        Main.warpManager.renameWarp(player, args[0], args[1]);
+                    }
+                    else {
+                        player.sendMessage(ChatColor.RED
+                                + Main.localization.get(RENAME_NOT_OWNER));
+                    }
                 }
                 else {
                     player.sendMessage(ChatColor.RED
-                            + Main.localization.get(MOVE_NOT_OWNER));
+                            + Main.localization.get(RENAME_ALREADY_EXIST,
+                                    args[0], args[1]));
                 }
             }
             else {
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get(MOVE_NOT_EXIST, args[0]));
+                        + Main.localization.get(RENAME_NOT_EXIST, args[0]));
             }
         }
     }
-
 }

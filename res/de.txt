@@ -81,8 +81,15 @@ notOwner = Du darfst zu diesem Warp niemanden einladen!
 notExisting = '%s' exisiert nicht!
 
 #moveCommand
+description = Verschiebt den Warp
 notExisting = '%s' exestiert nicht!
 notOwner = Du kannst diesen Warp nicht verschieben!
+
+#renameCommand
+description = Bennent den Warp um
+notExisting = '%s' exestiert nicht!
+allreadyExisting = '%s' kann nicht in '%s' umbennant werden, da dieser Name schon vergeben ist!
+notOwner = Du kannst diesen Warp nicht umbennenen!
 
 #warpToCommand
 description = Teleportiert dich zum angegebenden Warp
@@ -123,6 +130,7 @@ accessError = Konnte Warp '%s' Zugriffsmodifikator nicht in der Datenbank ändern
 private = '%s' ist nun privat!
 inviteMessage = Nutze '/warp invite <PlayerName> <%s> um den Spieler zum Warp einzuladen!
 move = Warp '%s' wurde erfolgreich verschoben!
+rename = Warp '%s' heist jetzt '%s'!
 
 #bankListCommand
 description = Listet alle Banken auf.

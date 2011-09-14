@@ -45,6 +45,7 @@ public class DatabaseManager {
     private PreparedStatement deleteWarp = null;
     private PreparedStatement changeGuestList = null;
     private PreparedStatement updateWarp = null;
+    private PreparedStatement renameWarp = null;
     private PreparedStatement addHome = null;
     private PreparedStatement updateHome = null;
     private PreparedStatement convertToPublic = null;
@@ -85,6 +86,8 @@ public class DatabaseManager {
                 .prepareStatement("UPDATE warps SET permissions = ? WHERE name = ?;");
         updateWarp = con
                 .prepareStatement("UPDATE warps SET world = ? , x = ? , y = ? , z = ? , yaw = ? , pitch = ? WHERE name = ?;");
+        renameWarp = con
+                .prepareStatement("UPDATE warps SET name = ? WHERE name = ?;");
         addHome = con
                 .prepareStatement("INSERT INTO homes (player,world, x, y, z, yaw, pitch) VALUES (?,?,?,?,?,?,?);");
         updateHome = con
@@ -574,6 +577,31 @@ public class DatabaseManager {
         }
         catch (Exception e) {
             Main.log.printError("Error while sending update warp to database!",
+                    e);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Change the name of a warp.
+     * 
+     * @param oldname
+     *            The oldname of the warp.
+     * @param newname
+     *            The newname of the warp.
+     * @return True when the warpname sucessfully changed.
+     */
+    public boolean renameWarp(String oldname, String newname) {
+        try {
+            // "UPDATE warps SET name = ? WHERE name = ?;"
+            renameWarp.setString(1, newname);
+            renameWarp.setString(2, oldname);
+            renameWarp.executeUpdate();
+            con.commit();
+        }
+        catch (Exception e) {
+            Main.log.printError("Error while sending rename warp to database!",
                     e);
             return false;
         }

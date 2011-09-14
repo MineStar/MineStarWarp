@@ -145,6 +145,15 @@ public class WarpManager implements LocalizationConstants {
         }
     }
 
+    public void renameWarp(Player player, String oldname, String newname) {
+        if (dbManager.renameWarp(oldname, newname)) {
+            player.sendMessage(ChatColor.AQUA
+                    + Main.localization.get(WARPM_RENAME, oldname, newname));
+            warps.put(newname, warps.get(oldname));
+            warps.remove(oldname);
+        }
+    }
+
     /**
      * The invited player is giving the right to also use the warp. <br>
      * The changed guest list will stored in the database. If no error occurs it
