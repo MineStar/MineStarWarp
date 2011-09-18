@@ -90,7 +90,11 @@ public class CommandList implements LocalizationConstants {
                 new BackCommand("/back", "", "back", server),
 
                 // Warp Command
-                new WarpToCommand("/warp", "<Name>", "warpTo", server,
+                new WarpToCommand(
+                        "/warp",
+                        "<Name>",
+                        "warpTo",
+                        server,
 
                         new Command[] {
                                 // Warp Creation, Removing, Moving and
@@ -104,8 +108,7 @@ public class CommandList implements LocalizationConstants {
                                 new MoveCommand("move", "<Name>", ",move",
                                         server),
                                 new RenameCommand("rename",
-                                        "<Oldname> <Newname>",
-                                        "rename", server),
+                                        "<Oldname> <Newname>", "rename", server),
 
                                 // Searching Warps
                                 new ListCommand("list", "", "list", server),

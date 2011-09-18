@@ -64,7 +64,13 @@ public class BankListCommand extends ExtendedCommand {
         int maxPage = (int) Math.ceil(Main.bankManager.countBanks()
                 / (double) banksPerPage);
 
-        if (pageNumber > maxPage) {
+        if (maxPage == 0) {
+            player.sendMessage(ChatColor.RED
+                    + Main.localization.get(BANK_LIST_NO_BANKS));
+            return;
+        }
+
+        if (pageNumber > maxPage || pageNumber == 0) {
             player.sendMessage(ChatColor.RED
                     + Main.localization.get(BANK_LIST_HIGH_PAGE,
                             Integer.toString(maxPage)));
@@ -73,12 +79,6 @@ public class BankListCommand extends ExtendedCommand {
 
         TreeMap<String, Location> banks = Main.bankManager.getBanksForList(
                 pageNumber, banksPerPage);
-
-        if (banks == null) {
-            player.sendMessage(ChatColor.RED
-                    + Main.localization.get(BANK_LIST_NO_BANKS));
-            return;
-        }
 
         player.sendMessage(ChatColor.WHITE
                 + Main.localization.get(BANK_LIST_PAGE_HEAD,
