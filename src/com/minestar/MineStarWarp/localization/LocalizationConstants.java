@@ -92,52 +92,53 @@ public interface LocalizationConstants {
     final static int MOVE_DESCRIPTION = 56;
     final static int MOVE_NOT_EXIST = 57;
     final static int MOVE_NOT_OWNER = 58;
+    final static int MOVE_FAIL = 59;
 
-    final static int RENAME_DESCRIPTION = 59;
-    final static int RENAME_NOT_EXIST = 60;
-    final static int RENAME_ALREADY_EXIST = 61;
-    final static int RENAME_NOT_OWNER = 62;
-    final static int RENAME_KEYWORD = 63;
+    final static int RENAME_DESCRIPTION = 60;
+    final static int RENAME_NOT_EXIST = 61;
+    final static int RENAME_ALREADY_EXIST = 62;
+    final static int RENAME_NOT_OWNER = 63;
+    final static int RENAME_KEYWORD = 64;
 
-    final static int WARP_TO_DESCRIPTION = 64;
-    final static int WARP_TO_WELCOME = 65;
-    final static int WARP_TO_NO_RIGHT = 66;
-    final static int WARP_TO_NOT_EXISTING = 67;
+    final static int WARP_TO_DESCRIPTION = 65;
+    final static int WARP_TO_WELCOME = 66;
+    final static int WARP_TO_NO_RIGHT = 67;
+    final static int WARP_TO_NOT_EXISTING = 68;
 
-    final static int COMMAND_NO_PERMISSIONS = 68;
+    final static int COMMAND_NO_PERMISSIONS = 69;
 
-    final static int COMMAND_LIST_WRONG_SYNTAX = 69;
+    final static int COMMAND_LIST_WRONG_SYNTAX = 70;
 
-    final static int BANKM_UPDATED_BANK = 70;
-    final static int BANKM_SET_BANK = 71;
+    final static int BANKM_UPDATED_BANK = 71;
+    final static int BANKM_SET_BANK = 72;
 
-    final static int HOMEM_HOME_SET = 72;
-    final static int HOMEMERROR = 73;
+    final static int HOMEM_HOME_SET = 73;
+    final static int HOMEMERROR = 74;
 
-    final static int SPAWNM_SPAWN_UPDATED = 74;
-    final static int SPAWNM_SPAWN_SET = 75;
-    final static int SPAWNM_ERROR = 76;
+    final static int SPAWNM_SPAWN_UPDATED = 75;
+    final static int SPAWNM_SPAWN_SET = 76;
+    final static int SPAWNM_ERROR = 77;
 
-    final static int WARPM_CREATE = 77;
-    final static int WARPM_ERROR_CREATE = 78;
-    final static int WARPM_DELETE = 79;
-    final static int WARPM_ERROR_DELETE = 80;
-    final static int WARPM_INVITE = 81;
-    final static int WARPM_ERROR_INVITE = 82;
-    final static int WARPM_UNINVITE = 83;
-    final static int WARPM_ERROR_UNINVITE = 84;
-    final static int WARPM_PUBLIC = 85;
-    final static int WARPM_ERROR_ACCESS_CHANGE = 86;
-    final static int WARPM_PRIVATE = 87;
-    final static int WARPM_INVITE_MESSAGE = 88;
-    final static int WARPM_MOVE = 89;
-    final static int WARPM_RENAME = 90;
+    final static int WARPM_CREATE = 78;
+    final static int WARPM_ERROR_CREATE = 79;
+    final static int WARPM_DELETE = 80;
+    final static int WARPM_ERROR_DELETE = 81;
+    final static int WARPM_INVITE = 82;
+    final static int WARPM_ERROR_INVITE = 83;
+    final static int WARPM_UNINVITE = 84;
+    final static int WARPM_ERROR_UNINVITE = 85;
+    final static int WARPM_PUBLIC = 86;
+    final static int WARPM_ERROR_ACCESS_CHANGE = 87;
+    final static int WARPM_PRIVATE = 88;
+    final static int WARPM_INVITE_MESSAGE = 89;
+    final static int WARPM_MOVE = 90;
+    final static int WARPM_RENAME = 91;
 
-    final static int BANK_LIST_DESCRIPTION = 91;
-    final static int BANK_LIST_PAGE_NUMBER = 92;
-    final static int BANK_LIST_NO_BANKS = 93;
-    final static int BANK_LIST_PAGE_HEAD = 94;
-    final static int BANK_LIST_HIGH_PAGE = 95;
+    final static int BANK_LIST_DESCRIPTION = 92;
+    final static int BANK_LIST_PAGE_NUMBER = 93;
+    final static int BANK_LIST_NO_BANKS = 94;
+    final static int BANK_LIST_PAGE_HEAD = 95;
+    final static int BANK_LIST_HIGH_PAGE = 96;
 
-    final static int BACK_NOT_EXIST = 96;
+    final static int BACK_NOT_EXIST = 97;
 }

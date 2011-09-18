@@ -84,6 +84,7 @@ notExisting = '%s' exisiert nicht!
 description = Verschiebt den Warp
 notExisting = '%s' exestiert nicht!
 notOwner = Du kannst diesen Warp nicht verschieben!
+fail = Warp '%s' konnte nicht verschoben werden!
 
 #renameCommand
 description = Bennent den Warp um

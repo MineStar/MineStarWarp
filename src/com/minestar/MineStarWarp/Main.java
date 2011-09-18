@@ -36,7 +36,6 @@ import com.minestar.MineStarWarp.dataManager.DatabaseManager;
 import com.minestar.MineStarWarp.dataManager.HomeManager;
 import com.minestar.MineStarWarp.dataManager.SpawnManager;
 import com.minestar.MineStarWarp.dataManager.WarpManager;
-import com.minestar.MineStarWarp.listeners.EntityDeathListener;
 import com.minestar.MineStarWarp.listeners.PlayerRespawnListener;
 import com.minestar.MineStarWarp.listeners.PlayerTeleportListener;
 import com.minestar.MineStarWarp.localization.Localization;
@@ -94,8 +93,6 @@ public class Main extends JavaPlugin {
                     new PlayerRespawnListener(), Priority.Normal, this);
             getServer().getPluginManager().registerEvent(Type.PLAYER_TELEPORT,
                     new PlayerTeleportListener(), Priority.Normal, this);
-            getServer().getPluginManager().registerEvent(Type.ENTITY_DEATH,
-                    new EntityDeathListener(), Priority.Normal, this);
 
             log.printInfo("enabled");
         }

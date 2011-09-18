@@ -40,21 +40,19 @@ public class MoveCommand extends Command {
      * Change the Location of a warp.
      */
     public void execute(String[] args, Player player) {
-        if (args.length == 1) {
-            if (Main.warpManager.isWarpExisting(args[0])) {
-                Warp warp = Main.warpManager.getWarp(args[0]);
-                if (warp.canEdit(player)) {
-                    Main.warpManager.updateWarp(player, args[0]);
-                }
-                else {
-                    player.sendMessage(ChatColor.RED
-                            + Main.localization.get(MOVE_NOT_OWNER));
-                }
+        if (Main.warpManager.isWarpExisting(args[0])) {
+            Warp warp = Main.warpManager.getWarp(args[0]);
+            if (warp.canEdit(player)) {
+                Main.warpManager.updateWarp(player, args[0]);
             }
             else {
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get(MOVE_NOT_EXIST, args[0]));
+                        + Main.localization.get(MOVE_NOT_OWNER));
             }
+        }
+        else {
+            player.sendMessage(ChatColor.RED
+                    + Main.localization.get(MOVE_NOT_EXIST, args[0]));
         }
     }
 

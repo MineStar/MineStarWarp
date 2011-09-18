@@ -139,9 +139,13 @@ public class WarpManager implements LocalizationConstants {
 
     public void updateWarp(Player player, String name) {
         if (dbManager.updateWarp(name, player.getLocation())) {
+            warps.get(name).moveWarp(player.getLocation());
             player.sendMessage(ChatColor.AQUA
                     + Main.localization.get(WARPM_MOVE, name));
-            warps.get(name).moveWarp(player.getLocation());
+        }
+        else {
+            player.sendMessage(ChatColor.RED
+                    + Main.localization.get(MOVE_FAIL, name));
         }
     }
 
