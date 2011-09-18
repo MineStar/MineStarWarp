@@ -18,23 +18,18 @@
 
 package com.minestar.MineStarWarp.listeners;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerListener;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityListener;
 
 import com.minestar.MineStarWarp.Main;
 
-public class PlayerRespawnListener extends PlayerListener {
-
-    @Override
-    public void onPlayerRespawn(PlayerRespawnEvent event) {
-        Player player = event.getPlayer();
-        if (!Main.respawn.contains(player.getName()))
+public class EntityDeathListener extends EntityListener {
+    public void onEntityDeath(EntityDeathEvent event) {
+        if (!(event.getEntity() instanceof Player))
+            return;
+        Player player = (Player) event.getEntity();
+        if (Main.respawn.contains(player.getName()))
             Main.respawn.add(player.getName());
-        Location loc = Main.spawnManager.getMainSpawn(player.getServer());
-        if (loc != null)
-            event.setRespawnLocation(loc);
-        Main.respawn.remove(player.getName());
     }
 }

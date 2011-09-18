@@ -18,6 +18,7 @@
 
 package com.minestar.MineStarWarp.listeners;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
@@ -25,6 +26,9 @@ import com.minestar.MineStarWarp.Main;
 
 public class PlayerTeleportListener extends PlayerListener {
     public void onPlayerTeleport(PlayerTeleportEvent event) {
-        Main.backManager.setBack(event.getPlayer());
+        Player player = event.getPlayer();
+        if (Main.respawn.contains(player.getName()))
+            return;
+        Main.backManager.setBack(player);
     }
 }

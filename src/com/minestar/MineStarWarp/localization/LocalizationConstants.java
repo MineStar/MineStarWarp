@@ -118,7 +118,7 @@ public interface LocalizationConstants {
     final static int SPAWNM_SPAWN_SET = 75;
     final static int SPAWNM_ERROR = 76;
 
-    final static int WARPM_CREATE = 76;
+    final static int WARPM_CREATE = 77;
     final static int WARPM_ERROR_CREATE = 78;
     final static int WARPM_DELETE = 79;
     final static int WARPM_ERROR_DELETE = 80;

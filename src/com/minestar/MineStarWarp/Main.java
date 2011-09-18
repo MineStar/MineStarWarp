@@ -19,6 +19,7 @@
 package com.minestar.MineStarWarp;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -35,6 +36,7 @@ import com.minestar.MineStarWarp.dataManager.DatabaseManager;
 import com.minestar.MineStarWarp.dataManager.HomeManager;
 import com.minestar.MineStarWarp.dataManager.SpawnManager;
 import com.minestar.MineStarWarp.dataManager.WarpManager;
+import com.minestar.MineStarWarp.listeners.EntityDeathListener;
 import com.minestar.MineStarWarp.listeners.PlayerRespawnListener;
 import com.minestar.MineStarWarp.listeners.PlayerTeleportListener;
 import com.minestar.MineStarWarp.localization.Localization;
@@ -52,6 +54,7 @@ public class Main extends JavaPlugin {
     public static BankManager bankManager;
     public static Localization localization;
     public static BackManager backManager;
+    public static ArrayList<String> respawn;
 
     private CommandList commandList;
 
@@ -66,6 +69,7 @@ public class Main extends JavaPlugin {
         commandList = null;
         localization = null;
         backManager = null;
+        respawn = null;
         System.gc();
         log.printInfo("disabled");
     }
@@ -84,11 +88,14 @@ public class Main extends JavaPlugin {
             spawnManager = new SpawnManager(dbManager);
             bankManager = new BankManager(dbManager);
             backManager = new BackManager();
+            respawn = new ArrayList<String>();
 
             getServer().getPluginManager().registerEvent(Type.PLAYER_RESPAWN,
                     new PlayerRespawnListener(), Priority.Normal, this);
             getServer().getPluginManager().registerEvent(Type.PLAYER_TELEPORT,
                     new PlayerTeleportListener(), Priority.Normal, this);
+            getServer().getPluginManager().registerEvent(Type.ENTITY_DEATH,
+                    new EntityDeathListener(), Priority.Normal, this);
 
             log.printInfo("enabled");
         }
