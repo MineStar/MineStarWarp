@@ -43,11 +43,6 @@ public class BankCommand extends SuperCommand {
                 return;
             }
 
-            /*
-             * if (!hasCorrectSyntax(args)) {
-             * player.sendMessage(getHelpMessage()); return; }
-             */
-
             execute(args, player);
         }
     }
