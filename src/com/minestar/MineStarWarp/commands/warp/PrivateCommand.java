@@ -31,7 +31,7 @@ public class PrivateCommand extends Command {
     public PrivateCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
-        this.description = Main.localization.get(PRIVATE_DESCRIPTION);
+        this.description = Main.localization.get("privateCommand.description");
     }
 
     @Override
@@ -52,10 +52,11 @@ public class PrivateCommand extends Command {
 
         if (warp == null) {
             player.sendMessage(ChatColor.RED
-                    + Main.localization.get(PRIVATE_NOT_EXISTING, args[0]));
+                    + Main.localization.get("privateCommand.notExisting",
+                            args[0]));
             if (Main.warpManager.getWarp(warpName.toLowerCase()) != null)
                 player.sendMessage(ChatColor.GRAY
-                        + Main.localization.get(PRIVATE_POSSIBLE_WARP,
+                        + Main.localization.get("privateCommand.possibleWarp",
                                 warpName.toLowerCase()));
             return;
         }
@@ -65,10 +66,12 @@ public class PrivateCommand extends Command {
                 Main.warpManager.changeAccess(player, false, warpName);
             else
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get(PRIVATE_IS_PRIVATE, warpName));
+                        + Main.localization.get("privateCommand.isPrivate",
+                                warpName));
         }
         else
             player.sendMessage(ChatColor.RED
-                    + Main.localization.get(PRIVATE_NOT_OWNER, warpName));
+                    + Main.localization
+                            .get("privateCommand.notOwner", warpName));
     }
 }

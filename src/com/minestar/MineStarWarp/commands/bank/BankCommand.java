@@ -66,11 +66,11 @@ public class BankCommand extends SuperCommand {
             bank = Main.bankManager.getBank(player.getName());
             if (bank != null) {
                 player.teleport(bank);
-                player.sendMessage(Main.localization.get(BANK_WELCOME));
+                player.sendMessage(Main.localization.get("bankCommand.welcome"));
             }
             else {
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get(BANK_NOT_FOUND));
+                        + Main.localization.get("bankCommand.netFound"));
             }
         }
         else {
@@ -83,12 +83,12 @@ public class BankCommand extends SuperCommand {
             bank = Main.bankManager.getBank(args[0]);
             if (bank != null) {
                 player.teleport(bank);
-                player.sendMessage(Main.localization.get(BANK_TELEPORTED,
-                        args[0]));
+                player.sendMessage(Main.localization.get(
+                        "bankCommand.teleportToBank", args[0]));
             }
             else {
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get(BANK_TELEPORT_NOT_FOUND,
+                        + Main.localization.get("bankCommand.teleportNotFound",
                                 args[0]));
             }
         }

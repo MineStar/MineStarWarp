@@ -31,7 +31,8 @@ public class TeleportHereCommand extends Command {
     public TeleportHereCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
-        this.description = Main.localization.get(TELEPORT_HERE_DESCRIPTION);
+        this.description = Main.localization
+                .get("teleportHereCommand.description");
     }
 
     @Override
@@ -50,15 +51,15 @@ public class TeleportHereCommand extends Command {
         Player target = PlayerUtil.getPlayer(server, args[0]);
         if (target == null) {
             player.sendMessage(ChatColor.RED
-                    + Main.localization.get(TELEPORT_HERE_PLAYER_NOT_FOUND,
-                            args[0]));
+                    + Main.localization.get(
+                            "teleportHereCommand.playerNotFound", args[0]));
             return;
         }
         player.sendMessage(ChatColor.AQUA
-                + Main.localization.get(TELEPORT_HERE_TARGET_MESSAGE,
+                + Main.localization.get("teleportHereCommand.targetTeleported",
                         target.getName()));
         target.sendMessage(ChatColor.AQUA
-                + Main.localization.get(TELEPORT_HERE_TARGET_TELEPORTED,
+                + Main.localization.get("teleportHereCommand.targetMessage",
                         player.getName()));
         target.teleport(player.getLocation());
     }

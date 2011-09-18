@@ -25,7 +25,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import com.minestar.MineStarWarp.Main;
-import com.minestar.MineStarWarp.localization.LocalizationConstants;
 
 /**
  * Is responsible for handling all home commands.
@@ -33,7 +32,7 @@ import com.minestar.MineStarWarp.localization.LocalizationConstants;
  * @author Meldanor
  * 
  */
-public class HomeManager implements LocalizationConstants {
+public class HomeManager {
 
     // Key = Username, so only one player can have a home
     private TreeMap<String, Location> homes;
@@ -65,11 +64,11 @@ public class HomeManager implements LocalizationConstants {
             if (dbManager.updateHome(player)) {
                 homes.put(playerName, loc);
                 player.sendMessage(ChatColor.GRAY
-                        + Main.localization.get(HOMEM_HOME_SET));
+                        + Main.localization.get("homeManager.homeSet"));
             }
             else {
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get(HOMEMERROR));
+                        + Main.localization.get("homeManager.error"));
                 Main.log.printWarning("User " + player.getName()
                         + " cannot update home at " + loc.getWorld().getName()
                         + " " + loc.getX() + " " + loc.getY() + " "
@@ -81,11 +80,11 @@ public class HomeManager implements LocalizationConstants {
             if (dbManager.setHome(player)) {
                 homes.put(playerName, loc);
                 player.sendMessage(ChatColor.GRAY
-                        + Main.localization.get(HOMEM_HOME_SET));
+                        + Main.localization.get("homeManager.homeSet"));
             }
             else {
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get(HOMEMERROR));
+                        + Main.localization.get("homeManager.error"));
 
                 Main.log.printWarning("User " + player.getName()
                         + " cannot set home at " + loc.getWorld().getName()

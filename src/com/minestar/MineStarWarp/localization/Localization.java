@@ -21,15 +21,15 @@ package com.minestar.MineStarWarp.localization;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.LinkedList;
+import java.util.HashMap;
 
 import com.minestar.MineStarWarp.Main;
 
-public class Localization implements LocalizationConstants {
+public class Localization {
 
     private static Localization instance;
-
-    private String[] texts;
+    // key = node , value = text
+    private HashMap<String, String> texts = new HashMap<String, String>();
 
     private Localization(String language) {
         loadtexts(language);
@@ -49,24 +49,28 @@ public class Localization implements LocalizationConstants {
         try {
 
             BufferedReader bReader = new BufferedReader(new FileReader(temp));
-            LinkedList<String> list = new LinkedList<String>();
+            String node = "";
+            String[] split;
             while ((line = bReader.readLine()) != null) {
-                if (line.startsWith("#") || line.trim().isEmpty())
+                if (line.trim().isEmpty())
                     continue;
+                if (line.startsWith("#")) {
+                    node = line.replace("#", "").concat(".");
+                    continue;
+                }
 
-                list.add(line.split(" = ", 2)[1]);
+                split = line.split(" = ", 2);
+
+                texts.put(node.concat(split[0]), split[1]);
             }
-            texts = new String[list.size()];
-            texts = list.toArray(texts);
             bReader.close();
-
         }
         catch (Exception e) {
             Main.log.printError("Error while loading the localized texts", e);
             Main.log.printWarning(line);
         }
 
-        Main.log.printInfo("Loaded " + texts.length + " localized texts");
+        Main.log.printInfo("Loaded " + texts.size() + " localized texts");
     }
 
     public static Localization getInstance(String language) {
@@ -76,17 +80,23 @@ public class Localization implements LocalizationConstants {
         return instance;
     }
 
-    public String get(int index) {
-        if (index < 0 || index >= texts.length)
-            return null;
-        return texts[index];
+    public String get(String node) {
+        String text = texts.get(node);
+        if (text == null) {
+            Main.log.printWarning("ERROR! Cannot find a text for the node "
+                    + node);
+            return "Fehler beim laden eines Textes! Bitte an einen Admin wenden!";
+        }
+        return text;
     }
 
-    public String get(int index, String... args) {
-
-        if (index < 0 || index >= texts.length)
-            return null;
-        else
-            return String.format(texts[index], (Object[]) args);
+    public String get(String node, String... args) {
+        String text = texts.get(node);
+        if (text == null) {
+            Main.log.printWarning("ERROR! Cannot find a text for the node "
+                    + node);
+            return "Fehler beim laden eines Textes! Bitte an einen Admin wenden!";
+        }
+        return String.format(texts.get(node), (Object[]) args);
     }
 }

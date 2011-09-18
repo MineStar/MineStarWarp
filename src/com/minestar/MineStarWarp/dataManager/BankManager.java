@@ -27,9 +27,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import com.minestar.MineStarWarp.Main;
-import com.minestar.MineStarWarp.localization.LocalizationConstants;
 
-public class BankManager implements LocalizationConstants {
+public class BankManager {
 
     private HashMap<String, Location> banks;
 
@@ -62,7 +61,8 @@ public class BankManager implements LocalizationConstants {
         if (banks.containsKey(playerName)) {
             if (dbManager.updateBank(playerName, bankLocation)) {
                 player.sendMessage(ChatColor.AQUA
-                        + Main.localization.get(BANKM_UPDATED_BANK, playerName));
+                        + Main.localization.get("bankManager.setBank",
+                                playerName));
                 banks.put(playerName, bankLocation);
                 return;
             }
@@ -74,7 +74,8 @@ public class BankManager implements LocalizationConstants {
         else {
             if (dbManager.setBank(playerName, bankLocation)) {
                 player.sendMessage(ChatColor.AQUA
-                        + Main.localization.get(BANKM_UPDATED_BANK, playerName));
+                        + Main.localization.get("bankManager.updatedBank",
+                                playerName));
                 banks.put(playerName, bankLocation);
                 return;
             }

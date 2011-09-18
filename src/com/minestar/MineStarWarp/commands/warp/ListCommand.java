@@ -37,7 +37,7 @@ public class ListCommand extends ExtendedCommand {
             Server server) {
         super(syntax, arguments, node, server);
         warpsPerPage = Main.config.getInt("warps.warpsPerPage", 8);
-        this.description = Main.localization.get(LIST_DESCRIPTION);
+        this.description = Main.localization.get("listCommand.description");
     }
 
     @Override
@@ -61,41 +61,41 @@ public class ListCommand extends ExtendedCommand {
             warps = Main.warpManager.getWarpsPlayerIsOwner(player.getName());
             if (warps != null) {
                 player.sendMessage(ChatColor.AQUA
-                        + Main.localization.get(LIST_USED_SLOTS,
+                        + Main.localization.get("listCommand.usedSlots",
                                 Main.warpManager.usedWarpSlots(player)));
                 showWarpList(player, warps);
             }
 
             else
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get(LIST_NO_MY_WARPS));
+                        + Main.localization.get("listCommand.noMyWarps"));
         }
         else {
             if (args.length != 0 && !args[0].matches("\\d*")) {
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get(LIST_PAGE_NUMBER));
+                        + Main.localization.get("listCommand.pageNumber"));
                 return;
             }
             int maxPageNumber = (int) Math.ceil(Main.warpManager
                     .countWarpsCanUse(player) / (double) warpsPerPage);
             if (maxPageNumber == 0) {
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get(LIST_NO_WARPS));
+                        + Main.localization.get("listCommand.noWarps"));
                 return;
             }
             int pageNumber = args.length == 0 ? 1 : Integer.parseInt(args[0]);
             if (pageNumber <= maxPageNumber) {
                 warps = Main.warpManager.getWarpsForList(pageNumber,
                         warpsPerPage, player);
-                player.sendMessage(Main.localization.get(LIST_PAGE_HEAD,
-                        Integer.toString(pageNumber),
-                        Integer.toString(maxPageNumber)));
+                player.sendMessage(Main.localization.get(
+                        "listCommand.pageHead", String.valueOf(pageNumber),
+                        String.valueOf(maxPageNumber)));
                 showWarpList(player, warps);
             }
             else
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get(LIST_HIGH_PAGE,
-                                Integer.toString(maxPageNumber)));
+                        + Main.localization.get("listCommand.highPage",
+                                String.valueOf(maxPageNumber)));
 
         }
     }

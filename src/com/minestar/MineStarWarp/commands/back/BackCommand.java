@@ -49,6 +49,6 @@ public class BackCommand extends Command {
             player.teleport(loc);
         else
             player.sendMessage(ChatColor.RED
-                    + Main.localization.get(BACK_NOT_EXIST));
+                    + Main.localization.get("backCommand.backNotExist"));
     }
 }

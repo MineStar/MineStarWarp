@@ -27,9 +27,8 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 import com.minestar.MineStarWarp.Main;
-import com.minestar.MineStarWarp.localization.LocalizationConstants;
 
-public class SpawnManager implements LocalizationConstants {
+public class SpawnManager {
 
     private TreeMap<String, Location> spawns;
     private final DatabaseManager dbManager;
@@ -54,20 +53,20 @@ public class SpawnManager implements LocalizationConstants {
             if (dbManager.updateSpawn(loc)) {
                 spawns.put(worldName, loc);
                 player.sendMessage(ChatColor.AQUA
-                        + Main.localization.get(SPAWNM_SPAWN_UPDATED, loc
-                                .getWorld().getName()));
+                        + Main.localization.get("spawnManager.spawnUpdated",
+                                loc.getWorld().getName()));
                 loc.getWorld().setSpawnLocation(loc.getBlockX(),
                         loc.getBlockY(), loc.getBlockZ());
             }
             else
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get(SPAWNM_ERROR));
+                        + Main.localization.get("spawnManager.error"));
         }
         else {
             if (dbManager.addSpawn(loc)) {
                 spawns.put(worldName, loc);
                 player.sendMessage(ChatColor.AQUA
-                        + Main.localization.get(SPAWNM_SPAWN_SET, loc
+                        + Main.localization.get("spawnManager.spawnSet", loc
                                 .getWorld().getName()));
 
                 loc.getWorld().setSpawnLocation(loc.getBlockX(),
@@ -75,7 +74,7 @@ public class SpawnManager implements LocalizationConstants {
             }
             else
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get(SPAWNM_ERROR));
+                        + Main.localization.get("spawnManager.error"));
         }
     }
 

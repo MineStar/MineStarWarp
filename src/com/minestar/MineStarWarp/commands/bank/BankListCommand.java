@@ -34,7 +34,7 @@ public class BankListCommand extends ExtendedCommand {
     public BankListCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
-        this.description = Main.localization.get(BANK_LIST_DESCRIPTION);
+        this.description = Main.localization.get("bankListCommand.description");
     }
 
     @Override
@@ -54,7 +54,7 @@ public class BankListCommand extends ExtendedCommand {
 
         if (args.length != 0 && !args[0].matches("\\d*")) {
             player.sendMessage(ChatColor.RED
-                    + Main.localization.get(BANK_LIST_PAGE_NUMBER));
+                    + Main.localization.get("bankListCommand.pageNumber"));
             return;
         }
         else if (args.length == 1)
@@ -66,14 +66,14 @@ public class BankListCommand extends ExtendedCommand {
 
         if (maxPage == 0) {
             player.sendMessage(ChatColor.RED
-                    + Main.localization.get(BANK_LIST_NO_BANKS));
+                    + Main.localization.get("bankListCommand.noBanks"));
             return;
         }
 
         if (pageNumber > maxPage || pageNumber == 0) {
             player.sendMessage(ChatColor.RED
-                    + Main.localization.get(BANK_LIST_HIGH_PAGE,
-                            Integer.toString(maxPage)));
+                    + Main.localization.get("bankListCommand.highPage",
+                            String.valueOf(maxPage)));
             return;
         }
 
@@ -81,8 +81,8 @@ public class BankListCommand extends ExtendedCommand {
                 pageNumber, banksPerPage);
 
         player.sendMessage(ChatColor.WHITE
-                + Main.localization.get(BANK_LIST_PAGE_HEAD,
-                        Integer.toString(pageNumber), Integer.toString(maxPage)));
+                + Main.localization.get("bankListCommand.pageHead",
+                        String.valueOf(pageNumber), String.valueOf(maxPage)));
         showBankList(player, banks);
     }
 

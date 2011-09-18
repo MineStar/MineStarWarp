@@ -49,9 +49,8 @@ import com.minestar.MineStarWarp.commands.warp.RenameCommand;
 import com.minestar.MineStarWarp.commands.warp.SearchCommand;
 import com.minestar.MineStarWarp.commands.warp.UninviteCommand;
 import com.minestar.MineStarWarp.commands.warp.WarpToCommand;
-import com.minestar.MineStarWarp.localization.LocalizationConstants;
 
-public class CommandList implements LocalizationConstants {
+public class CommandList {
 
     // The commands are stored in this list. The key indicates the
     // commandssyntax and the argument counter
@@ -153,7 +152,7 @@ public class CommandList implements LocalizationConstants {
                 cmd.run(args, player);
             else {
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get(COMMAND_LIST_WRONG_SYNTAX,
+                        + Main.localization.get("commandList.wrongSyntax",
                                 label));
 
                 // FIND RELATED COMMANDS

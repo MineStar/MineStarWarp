@@ -32,7 +32,7 @@ public class UninviteCommand extends Command {
     public UninviteCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
-        this.description = Main.localization.get(UNINVITE_DESCRIPTION);
+        this.description = Main.localization.get("uninviteCommand.description");
     }
 
     @Override
@@ -59,19 +59,21 @@ public class UninviteCommand extends Command {
                     guestName = guest.getName();
                 else
                     player.sendMessage(Main.localization.get(
-                            UNINVITE_NOT_EXACT_PLAYER, args[0]));
+                            "uninviteCommand.notExactPlayer", args[0]));
                 if (Main.warpManager.removeGuest(player, warpName, guestName)
                         && guest != null)
                     guest.sendMessage(ChatColor.RED
-                            + Main.localization.get(UNINVITE_GUEST_MESSAGE,
-                                    warpName));
+                            + Main.localization.get(
+                                    "uninviteCommand.guestMessage", warpName));
             }
             else
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get(UNINVITE_NOT_OWNER, warpName));
+                        + Main.localization.get("uninviteCommand.notOwner",
+                                warpName));
         }
         else
             player.sendMessage(ChatColor.RED
-                    + Main.localization.get(INVITE_NOT_EXIST, warpName));
+                    + Main.localization.get("uninviteCommand.notExisting",
+                            warpName));
     }
 }

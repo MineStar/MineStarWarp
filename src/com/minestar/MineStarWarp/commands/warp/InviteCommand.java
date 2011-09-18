@@ -32,7 +32,7 @@ public class InviteCommand extends Command {
     public InviteCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
-        this.description = Main.localization.get(INVITE_DESCRIPTION);
+        this.description = Main.localization.get("inviteCommand.description");
     }
 
     @Override
@@ -59,18 +59,19 @@ public class InviteCommand extends Command {
                     guestName = guest.getName();
                 else
                     player.sendMessage(Main.localization.get(
-                            INVITE_NOT_EXACT_PLAYER, guestName));
+                            "inviteCommand.notExactPlayer", guestName));
                 if (Main.warpManager.addGuest(player, warpName, guestName)
                         && guest != null)
                     guest.sendMessage(Main.localization.get(
-                            INVITE_GUEST_MESSAGE, warpName));
+                            "inviteCommand.guestMessage", warpName));
             }
             else
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get(INVITE_NOT_OWNER, warpName));
+                        + Main.localization.get("inviteCommand.notOwner",
+                                warpName));
         }
         else
             player.sendMessage(ChatColor.RED
-                    + Main.localization.get(INVITE_NOT_EXIST, warpName));
+                    + Main.localization.get("inviteCommand.notExist", warpName));
     }
 }

@@ -30,7 +30,7 @@ public class MoveCommand extends Command {
     public MoveCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
-        this.description = Main.localization.get(MOVE_DESCRIPTION);
+        this.description = Main.localization.get("moveCommand.description");
     }
 
     @Override
@@ -47,12 +47,12 @@ public class MoveCommand extends Command {
             }
             else {
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get(MOVE_NOT_OWNER));
+                        + Main.localization.get("moveCommand.notOwner"));
             }
         }
         else {
             player.sendMessage(ChatColor.RED
-                    + Main.localization.get(MOVE_NOT_EXIST, args[0]));
+                    + Main.localization.get("moveCommand.notExisting", args[0]));
         }
     }
 

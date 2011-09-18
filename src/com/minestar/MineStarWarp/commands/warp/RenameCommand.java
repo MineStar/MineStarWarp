@@ -29,7 +29,7 @@ public class RenameCommand extends Command {
     public RenameCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
-        this.description = Main.localization.get(RENAME_DESCRIPTION);
+        this.description = Main.localization.get("renameCommand.description");
     }
 
     @Override
@@ -39,33 +39,34 @@ public class RenameCommand extends Command {
      * Chance the name of a warp.
      */
     public void execute(String[] args, Player player) {
-        if (args.length == 2) {
-            if (Main.warpManager.isWarpExisting(args[0])) {
-                if (!Main.warpManager.isWarpExisting(args[1])) {
-                    if (CreateCommand.isKeyWord(args[1])) {
-                        player.sendMessage(ChatColor.RED
-                                + Main.localization
-                                        .get(RENAME_KEYWORD, args[1]));
-                        return;
-                    }
-                    if (Main.warpManager.getWarp(args[0]).canEdit(player)) {
-                        Main.warpManager.renameWarp(player, args[0], args[1]);
-                    }
-                    else {
-                        player.sendMessage(ChatColor.RED
-                                + Main.localization.get(RENAME_NOT_OWNER));
-                    }
-                }
-                else {
+
+        if (Main.warpManager.isWarpExisting(args[0])) {
+
+            if (!Main.warpManager.isWarpExisting(args[1])) {
+
+                if (CreateCommand.isKeyWord(args[1])) {
                     player.sendMessage(ChatColor.RED
-                            + Main.localization.get(RENAME_ALREADY_EXIST,
-                                    args[0], args[1]));
+                            + Main.localization.get("renameCommand.keyWord",
+                                    args[1]));
+                    return;
                 }
+
+                if (Main.warpManager.getWarp(args[0]).canEdit(player))
+                    Main.warpManager.renameWarp(player, args[0], args[1]);
+                else
+                    player.sendMessage(ChatColor.RED
+                            + Main.localization.get("renameCommand.notOwner"));
             }
-            else {
+            else
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get(RENAME_NOT_EXIST, args[0]));
-            }
+                        + Main.localization.get(
+                                "renameCommand.alreadyExisting", args[0],
+                                args[1]));
         }
+        else
+            player.sendMessage(ChatColor.RED
+                    + Main.localization.get("renameCommand.notExisting",
+                            args[0]));
+
     }
 }

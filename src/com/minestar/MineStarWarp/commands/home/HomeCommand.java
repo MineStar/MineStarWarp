@@ -51,10 +51,10 @@ public class HomeCommand extends Command {
         if (homeLocation != null) {
             player.teleport(homeLocation);
             player.sendMessage(ChatColor.GRAY
-                    + Main.localization.get(HOME_WELCOME));
+                    + Main.localization.get("homeCommand.welcome"));
         }
         else
             player.sendMessage(ChatColor.RED
-                    + Main.localization.get(HOME_NO_HOME));
+                    + Main.localization.get("homeCommand.noHome"));
     }
 }

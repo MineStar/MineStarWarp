@@ -51,8 +51,8 @@ usedSlots = Du hast %s freie Slots benutzt
 noMyWarp = Du hast keinen Warp erstellt!
 pageNumber = Benutze eine Zahl für die Seite
 noWarps = Du kannst keinen einzigen Warp benutzen!
-pageHead = ------------------- Seite %s/%s -------------------
-highPage = Benutze nur Zahlen von 1 bis %s
+pageHead = ------------------- Seite %d/%d -------------------
+highPage = Benutze nur Zahlen von 1 bis %d
 
 #privateCommand
 description = Macht aus einem öffentlichen Warp einen privaten
@@ -73,7 +73,7 @@ description = Gibt Warps aus, die das Suchwort beinhalten
 matches = Treffer für %s
 noMatches = Keine Treffer gefunden für %s
 
-#uninivteCommand
+#uninviteCommand
 description = Der Spieler kann den Warp nicht mehr nutzen
 notExactPlayer = Spieler mit dem Namen '%s' nicht gefunden(offline?). Wurde dennoch ausgeladen.
 guestMessage = Du wurdest von dem Warp '%s' ausgeladen.
@@ -130,7 +130,7 @@ errorUninvite = Fehler! Konnte nicht '%s' vom Warp '%s' ausladen! Wende dich bit
 public = '%s' ist nun öffentlich!
 accessError = Konnte Warp '%s' Zugriffsmodifikator nicht in der Datenbank ändern! Wende dich bitte an einen Admin!
 private = '%s' ist nun privat!
-inviteMessage = Nutze '/warp invite <PlayerName> <%s> um den Spieler zum Warp einzuladen!
+inviteMessage = Nutze '/warp invite <PlayerName> %s' um den Spieler zum Warp einzuladen!
 move = Warp '%s' wurde erfolgreich verschoben!
 rename = Warp '%s' heist jetzt '%s'!
 
@@ -138,8 +138,8 @@ rename = Warp '%s' heist jetzt '%s'!
 description = Listet alle Banken auf.
 pageNumber = Benutze eine Zahl für die Seite
 noBanks = Es existiert keine einzige Bank!
-pageHead = ------------------- Seite %s/%s -------------------
-highPage = Benutze nur Zahlen von 1 bis %s
+pageHead = ------------------- Seite %d/%d -------------------
+highPage = Benutze nur Zahlen von 1 bis %d
 
 #backCommand
 backNotExist = Es gibt keine Punkt zum zurueckwarpen.

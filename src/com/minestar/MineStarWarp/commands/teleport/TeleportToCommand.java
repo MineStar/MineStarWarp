@@ -32,7 +32,8 @@ public class TeleportToCommand extends ExtendedCommand {
     public TeleportToCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
-        this.description = Main.localization.get(TELEPORT_TO_DESCRIPTION);
+        this.description = Main.localization
+                .get("teleportToCommand.description");
     }
 
     @Override
@@ -68,21 +69,21 @@ public class TeleportToCommand extends ExtendedCommand {
         Player playerToTeleport = PlayerUtil.getPlayer(server, args[0]);
         if (playerToTeleport == null) {
             player.sendMessage(Main.localization.get(
-                    TELEPORT_TO_PLAYER_NOT_FOUND, args[0]));
+                    "teleportToCommand.playerNotFound", args[0]));
             return;
         }
         Player target = PlayerUtil.getPlayer(server, args[1]);
         if (target == null) {
             player.sendMessage(Main.localization.get(
-                    TELEPORT_TO_PLAYER_NOT_FOUND, args[1]));
+                    "teleportToCommand.playerNotFound", args[1]));
             return;
         }
         playerToTeleport.teleport(target.getLocation());
         player.sendMessage(ChatColor.AQUA
-                + Main.localization.get(TELEPORT_TO_TARGET_MESSAGE,
+                + Main.localization.get("teleportToCommand.targetTeleported",
                         target.getName()));
         target.sendMessage(ChatColor.AQUA
-                + Main.localization.get(TELEPORT_TO_TARGET_TELEPORTED,
+                + Main.localization.get("teleportToCommand.targetInformation",
                         player.getName()));
     }
 
@@ -97,12 +98,12 @@ public class TeleportToCommand extends ExtendedCommand {
         Player target = server.getPlayer(args[0]);
         if (target == null) {
             player.sendMessage(Main.localization.get(
-                    TELEPORT_TO_PLAYER_NOT_FOUND, args[0]));
+                    "teleportToCommand.playerNotFound", args[0]));
             return;
         }
         player.teleport(target.getLocation());
         player.sendMessage(ChatColor.AQUA
-                + Main.localization.get(TELEPORT_TO_TARGET_MESSAGE,
+                + Main.localization.get("teleportToCommand.targetTeleported",
                         target.getName()));
     }
 
