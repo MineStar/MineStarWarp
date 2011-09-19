@@ -105,7 +105,7 @@ public class CommandList {
                                         "create", server),
                                 new DeleteCommand("delete", "<Name>", "delete",
                                         server),
-                                new MoveCommand("move", "<Name>", ",move",
+                                new MoveCommand("move", "<Name>", "move",
                                         server),
                                 new RenameCommand("rename",
                                         "<Oldname> <Newname>", "rename", server),
