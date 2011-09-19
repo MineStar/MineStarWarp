@@ -62,7 +62,7 @@ public class WarpToCommand extends SuperCommand {
             }
             else
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get("warpToCommand.noPermissions",
+                        + Main.localization.get("warpToCommand.noPermission",
                                 entry.getKey()));
         }
         else
