@@ -40,6 +40,7 @@ import com.minestar.MineStarWarp.commands.teleport.TeleportHereCommand;
 import com.minestar.MineStarWarp.commands.teleport.TeleportToCommand;
 import com.minestar.MineStarWarp.commands.warp.CreateCommand;
 import com.minestar.MineStarWarp.commands.warp.DeleteCommand;
+import com.minestar.MineStarWarp.commands.warp.GuestListCommand;
 import com.minestar.MineStarWarp.commands.warp.InviteCommand;
 import com.minestar.MineStarWarp.commands.warp.ListCommand;
 import com.minestar.MineStarWarp.commands.warp.MoveCommand;
@@ -126,7 +127,9 @@ public class CommandList {
                                         server),
                                 new UninviteCommand("uninvite",
                                         "<PlayerName> <Warpname>", "uninvite",
-                                        server) }) };
+                                        server),
+                                new GuestListCommand("guestlist", "<WarpName>",
+                                        "guestlist", server) }) };
 
         // store the commands in the hash map
         initCommandList(commands);

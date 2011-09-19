@@ -143,3 +143,11 @@ highPage = Benutze nur Zahlen von 1 bis %s
 
 #backCommand
 backNotExist = Es gibt keine Punkt zum zurueckwarpen.
+
+#guestList
+description = Zeigt die Gäste eines Warps an.
+notExist = '%s' existiert nicht!
+notOwner = Sie haben keine zugriff auf '%s'.
+public = '%s' ist Public.
+list = Gäste von '%s': 
+noGuests = Es gibt keine Gäste für '%s'
