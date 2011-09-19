@@ -51,8 +51,8 @@ usedSlots = Du hast %s freie Slots benutzt
 noMyWarp = Du hast keinen Warp erstellt!
 pageNumber = Benutze eine Zahl für die Seite
 noWarps = Du kannst keinen einzigen Warp benutzen!
-pageHead = ------------------- Seite %d/%d -------------------
-highPage = Benutze nur Zahlen von 1 bis %d
+pageHead = ------------------- Seite %s/%s -------------------
+highPage = Benutze nur Zahlen von 1 bis %s
 
 #privateCommand
 description = Macht aus einem öffentlichen Warp einen privaten
@@ -138,8 +138,8 @@ rename = Warp '%s' heist jetzt '%s'!
 description = Listet alle Banken auf.
 pageNumber = Benutze eine Zahl für die Seite
 noBanks = Es existiert keine einzige Bank!
-pageHead = ------------------- Seite %d/%d -------------------
-highPage = Benutze nur Zahlen von 1 bis %d
+pageHead = ------------------- Seite %s/%s -------------------
+highPage = Benutze nur Zahlen von 1 bis %s
 
 #backCommand
 backNotExist = Es gibt keine Punkt zum zurueckwarpen.

@@ -72,6 +72,6 @@ public class InviteCommand extends Command {
         }
         else
             player.sendMessage(ChatColor.RED
-                    + Main.localization.get("inviteCommand.notExist", warpName));
+                    + Main.localization.get("inviteCommand.notExisting", warpName));
     }
 }
