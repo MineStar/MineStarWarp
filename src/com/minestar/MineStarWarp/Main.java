@@ -25,6 +25,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 
@@ -36,6 +37,7 @@ import com.minestar.MineStarWarp.dataManager.DatabaseManager;
 import com.minestar.MineStarWarp.dataManager.HomeManager;
 import com.minestar.MineStarWarp.dataManager.SpawnManager;
 import com.minestar.MineStarWarp.dataManager.WarpManager;
+import com.minestar.MineStarWarp.listeners.PlayerBedListener;
 import com.minestar.MineStarWarp.listeners.PlayerRespawnListener;
 import com.minestar.MineStarWarp.listeners.PlayerTeleportListener;
 import com.minestar.MineStarWarp.localization.Localization;
@@ -89,10 +91,17 @@ public class Main extends JavaPlugin {
             backManager = new BackManager();
             respawn = new ArrayList<String>();
 
-            getServer().getPluginManager().registerEvent(Type.PLAYER_RESPAWN,
-                    new PlayerRespawnListener(), Priority.Normal, this);
-            getServer().getPluginManager().registerEvent(Type.PLAYER_TELEPORT,
+            PluginManager pm = getServer().getPluginManager();
+
+            pm.registerEvent(Type.PLAYER_RESPAWN, new PlayerRespawnListener(),
+                    Priority.Normal, this);
+            pm.registerEvent(Type.PLAYER_TELEPORT,
                     new PlayerTeleportListener(), Priority.Normal, this);
+
+            // shall the home set when a player uses the bed?
+            if (config.getBoolean("home.setHomeUsingBed", true))
+                pm.registerEvent(Type.PLAYER_BED_ENTER,
+                        new PlayerBedListener(), Priority.Normal, this);
 
             log.printInfo("enabled");
         }
@@ -140,6 +149,7 @@ public class Main extends JavaPlugin {
         config.setProperty("warps.warpsPerPage", 8);
         config.setProperty("language", "de");
         config.setProperty("banks.banksPerPage", 10);
+        config.setProperty("home.setHomeUsingBed", true);
         config.save();
     }
 }
