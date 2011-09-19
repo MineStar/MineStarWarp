@@ -142,7 +142,7 @@ pageHead = ------------------- Seite %s/%s -------------------
 highPage = Benutze nur Zahlen von 1 bis %s
 
 #backCommand
-backNotExist = Es gibt keine Punkt zum zurueckwarpen.
+backNotExist = Es gibt keine Punkt zum zurückwarpen.
 
 #guestList
 description = Zeigt die Gäste eines Warps an.

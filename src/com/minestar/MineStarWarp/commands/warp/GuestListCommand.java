@@ -48,14 +48,16 @@ public class GuestListCommand extends Command {
             if (warp.canEdit(player)) {
                 ArrayList<String> guests = warp.getGuests();
                 if (guests != null) {
-                    if (guests.size() != 0) {
-                        String temp = guests.get(0);
-                        for (int i = 1; i < guests.size(); i++) {
-                            temp += (", " + guests.get(i));
+                    if (!guests.isEmpty()) {
+                        StringBuilder result = new StringBuilder("");
+                        for (String temp : guests) {
+                            result.append(temp);
+                            result.append(", ");
                         }
                         player.sendMessage(ChatColor.AQUA
                                 + Main.localization.get("guestList.list",
-                                        warpName) + ChatColor.GREEN + temp);
+                                        warpName) + ChatColor.GREEN
+                                + result.substring(0, result.length() - 2));
                     }
                     else {
                         player.sendMessage(ChatColor.AQUA

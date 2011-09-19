@@ -58,7 +58,7 @@ public class Localization {
                     node = line.replace("#", "").concat(".");
                     continue;
                 }
-                line = new String(line.getBytes(),"UTF-8");
+                line = new String(line.getBytes(), "UTF-8");
                 split = line.split(" = ", 2);
 
                 texts.put(node.concat(split[0]), split[1]);

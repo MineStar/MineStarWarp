@@ -54,10 +54,12 @@ public class DeleteCommand extends Command {
                 Main.warpManager.deleteWarp(player, warpName);
             else
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get("deleteCommand.notOwner", warpName));
+                        + Main.localization.get("deleteCommand.notOwner",
+                                warpName));
         }
         else
             player.sendMessage(ChatColor.RED
-                    + Main.localization.get("deleteCommand.notExisting", warpName));
+                    + Main.localization.get("deleteCommand.notExisting",
+                            warpName));
     }
 }

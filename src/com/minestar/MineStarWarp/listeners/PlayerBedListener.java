@@ -24,7 +24,7 @@ import org.bukkit.event.player.PlayerListener;
 import com.minestar.MineStarWarp.Main;
 
 public class PlayerBedListener extends PlayerListener {
-    
+
     @Override
     public void onPlayerBedEnter(PlayerBedEnterEvent event) {
         Main.homeManager.setHome(event.getPlayer());
