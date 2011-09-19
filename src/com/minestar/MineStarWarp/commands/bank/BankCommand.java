@@ -70,7 +70,7 @@ public class BankCommand extends SuperCommand {
             }
             else {
                 player.sendMessage(ChatColor.RED
-                        + Main.localization.get("bankCommand.netFound"));
+                        + Main.localization.get("bankCommand.notFound"));
             }
         }
         else {
