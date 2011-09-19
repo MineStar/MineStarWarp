@@ -121,8 +121,7 @@ public class DatabaseManager {
                         + "`z` DOUBLE NOT NULL DEFAULT '0',"
                         + "`yaw` smallint NOT NULL DEFAULT '0',"
                         + "`pitch` smallint NOT NULL DEFAULT '0',"
-                        + "`publicAll` boolean NOT NULL DEFAULT '1',"
-                        + "`permissions` text DEFAULT null);");
+                        + "`permissions` text DEFAULT '');");
         con.commit();
 
         // create the table for storing the homes
