@@ -18,6 +18,8 @@
 
 package com.minestar.MineStarWarp.commands.warp;
 
+import java.util.Map.Entry;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -49,18 +51,19 @@ public class WarpToCommand extends SuperCommand {
     public void execute(String[] args, Player player) {
 
         String warpName = args[0];
-        Warp warp = Main.warpManager.getSimiliarWarp(warpName);
-        if (warp != null) {
+        Entry<String, Warp> entry = Main.warpManager.getSimiliarWarp(warpName);
+        if (entry != null) {
+            Warp warp = entry.getValue();
             if (warp.canUse(player)) {
                 player.teleport(warp.getLoc());
                 player.sendMessage(ChatColor.AQUA
                         + Main.localization.get("warpToCommand.welcome",
-                                warpName));
+                                entry.getKey()));
             }
             else
                 player.sendMessage(ChatColor.RED
                         + Main.localization.get("warpToCommand.noPermissions",
-                                warpName));
+                                entry.getKey()));
         }
         else
             player.sendMessage(ChatColor.RED

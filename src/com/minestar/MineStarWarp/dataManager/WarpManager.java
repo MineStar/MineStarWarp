@@ -321,23 +321,33 @@ public class WarpManager {
      *            Same name or similiar name
      * @return Warp matching name
      */
-    public Warp getSimiliarWarp(String name) {
+    public Entry<String, Warp> getSimiliarWarp(String name) {
 
-        Warp warp = warps.get(name);
+        if (warps.containsKey(name))
+            return warps.ceilingEntry(name);
 
-        if (warp != null)
-            return warp;
+        String lowerName = name.toLowerCase();
+        if (warps.containsKey(lowerName))
+            return warps.ceilingEntry(name);
 
-        warp = warps.get(name.toLowerCase());
+        Entry<String, Warp> found = null;
+        int delta = Integer.MAX_VALUE;
 
-        if (warp != null)
-            return warp;
+        for (Entry<String, Warp> entry : warps.entrySet()) {
+            String tempName = entry.getKey().toLowerCase();
+            if (tempName.startsWith(lowerName)) {
+                int curDelta = tempName.length() - lowerName.length();
+                if (curDelta < delta) {
+                    found = entry;
+                    delta = curDelta;
+                }
+                if (curDelta == 0)
+                    break;
+            }
 
-        for (String tempName : warps.keySet())
-            if (tempName.toLowerCase().startsWith(name.toLowerCase()))
-                return warps.get(tempName);
-
-        return null;
+        }
+        
+        return found;
     }
 
     /**
