@@ -18,7 +18,7 @@
 
 package com.minestar.MineStarWarp;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -30,7 +30,7 @@ public class Warp {
     /** The position to warp to */
     private Location loc;
     /** When the warp is a public warp, the value is null */
-    private ArrayList<String> guests = null;
+    private HashSet<String> guests = null;
 
     /**
      * Use this constructor for loading it from database
@@ -44,7 +44,7 @@ public class Warp {
      * @param guests
      *            Players are able to use the Warp
      */
-    public Warp(String owner, Location loc, ArrayList<String> guests) {
+    public Warp(String owner, Location loc, HashSet<String> guests) {
         this.owner = owner;
         this.loc = loc;
         this.guests = guests;
@@ -64,7 +64,7 @@ public class Warp {
      *            created. Otherwise the value for guests is null
      */
     public Warp(Player creator) {
-        this(creator.getName(), creator.getLocation(), new ArrayList<String>());
+        this(creator.getName(), creator.getLocation(), new HashSet<String>());
     }
 
     public void moveWarp(Location loc) {
@@ -89,7 +89,7 @@ public class Warp {
      * @return All player who can also use the warp. If the value is null, the
      *         warp is public.
      */
-    public ArrayList<String> getGuests() {
+    public HashSet<String> getGuests() {
         return guests;
     }
 
@@ -125,7 +125,7 @@ public class Warp {
         if (isPublic)
             guests = null;
         else if (guests == null)
-            guests = new ArrayList<String>();
+            guests = new HashSet<String>();
     }
 
     /**
