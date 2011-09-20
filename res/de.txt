@@ -87,7 +87,7 @@ notOwner = Du kannst diesen Warp nicht verschieben!
 fail = Warp '%s' konnte nicht verschoben werden!
 
 #renameCommand
-description = Bennent den Warp um
+description = Benennt den Warp um
 notExisting = '%s' exestiert nicht!
 allreadyExisting = '%s' kann nicht in '%s' umbennant werden, da dieser Name schon vergeben ist!
 notOwner = Du kannst diesen Warp nicht umbennenen!

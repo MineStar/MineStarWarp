@@ -19,8 +19,10 @@
 package com.minestar.MineStarWarp.localization;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 
 import com.minestar.MineStarWarp.Main;
@@ -47,8 +49,10 @@ public class Localization {
 
         String line = "";
         try {
-
-            BufferedReader bReader = new BufferedReader(new FileReader(temp));
+            FileInputStream fstream = new FileInputStream(temp);
+            DataInputStream in = new DataInputStream(fstream);
+            BufferedReader bReader = new BufferedReader(new InputStreamReader(in));
+            
             String node = "";
             String[] split;
             while ((line = bReader.readLine()) != null) {
