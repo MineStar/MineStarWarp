@@ -40,12 +40,13 @@ public class PlayerUtil {
         if (player != null)
             return player;
 
+        name = name.toLowerCase();
         for (Player tempPlayer : server.getOnlinePlayers()) {
-            if (tempPlayer.getName().contains(name))
+            String playerName = tempPlayer.getName().toLowerCase();
+            if (playerName.contains(name))
                 return tempPlayer;
         }
 
-        return player;
-
+        return null;
     }
 }
