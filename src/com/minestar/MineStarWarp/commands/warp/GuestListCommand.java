@@ -18,7 +18,7 @@
 
 package com.minestar.MineStarWarp.commands.warp;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -46,7 +46,7 @@ public class GuestListCommand extends Command {
         if (Main.warpManager.isWarpExisting(warpName)) {
             Warp warp = Main.warpManager.getWarp(warpName);
             if (warp.canEdit(player)) {
-                ArrayList<String> guests = warp.getGuests();
+                HashSet<String> guests = warp.getGuests();
                 if (guests != null) {
                     if (!guests.isEmpty()) {
                         StringBuilder result = new StringBuilder("");

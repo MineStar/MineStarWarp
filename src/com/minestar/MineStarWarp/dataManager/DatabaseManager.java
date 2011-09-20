@@ -21,9 +21,9 @@ package com.minestar.MineStarWarp.dataManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.TreeMap;
 
 import org.bukkit.Location;
@@ -619,13 +619,13 @@ public class DatabaseManager {
      *         Otherwise the name of player which can use the warp in an
      *         ArrayList
      */
-    private ArrayList<String> convertsGuestsToList(String guestList) {
+    private HashSet<String> convertsGuestsToList(String guestList) {
 
         if (guestList == null)
             return null;
         if (guestList.equals(""))
-            return new ArrayList<String>();
-        ArrayList<String> guests = new ArrayList<String>();
+            return new HashSet<String>();
+        HashSet<String> guests = new HashSet<String>();
         String[] split = guestList.split(";");
         guests.addAll(Arrays.asList(split));
 
