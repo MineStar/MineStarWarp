@@ -74,6 +74,6 @@ public class CreateCommand extends Command {
                 || warpName.equals("list") || warpName.equals("private")
                 || warpName.equals("public") || warpName.equals("search")
                 || warpName.equals("uninvite") || warpName.equals("move")
-                || warpName.equals("rename");
+                || warpName.equals("rename") || warpName.equals("guestlist");
     }
 }
