@@ -361,13 +361,16 @@ public class WarpManager {
      * @return HashMap of all warps that contains the phrase. Returns null if no
      *         warp is find
      */
-    public HashMap<String, Warp> getSimiliarWarps(String query) {
+    public HashMap<String, Warp> getSimiliarWarps(String query, Player player) {
+
+        query = query.toLowerCase();
 
         HashMap<String, Warp> warpList = new HashMap<String, Warp>();
         for (Entry<String, Warp> entry : warps.entrySet()) {
-            if (entry.getKey().toLowerCase().contains(query.toLowerCase()))
-                warpList.put(entry.getKey(), entry.getValue());
-
+            Warp warp = entry.getValue();
+            String warpName = entry.getKey();
+            if (warp.canUse(player) && warpName.toLowerCase().contains(query))
+                warpList.put(warpName, warp);
         }
 
         return warpList.size() > 0 ? warpList : null;

@@ -19,6 +19,7 @@
 package com.minestar.MineStarWarp.commands.warp;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -52,43 +53,41 @@ public class SearchCommand extends Command {
         String query = args[0];
 
         // Getting all warps that contains the query
-        HashMap<String, Warp> matchingWarps = Main.warpManager
-                .getSimiliarWarps(query);
+        HashMap<String, Warp> result = Main.warpManager.getSimiliarWarps(query,
+                player);
 
         // When at least one warp is found
-        if (matchingWarps != null) {
+        if (result != null) {
             player.sendMessage(ChatColor.YELLOW
                     + Main.localization.get("searchCommand.matches", query));
             // Sending all warps per Line to the player
-            for (String warpName : matchingWarps.keySet()) {
-                Warp warp = matchingWarps.get(warpName);
+            for (Entry<String, Warp> entry : result.entrySet()) {
+                Warp warp = entry.getValue();
+                String warpName = entry.getKey();
 
-                // The player can only search for warps he can use
-                if (warp.canUse(player)) {
-                    // Output Formation START
-                    String owner = null;
-                    ChatColor color = null;
+                // Output Formation START
+                String owner = null;
+                ChatColor color = null;
 
-                    if (warp.isOwner(player.getName())) {
-                        color = ChatColor.AQUA;
-                        owner = "you";
-                    }
-                    else if (warp.isPublic())
-                        color = ChatColor.GREEN;
-                    else
-                        color = ChatColor.RED;
-
-                    if (owner == null)
-                        owner = warp.getOwner();
-
-                    int x = warp.getLoc().getBlockX();
-                    int y = warp.getLoc().getBlockY();
-                    int z = warp.getLoc().getBlockZ();
-                    // Output Formation END
-                    player.sendMessage(color + "'" + warpName + "'"
-                            + ChatColor.WHITE + " by " + owner + " @(" + x
-                            + ", " + y + ", " + z + ")");
+                if (warp.isOwner(player.getName())) {
+                    color = ChatColor.AQUA;
+                    owner = "you";
                 }
+                else if (warp.isPublic())
+                    color = ChatColor.GREEN;
+                else
+                    color = ChatColor.RED;
+
+                if (owner == null)
+                    owner = warp.getOwner();
+
+                int x = warp.getLoc().getBlockX();
+                int y = warp.getLoc().getBlockY();
+                int z = warp.getLoc().getBlockZ();
+                // Output Formation END
+                player.sendMessage(color + "'" + warpName + "'"
+                        + ChatColor.WHITE + " by " + owner + " @(" + x + ", "
+                        + y + ", " + z + ")");
             }
         }
         // When no warp was found
