@@ -63,7 +63,7 @@ public abstract class Command {
         this.syntax = syntax;
         this.arguments = arguments;
         this.server = server;
-        this.permissionNode = node;
+        this.permissionNode = "minestarwarp.command." + node;
         this.argumentCount = countArguments();
     }
 
@@ -108,8 +108,7 @@ public abstract class Command {
      * @return True when the player has enough rights to use the command
      */
     protected boolean hasRights(Player player) {
-        return UtilPermissions.playerCanUseCommand(player,
-                "minestarwarp.command." + getPermissionNode());
+        return UtilPermissions.playerCanUseCommand(player, getPermissionNode());
     }
 
     /**
