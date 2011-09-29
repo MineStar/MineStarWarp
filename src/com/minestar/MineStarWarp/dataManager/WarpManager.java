@@ -328,7 +328,7 @@ public class WarpManager {
 
         String lowerName = name.toLowerCase();
         if (warps.containsKey(lowerName))
-            return warps.ceilingEntry(name);
+            return warps.ceilingEntry(lowerName);
 
         Entry<String, Warp> found = null;
         int delta = Integer.MAX_VALUE;
