@@ -5,7 +5,7 @@ teleportToBank = Du bist in der Bank von '%s'.
 teleportNotFound = Keine Bank für '%s' gefunden!
 
 #homeCommand
-welcome = Wilkommen zu Hause.
+welcome = Willkommen zu Hause.
 noHome = Du besitzt kein Zuhause. Benutze /setHome um eines zu erstellen.
 
 #spawnCommand
