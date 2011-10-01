@@ -65,6 +65,8 @@ public class CommandList {
      */
     public CommandList(Server server) {
 
+        /* @formatter:off */
+
         // Add an command to this list to register it in the plugin
         Command[] commands = new Command[] {
                 // Teleport Commands
@@ -77,8 +79,7 @@ public class CommandList {
 
                 // Spawn
                 new SpawnCommand("/spawn", "", "spawn", server),
-                new SpawnCommand("/spawn", "<Worldname>", "spawnSpecific",
-                        server),
+                new SpawnCommand("/spawn", "<Worldname>", "spawnSpecific", server),
                 new SetSpawnCommand("/setspawn", "", "setSpawn", server),
 
                 // Bank
@@ -90,47 +91,29 @@ public class CommandList {
                 new BackCommand("/back", "", "back", server),
 
                 // Warp Command
-                new WarpToCommand(
-                        "/warp",
-                        "<Name>",
-                        "warpTo",
-                        server,
-
+                new WarpToCommand("/warp", "<Name>", "warpTo", server,
                         new Command[] {
                                 // Warp Creation, Removing, Moving and
                                 // Renameing.
-                                new CreateCommand("create", "<Name>", "create",
-                                        server),
-                                new CreateCommand("pcreate", "<Name>",
-                                        "create", server),
-                                new DeleteCommand("delete", "<Name>", "delete",
-                                        server),
-                                new MoveCommand("move", "<Name>", "move",
-                                        server),
-                                new RenameCommand("rename",
-                                        "<Oldname> <Newname>", "rename", server),
-
+                                new CreateCommand("create", "<Name>", "create", server),
+                                new CreateCommand("pcreate", "<Name>", "create", server),
+                                new DeleteCommand("delete", "<Name>", "delete", server),
+                                new MoveCommand("move", "<Name>", "move", server),
+                                new RenameCommand("rename", "<Oldname> <Newname>", "rename", server),
+                                
                                 // Searching Warps
                                 new ListCommand("list", "", "list", server),
-                                new SearchCommand("search", "<Name>", "search",
-                                        server),
+                                new SearchCommand("search", "<Name>", "search", server),
 
                                 // Modifiers
-                                new PrivateCommand("private", "<Name>",
-                                        "private", server),
-                                new PublicCommand("public", "<Name>", "public",
-                                        server),
+                                new PrivateCommand("private", "<Name>", "private", server),
+                                new PublicCommand("public", "<Name>", "public", server),
 
                                 // Guests
-                                new InviteCommand("invite",
-                                        "<PlayerName> <Warpname>", "invite",
-                                        server),
-                                new UninviteCommand("uninvite",
-                                        "<PlayerName> <Warpname>", "uninvite",
-                                        server),
-                                new GuestListCommand("guestlist", "<WarpName>",
-                                        "guestlist", server) }) };
-
+                                new InviteCommand("invite", "<PlayerName> <Warpname>", "invite", server),
+                                new UninviteCommand("uninvite", "<PlayerName> <Warpname>", "uninvite", server),
+                                new GuestListCommand("guestlist", "<WarpName>", "guestlist", server) }) };
+        /* @formatter:on */
         // store the commands in the hash map
         initCommandList(commands);
     }

@@ -23,10 +23,10 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 import com.minestar.MineStarWarp.Main;
-import com.minestar.MineStarWarp.commands.Command;
+import com.minestar.MineStarWarp.commands.ExtendedCommand;
 import com.minestar.MineStarWarp.utils.PlayerUtil;
 
-public class TeleportHereCommand extends Command {
+public class TeleportHereCommand extends ExtendedCommand {
 
     public TeleportHereCommand(String syntax, String arguments, String node,
             Server server) {
@@ -44,23 +44,30 @@ public class TeleportHereCommand extends Command {
      * @param player
      *            Called the command
      * @param args
-     *            split[0] is the targets name
+     *            split is the targets name
      */
     public void execute(String[] args, Player player) {
 
-        Player target = PlayerUtil.getPlayer(server, args[0]);
-        if (target == null) {
-            player.sendMessage(ChatColor.RED
+        for (String playerName : args) {
+
+            Player target = PlayerUtil.getPlayer(server, playerName);
+            if (target == null) {
+                player.sendMessage(ChatColor.RED
+                        + Main.localization.get(
+                                "teleportHereCommand.playerNotFound",
+                                playerName));
+                return;
+            }
+            player.sendMessage(ChatColor.AQUA
                     + Main.localization.get(
-                            "teleportHereCommand.playerNotFound", args[0]));
-            return;
+                            "teleportHereCommand.targetTeleported",
+                            target.getName()));
+            target.sendMessage(ChatColor.AQUA
+                    + Main.localization.get(
+                            "teleportHereCommand.targetMessage",
+                            player.getName()));
+            target.teleport(player.getLocation());
         }
-        player.sendMessage(ChatColor.AQUA
-                + Main.localization.get("teleportHereCommand.targetTeleported",
-                        target.getName()));
-        target.sendMessage(ChatColor.AQUA
-                + Main.localization.get("teleportHereCommand.targetMessage",
-                        player.getName()));
-        target.teleport(player.getLocation());
+
     }
 }
