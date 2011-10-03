@@ -51,8 +51,6 @@ import com.minestar.MineStarWarp.commands.warp.SearchCommand;
 import com.minestar.MineStarWarp.commands.warp.UninviteCommand;
 import com.minestar.MineStarWarp.commands.warp.WarpToCommand;
 
-import de.minestar.blockcounter.commands.Command;
-
 public class CommandList {
 
     // The commands are stored in this list. The key indicates the
