@@ -315,10 +315,13 @@ public class WarpManager {
 
     /**
      * Return a warp that have the same name. If no warp exists with the same
-     * name, the first warp, that starts with the name will returned.
+     * name, the first warp, that starts with the name will returned. Returns
+     * only warps the player can use
      * 
      * @param name
      *            Same name or similiar name
+     * @param player
+     *            Ignore warps this player cannot use
      * @return Warp matching name
      */
     public Entry<String, Warp> getSimiliarWarp(String name, Player player) {
@@ -346,7 +349,6 @@ public class WarpManager {
                 if (curDelta == 0)
                     break;
             }
-
         }
 
         return found;
