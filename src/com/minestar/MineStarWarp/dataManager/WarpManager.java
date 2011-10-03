@@ -321,7 +321,7 @@ public class WarpManager {
      *            Same name or similiar name
      * @return Warp matching name
      */
-    public Entry<String, Warp> getSimiliarWarp(String name) {
+    public Entry<String, Warp> getSimiliarWarp(String name, Player player) {
 
         if (warps.containsKey(name))
             return warps.ceilingEntry(name);
@@ -334,6 +334,8 @@ public class WarpManager {
         int delta = Integer.MAX_VALUE;
 
         for (Entry<String, Warp> entry : warps.entrySet()) {
+            if (!entry.getValue().canUse(player))
+                continue;
             String tempName = entry.getKey().toLowerCase();
             if (tempName.startsWith(lowerName)) {
                 int curDelta = tempName.length() - lowerName.length();
