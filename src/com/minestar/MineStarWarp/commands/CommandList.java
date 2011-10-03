@@ -51,6 +51,8 @@ import com.minestar.MineStarWarp.commands.warp.SearchCommand;
 import com.minestar.MineStarWarp.commands.warp.UninviteCommand;
 import com.minestar.MineStarWarp.commands.warp.WarpToCommand;
 
+import de.minestar.blockcounter.commands.Command;
+
 public class CommandList {
 
     // The commands are stored in this list. The key indicates the
@@ -149,11 +151,9 @@ public class CommandList {
                 }
 
                 // PRINT SYNTAX
-                while (!cmdList.isEmpty()) {
-                    cmd = cmdList.removeFirst();
-                    player.sendMessage(ChatColor.GRAY + cmd.getSyntax() + " "
-                            + cmd.getArguments());
-                }
+                for (Command command : cmdList)
+                    player.sendMessage(ChatColor.GRAY + command.getSyntax()
+                            + " " + command.getArguments());
             }
         }
     }
