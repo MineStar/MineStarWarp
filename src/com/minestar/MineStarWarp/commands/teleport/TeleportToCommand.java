@@ -22,7 +22,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
-import com.gemo.utils.UtilPermissions;
+import com.bukkit.gemo.utils.UtilPermissions;
 import com.minestar.MineStarWarp.Main;
 import com.minestar.MineStarWarp.commands.ExtendedCommand;
 import com.minestar.MineStarWarp.utils.PlayerUtil;

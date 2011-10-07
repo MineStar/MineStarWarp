@@ -22,7 +22,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
-import com.gemo.utils.UtilPermissions;
+import com.bukkit.gemo.utils.UtilPermissions;
 import com.minestar.MineStarWarp.Main;
 
 public class PlayerTeleportListener extends PlayerListener {
