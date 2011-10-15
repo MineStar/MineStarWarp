@@ -79,12 +79,16 @@ public class TeleportToCommand extends ExtendedCommand {
             return;
         }
         playerToTeleport.teleport(target.getLocation());
-        player.sendMessage(ChatColor.AQUA
-                + Main.localization.get("teleportToCommand.targetTeleported",
+        playerToTeleport.sendMessage(ChatColor.AQUA
+                + Main.localization.get("teleportToCommand.targetInformation",
                         target.getName()));
         target.sendMessage(ChatColor.AQUA
-                + Main.localization.get("teleportToCommand.targetInformation",
+                + Main.localization.get("teleportToCommand.targetTeleported",
                         player.getName()));
+        player.sendMessage(ChatColor.AQUA
+                + Main.localization.get("teleportToCommand.teleportSucess",
+                        playerToTeleport.getName(), target.getName()));
+
     }
 
     private void teleportToPlayer(String[] args, Player player) {

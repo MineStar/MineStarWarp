@@ -26,6 +26,7 @@ description = Teleportiert dich zum Spieler.
 playerNotFound = Spieler mit Namen '%s' nicht gefunden. Vielleicht ist er offline?
 targetInformation = Du wurdest zu '%s' teleportiert.
 targetTeleported = '%s' wurde zu dir teleportiert.
+teleportSucess = '%s' wurde zu '%s' teleportiert.
 
 #createCommand
 description = Erstellt einen privaten Warp.
