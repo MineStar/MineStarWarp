@@ -71,7 +71,6 @@ public class Main extends JavaPlugin {
         localization = null;
         backManager = null;
         respawn = null;
-        System.gc();
         log.printInfo("disabled");
     }
 
