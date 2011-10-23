@@ -28,6 +28,10 @@ targetInformation = Du wurdest zu '%s' teleportiert.
 targetTeleported = '%s' wurde zu dir teleportiert.
 teleportSucess = '%s' wurde zu '%s' teleportiert.
 
+#teleportToCoords
+description = Teleportiert dich zu einem Punkt
+teleportSucess = Erfolgreich teleportiert
+
 #createCommand
 description = Erstellt einen privaten Warp.
 keyWord = Der Name '%s' kann nicht verwendet werden. Bitte nutz einen anderen!

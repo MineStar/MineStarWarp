@@ -192,7 +192,7 @@ public class DatabaseManager {
         catch (Exception e) {
             Main.log.printError("Error while loading warps from database!", e);
         }
-        Main.log.printInfo("Loaded sucessfully " + warps.size() + " Warps");
+        Main.log.printInfo("Warps loaded: " + warps.size());
         return warps;
     }
 
@@ -222,7 +222,7 @@ public class DatabaseManager {
             Main.log.printError("Error while loading the homes from database!",
                     e);
         }
-        Main.log.printInfo("Loaded sucessfully " + homes.size() + " Homes");
+        Main.log.printInfo("Homes loaded: " + homes.size());
         return homes;
     }
 
@@ -250,7 +250,7 @@ public class DatabaseManager {
         catch (Exception e) {
             Main.log.printError("Error while loading spawns from database!", e);
         }
-        Main.log.printInfo("Loaded sucessfully " + spawns.size() + " Spawns");
+        Main.log.printInfo("Spawns loaded: " + spawns.size());
         return spawns;
 
     }
@@ -280,7 +280,7 @@ public class DatabaseManager {
         catch (Exception e) {
             Main.log.printError("Error while loading banks from database!", e);
         }
-        Main.log.printInfo("Loaded sucessfully " + banks.size() + " Banks");
+        Main.log.printInfo("Banks loaded: " + banks.size());
         return banks;
     }
 

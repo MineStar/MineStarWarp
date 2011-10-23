@@ -38,6 +38,7 @@ import com.minestar.MineStarWarp.commands.spawn.SetSpawnCommand;
 import com.minestar.MineStarWarp.commands.spawn.SpawnCommand;
 import com.minestar.MineStarWarp.commands.teleport.TeleportHereCommand;
 import com.minestar.MineStarWarp.commands.teleport.TeleportToCommand;
+import com.minestar.MineStarWarp.commands.teleport.TeleportToCoords;
 import com.minestar.MineStarWarp.commands.warp.CreateCommand;
 import com.minestar.MineStarWarp.commands.warp.DeleteCommand;
 import com.minestar.MineStarWarp.commands.warp.GuestListCommand;
@@ -69,9 +70,11 @@ public class CommandList {
 
         // Add an command to this list to register it in the plugin
         Command[] commands = new Command[] {
+
                 // Teleport Commands
                 new TeleportHereCommand("/tphere", "<Player>", "tphere", server),
                 new TeleportToCommand("/tp", "<Player>", "tpTo", server),
+                new TeleportToCoords("/tp", "<X> <Y> <Z>","",server),
 
                 // Home
                 new SetHomeCommand("/sethome", "", "sethome", server),
@@ -100,7 +103,7 @@ public class CommandList {
                                 new DeleteCommand("delete", "<Name>", "delete", server),
                                 new MoveCommand("move", "<Name>", "move", server),
                                 new RenameCommand("rename", "<Oldname> <Newname>", "rename", server),
-                                
+
                                 // Searching Warps
                                 new ListCommand("list", "", "list", server),
                                 new SearchCommand("search", "<Name>", "search", server),

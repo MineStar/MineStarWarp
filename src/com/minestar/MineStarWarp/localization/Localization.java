@@ -74,7 +74,7 @@ public class Localization {
             Main.log.printWarning(line);
         }
 
-        Main.log.printInfo("Loaded " + texts.size() + " localized texts");
+        Main.log.printInfo("Localized texts loaded: " + texts.size());
     }
 
     public static Localization getInstance(String language) {
