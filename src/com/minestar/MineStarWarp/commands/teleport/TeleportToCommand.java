@@ -19,6 +19,7 @@
 package com.minestar.MineStarWarp.commands.teleport;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
@@ -54,8 +55,41 @@ public class TeleportToCommand extends ExtendedCommand {
             teleportToPlayer(args, player);
         else if (args.length == 2)
             teleportPlayerToPlayer(args, player);
+        else if (args.length == 3 || args.length == 4)
+            teleportToCoords(args, player);
         else
             player.sendMessage(getHelpMessage());
+    }
+
+    private void teleportToCoords(String[] args, Player player) {
+
+        if (!UtilPermissions.playerCanUseCommand(player,
+                "minestarwarp.command.tptocoords")) {
+            player.sendMessage(NO_RIGHT);
+            return;
+        }
+
+        double[] coords = new double[3];
+        try {
+            coords[0] = Double.parseDouble(args[0]);
+            coords[1] = Double.parseDouble(args[1]);
+            coords[2] = Double.parseDouble(args[2]);
+        }
+        catch (Exception e) {
+            player.sendMessage(ChatColor.BLUE + "/tp X Y Z ");
+            return;
+        }
+        String worldName;
+
+        if (args.length == 4)
+            worldName = args[4];
+        else
+            worldName = player.getWorld().getName();
+
+        player.teleport(new Location(server.getWorld(worldName), coords[0],
+                coords[1], coords[2]));
+        player.sendMessage(ChatColor.AQUA
+                + Main.localization.get("teleportToCoords.description"));
     }
 
     private void teleportPlayerToPlayer(String[] args, Player player) {

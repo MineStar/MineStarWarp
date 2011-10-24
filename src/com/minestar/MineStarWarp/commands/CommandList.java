@@ -38,7 +38,6 @@ import com.minestar.MineStarWarp.commands.spawn.SetSpawnCommand;
 import com.minestar.MineStarWarp.commands.spawn.SpawnCommand;
 import com.minestar.MineStarWarp.commands.teleport.TeleportHereCommand;
 import com.minestar.MineStarWarp.commands.teleport.TeleportToCommand;
-import com.minestar.MineStarWarp.commands.teleport.TeleportToCoords;
 import com.minestar.MineStarWarp.commands.warp.CreateCommand;
 import com.minestar.MineStarWarp.commands.warp.DeleteCommand;
 import com.minestar.MineStarWarp.commands.warp.GuestListCommand;
@@ -74,7 +73,6 @@ public class CommandList {
                 // Teleport Commands
                 new TeleportHereCommand("/tphere", "<Player>", "tphere", server),
                 new TeleportToCommand("/tp", "<Player>", "tpTo", server),
-                new TeleportToCoords("/tp", "<X> <Y> <Z>","",server),
 
                 // Home
                 new SetHomeCommand("/sethome", "", "sethome", server),
