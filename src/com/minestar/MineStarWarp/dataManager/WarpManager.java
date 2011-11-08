@@ -23,8 +23,8 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.util.config.Configuration;
 
 import com.bukkit.gemo.utils.UtilPermissions;
 import com.minestar.MineStarWarp.Main;
@@ -64,7 +64,7 @@ public class WarpManager {
      * @param config
      *            The config file for the plugin
      */
-    public WarpManager(DatabaseManager dbManager, Configuration config) {
+    public WarpManager(DatabaseManager dbManager, FileConfiguration config) {
         this.dbManager = dbManager;
         warps = dbManager.loadWarpsFromDatabase();
 

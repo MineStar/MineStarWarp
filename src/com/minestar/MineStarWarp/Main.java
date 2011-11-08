@@ -23,11 +23,11 @@ import java.util.ArrayList;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.Event.Priority;
 import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.config.Configuration;
 
 import com.minestar.MineStarWarp.commands.CommandList;
 import com.minestar.MineStarWarp.dataManager.BackManager;
@@ -59,7 +59,7 @@ public class Main extends JavaPlugin {
 
     private CommandList commandList;
 
-    public static Configuration config;
+    public static FileConfiguration config;
 
     public void onDisable() {
         ConnectionManager.closeConnection();
@@ -76,7 +76,7 @@ public class Main extends JavaPlugin {
 
     public void onEnable() {
 
-        loadConfig();
+        checkConfig();
 
         if (ConnectionManager.initialize()) {
             localization = Localization.getInstance(config.getString(
@@ -121,18 +121,18 @@ public class Main extends JavaPlugin {
      * Load the properties from the configFile. If the configFile not exists it
      * create ones
      */
-    public void loadConfig() {
+    private void checkConfig() {
+
         File pluginDir = getDataFolder();
         if (!pluginDir.exists())
             pluginDir.mkdirs();
+
         File configFile = new File(pluginDir.getAbsolutePath().concat(
                 "/config.yml"));
-        config = new Configuration(new File(pluginDir.getAbsolutePath().concat(
-                "/config.yml")));
-        if (!configFile.exists())
+
+        if (!configFile.exists()) {
             createConfig();
-        else
-            config.load();
+        }
     }
 
     /**
@@ -140,15 +140,21 @@ public class Main extends JavaPlugin {
      * format.
      */
     public void createConfig() {
-
-        config.setProperty("warps.default", 0);
-        config.setProperty("warps.proble", 2);
-        config.setProperty("warps.free", 5);
-        config.setProperty("warps.pay", 9);
-        config.setProperty("warps.warpsPerPage", 8);
-        config.setProperty("language", "de");
-        config.setProperty("banks.banksPerPage", 10);
-        config.setProperty("home.setHomeUsingBed", true);
-        config.save();
+        
+        config = getConfig();
+        config.addDefault("warps.default", 0);
+        config.addDefault("warps.probe", 2);
+        config.addDefault("warps.free", 5);
+        config.addDefault("warps.pay", 9);
+        config.addDefault("warps.warpsPerPage", 8);
+        
+        config.addDefault("banks.banksPerPage", 10);
+        
+        config.addDefault("home.setHomeUsingBed", true);
+        
+        config.addDefault("language", "de");
+        
+        config.options().copyDefaults(true);
+        saveConfig();
     }
 }
