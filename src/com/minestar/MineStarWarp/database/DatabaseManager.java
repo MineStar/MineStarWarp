@@ -16,7 +16,7 @@
  * along with MineStarWarp.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.minestar.MineStarWarp.dataManager;
+package com.minestar.MineStarWarp.database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

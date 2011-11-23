@@ -27,6 +27,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import com.minestar.MineStarWarp.Main;
+import com.minestar.MineStarWarp.database.DatabaseManager;
 
 public class BankManager {
 

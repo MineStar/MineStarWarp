@@ -25,6 +25,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import com.minestar.MineStarWarp.Main;
+import com.minestar.MineStarWarp.database.DatabaseManager;
 
 /**
  * Is responsible for handling all home commands.
