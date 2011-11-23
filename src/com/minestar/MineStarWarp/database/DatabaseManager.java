@@ -117,7 +117,7 @@ public class DatabaseManager {
                         + "`creator` varchar(32) NOT NULL DEFAULT 'Player',"
                         + "`world` varchar(32) NOT NULL DEFAULT '0',"
                         + "`x` DOUBLE NOT NULL DEFAULT '0',"
-                        + "`y` tinyint NOT NULL DEFAULT '0',"
+                        + "`y` DOUBLE NOT NULL DEFAULT '0',"
                         + "`z` DOUBLE NOT NULL DEFAULT '0',"
                         + "`yaw` smallint NOT NULL DEFAULT '0',"
                         + "`pitch` smallint NOT NULL DEFAULT '0',"
@@ -130,7 +130,7 @@ public class DatabaseManager {
                         + "`player` varchar(32) PRIMARY KEY,"
                         + "`world` varchar(32) NOT NULL DEFAULT '0',"
                         + "`x` DOUBLE NOT NULL DEFAULT '0',"
-                        + "`y` tinyint NOT NULL DEFAULT '0',"
+                        + "`y` DOUBLE NOT NULL DEFAULT '0',"
                         + "`z` DOUBLE NOT NULL DEFAULT '0',"
                         + "`yaw` smallint NOT NULL DEFAULT '0',"
                         + "`pitch` smallint NOT NULL DEFAULT '0');");
@@ -141,7 +141,7 @@ public class DatabaseManager {
                 "CREATE TABLE IF NOT EXISTS `spawns` ("
                         + "`world` varchar(32) PRIMARY KEY,"
                         + "`x` DOUBLE NOT NULL DEFAULT '0',"
-                        + "`y` tinyint NOT NULL DEFAULT '0',"
+                        + "`y` DOUBLE NOT NULL DEFAULT '0',"
                         + "`z` DOUBLE NOT NULL DEFAULT '0',"
                         + "`yaw` smallint NOT NULL DEFAULT '0',"
                         + "`pitch` smallint NOT NULL DEFAULT '0');");
@@ -153,7 +153,7 @@ public class DatabaseManager {
                         + "`player` varchar(32) PRIMARY KEY,"
                         + "`world` varchar(32) NOT NULL DEFAULT '0',"
                         + "`x` DOUBLE NOT NULL DEFAULT '0',"
-                        + "`y` tinyint NOT NULL DEFAULT '0',"
+                        + "`y` DOUBLE NOT NULL DEFAULT '0',"
                         + "`z` DOUBLE NOT NULL DEFAULT '0',"
                         + "`yaw` smallint NOT NULL DEFAULT '0',"
                         + "`pitch` smallint NOT NULL DEFAULT '0');");
@@ -181,7 +181,7 @@ public class DatabaseManager {
                 String creator = rs.getString(2);
                 String world = rs.getString(3);
                 Location loc = new Location(server.getWorld(world),
-                        rs.getDouble(4), rs.getInt(5), rs.getDouble(6),
+                        rs.getDouble(4), rs.getDouble(5), rs.getDouble(6),
                         rs.getInt(7), rs.getInt(8));
                 String guestsList = rs.getString(9);
                 Warp warp = new Warp(creator, loc,
@@ -213,7 +213,7 @@ public class DatabaseManager {
                 String name = rs.getString(1).toLowerCase();
                 String world = rs.getString(2);
                 Location loc = new Location(server.getWorld(world),
-                        rs.getDouble(3), rs.getInt(4), rs.getDouble(5),
+                        rs.getDouble(3), rs.getDouble(4), rs.getDouble(5),
                         rs.getInt(6), rs.getInt(7));
                 homes.put(name, loc);
             }
@@ -242,7 +242,7 @@ public class DatabaseManager {
 
                 String world = rs.getString(1);
                 Location loc = new Location(server.getWorld(world),
-                        rs.getDouble(2), rs.getInt(3), rs.getDouble(4),
+                        rs.getDouble(2), rs.getDouble(3), rs.getDouble(4),
                         rs.getInt(5), rs.getInt(6));
                 spawns.put(world, loc);
             }
@@ -272,7 +272,7 @@ public class DatabaseManager {
                 String name = rs.getString(1).toLowerCase();
                 String world = rs.getString(2);
                 Location loc = new Location(server.getWorld(world),
-                        rs.getDouble(3), rs.getInt(4), rs.getDouble(5),
+                        rs.getDouble(3), rs.getDouble(4), rs.getDouble(5),
                         rs.getInt(6), rs.getInt(7));
                 banks.put(name, loc);
             }
@@ -305,7 +305,7 @@ public class DatabaseManager {
             addWarp.setString(2, creator.getName());
             addWarp.setString(3, creator.getWorld().getName());
             addWarp.setDouble(4, loc.getX());
-            addWarp.setInt(5, loc.getBlockY());
+            addWarp.setDouble(5, loc.getY());
             addWarp.setDouble(6, loc.getZ());
             addWarp.setInt(7, Math.round(loc.getYaw()) % 360);
             addWarp.setInt(8, Math.round(loc.getPitch()) % 360);
@@ -336,7 +336,7 @@ public class DatabaseManager {
             addHome.setString(1, creator.getName().toLowerCase());
             addHome.setString(2, creator.getWorld().getName());
             addHome.setDouble(3, loc.getX());
-            addHome.setInt(4, loc.getBlockY());
+            addHome.setDouble(4, loc.getY());
             addHome.setDouble(5, loc.getZ());
             addHome.setInt(6, Math.round(loc.getYaw()) % 360);
             addHome.setInt(7, Math.round(loc.getPitch()) % 360);
@@ -365,7 +365,7 @@ public class DatabaseManager {
             // INSERT INTO spawns (world,x,y,z,yaw,pitch) VALUES (?,?,?,?,?,?)
             addSpawn.setString(1, loc.getWorld().getName());
             addSpawn.setDouble(2, loc.getX());
-            addSpawn.setInt(3, loc.getBlockY());
+            addSpawn.setDouble(3, loc.getY());
             addSpawn.setDouble(4, loc.getZ());
             addSpawn.setInt(5, Math.round(loc.getYaw()) % 360);
             addSpawn.setInt(6, Math.round(loc.getPitch()) % 360);
@@ -395,7 +395,7 @@ public class DatabaseManager {
             // pitch = ? WHERE name = ?;
             updateHome.setString(1, player.getWorld().getName());
             updateHome.setDouble(2, loc.getX());
-            updateHome.setInt(3, loc.getBlockY());
+            updateHome.setDouble(3, loc.getY());
             updateHome.setDouble(4, loc.getZ());
             updateHome.setInt(5, Math.round(loc.getYaw()) % 360);
             updateHome.setInt(6, Math.round(loc.getPitch()) % 360);
@@ -430,7 +430,7 @@ public class DatabaseManager {
             setBank.setString(1, playerName.toLowerCase());
             setBank.setString(2, bankLocation.getWorld().getName());
             setBank.setDouble(3, bankLocation.getX());
-            setBank.setInt(4, bankLocation.getBlockY());
+            setBank.setDouble(4, bankLocation.getY());
             setBank.setDouble(5, bankLocation.getZ());
             setBank.setInt(6, Math.round(bankLocation.getYaw()) % 360);
             setBank.setInt(7, Math.round(bankLocation.getPitch()) % 360);
@@ -459,7 +459,7 @@ public class DatabaseManager {
             // pitch = ? WHERE name = ?;
             updateBank.setString(1, bankLocation.getWorld().getName());
             updateBank.setDouble(2, bankLocation.getX());
-            updateBank.setInt(3, bankLocation.getBlockY());
+            updateBank.setDouble(3, bankLocation.getY());
             updateBank.setDouble(4, bankLocation.getZ());
             updateBank.setInt(5, Math.round(bankLocation.getYaw()) % 360);
             updateBank.setInt(6, Math.round(bankLocation.getPitch()) % 360);
@@ -487,7 +487,7 @@ public class DatabaseManager {
             // UPDATE spawns SET x = ? , y = ? , z = ? , yaw = ? , pitch = ?
             // WHERE world = ?
             updateSpawn.setDouble(1, loc.getX());
-            updateSpawn.setInt(2, loc.getBlockY());
+            updateSpawn.setDouble(2, loc.getY());
             updateSpawn.setDouble(3, loc.getZ());
             updateSpawn.setInt(4, Math.round(loc.getYaw()) % 360);
             updateSpawn.setInt(5, Math.round(loc.getPitch()) % 360);
@@ -566,7 +566,7 @@ public class DatabaseManager {
             // pitch = ?, WHERE name = ?;"
             updateWarp.setString(1, loc.getWorld().getName());
             updateWarp.setDouble(2, loc.getX());
-            updateWarp.setInt(3, loc.getBlockY());
+            updateWarp.setDouble(3, loc.getY());
             updateWarp.setDouble(4, loc.getZ());
             updateWarp.setInt(5, Math.round(loc.getYaw() % 360));
             updateWarp.setInt(6, Math.round(loc.getPitch() % 360));
