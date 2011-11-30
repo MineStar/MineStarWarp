@@ -53,6 +53,11 @@ public class InviteCommand extends Command {
         String warpName = args[1];
         Warp warp = Main.warpManager.getWarp(warpName);
         if (warp != null) {
+            if (warp.isPublic()) {
+                player.sendMessage(ChatColor.RED
+                        + "Warp ist public und für alle Spieler zugänglich!");
+                return;
+            }
             if (warp.canEdit(player)) {
                 Player guest = PlayerUtil.getPlayer(server, guestName);
                 if (guest != null)

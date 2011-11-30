@@ -133,6 +133,8 @@ public class Main extends JavaPlugin {
         if (!configFile.exists()) {
             createConfig();
         }
+
+        config = getConfig();
     }
 
     /**
@@ -140,20 +142,20 @@ public class Main extends JavaPlugin {
      * format.
      */
     public void createConfig() {
-        
+
         config = getConfig();
         config.addDefault("warps.default", 0);
         config.addDefault("warps.probe", 2);
         config.addDefault("warps.free", 5);
         config.addDefault("warps.pay", 9);
         config.addDefault("warps.warpsPerPage", 8);
-        
+
         config.addDefault("banks.banksPerPage", 10);
-        
+
         config.addDefault("home.setHomeUsingBed", true);
-        
+
         config.addDefault("language", "de");
-        
+
         config.options().copyDefaults(true);
         saveConfig();
     }
