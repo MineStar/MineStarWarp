@@ -128,7 +128,8 @@ public class ListCommand extends ExtendedCommand {
             else
                 color = ChatColor.RED;
 
-            String location = " @(" + x + ", " + y + ", " + z + ")";
+            String location = " @(" + x + ", " + y + ", " + z + " in "
+                    + loc.getWorld().getName() + ")";
             String creatorString = (warp.isPublic() ? "(+)" : "(-)") + " by "
                     + creator;
             player.sendMessage(color + "'" + warpName + "'" + ChatColor.WHITE
