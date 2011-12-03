@@ -23,6 +23,8 @@ import java.util.HashSet;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import com.bukkit.gemo.utils.UtilPermissions;
+
 public class Warp {
 
     /** Is able to edit , use the warp and invite other player to it */
@@ -102,7 +104,9 @@ public class Warp {
      * @return True if the player is allowed to use it
      */
     public boolean canUse(Player player) {
-        return isPublic() || canEdit(player)
+        return isPublic()
+                || canEdit(player)
+                || UtilPermissions.playerCanUseCommand(player, "minestarwarp.useAll")
                 || guests.contains(player.getName().toLowerCase());
 
     }
@@ -169,7 +173,9 @@ public class Warp {
      * @return True, when the player is the owner or an admin
      */
     public boolean canEdit(Player player) {
-        return isOwner(player.getName()) || player.isOp();
+        return isOwner(player.getName())
+                || player.isOp()
+                || UtilPermissions.playerCanUseCommand(player, "minestarwarp.editAll");
     }
 
     /**
