@@ -297,11 +297,11 @@ public class WarpManager {
             return maximumWarps[DEFAULTS];
         else if (groupName.equals("probe"))
             return maximumWarps[PROBE];
-        else if (groupName.equals("free"))
+        else if (groupName.equals("vip"))
             return maximumWarps[FREE];
         else if (groupName.equals("pay"))
             return maximumWarps[PAY];
-        return Integer.MAX_VALUE;
+        return 0;
     }
 
     /**
