@@ -18,6 +18,7 @@
 
 package com.minestar.MineStarWarp.commands.warp;
 
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import org.bukkit.ChatColor;
@@ -138,16 +139,27 @@ public class ListCommand extends ExtendedCommand {
      */
     private void showWarpList(Player player, TreeMap<String, Warp> warps) {
 
-        for (String warpName : warps.keySet()) {
+        // FORMAT IS
+        // COLOR 'WARPNAME' by CREATOR + (X Y Z world)
+        String message = "%s'%s'" + ChatColor.WHITE + " by " + ChatColor.GREEN
+                + "%s" + ChatColor.WHITE + " (" + ChatColor.BLUE
+                + "%d %d %d %s" + ChatColor.WHITE + ")";
 
-            Warp warp = warps.get(warpName);
-            boolean isOwner = warp.isOwner(player.getName());
-            String creator = isOwner ? "you" : warp.getOwner();
-            Location loc = warp.getLoc();
-            int x = loc.getBlockX();
-            int y = loc.getBlockY();
-            int z = loc.getBlockZ();
-            ChatColor color;
+        Warp warp = null;
+        boolean isOwner = false;
+        String creator = null;
+        Location loc = null;
+        int x, y, z = 0;
+        ChatColor color = null;
+        for (Entry<String, Warp> entry : warps.entrySet()) {
+
+            warp = entry.getValue();
+            isOwner = warp.isOwner(player.getName());
+            creator = isOwner ? "you" : warp.getOwner();
+            loc = warp.getLoc();
+            x = loc.getBlockX();
+            y = loc.getBlockY();
+            z = loc.getBlockZ();
 
             if (isOwner)
                 color = ChatColor.AQUA;
@@ -156,12 +168,8 @@ public class ListCommand extends ExtendedCommand {
             else
                 color = ChatColor.RED;
 
-            String location = " " + x + " " + y + " " + z + " in "
-                    + loc.getWorld().getName() + "";
-            String creatorString = (warp.isPublic() ? "(+)" : "(-)") + " by "
-                    + creator;
-            player.sendMessage(color + "'" + warpName + "'" + ChatColor.WHITE
-                    + creatorString + location);
+            player.sendMessage(String.format(message, color, entry.getKey(),
+                    creator, x, y, z, loc.getWorld().getName()));
         }
     }
 }
