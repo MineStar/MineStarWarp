@@ -27,6 +27,7 @@ import com.minestar.MineStarWarp.Main;
 
 public class PlayerTeleportListener extends PlayerListener {
     public void onPlayerTeleport(PlayerTeleportEvent event) {
+        event.getTo().getBlock().getChunk().load();
         Player player = event.getPlayer();
         if (UtilPermissions.playerCanUseCommand(player,"minestarwarp.command.back")
                 && !Main.respawn.contains(player.getName()))

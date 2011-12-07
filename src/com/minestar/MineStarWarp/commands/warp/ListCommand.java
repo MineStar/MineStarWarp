@@ -25,6 +25,7 @@ import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
+import com.bukkit.gemo.utils.UtilPermissions;
 import com.minestar.MineStarWarp.Main;
 import com.minestar.MineStarWarp.Warp;
 import com.minestar.MineStarWarp.commands.ExtendedCommand;
@@ -54,50 +55,77 @@ public class ListCommand extends ExtendedCommand {
      */
     public void execute(String[] args, Player player) {
 
+        // /warp list was used
+        if (args.length == 0)
+            showAllWarps(player, 1);
+        // warp list PARAMATER was used
+        else if (args.length == 1) {
+            // /warp list my
+            if (args[0].equalsIgnoreCase("my"))
+                showPlayersWarp(player, player.getName());
+            // warp list #
+            else if (args[0].matches("\\d*"))
+                showAllWarps(player, Integer.parseInt(args[0]));
+            // warp list playerName
+            else if (UtilPermissions.playerCanUseCommand(player,
+                    "minestarwarp.command.listPlayer"))
+                showPlayersWarp(player, args[0]);
+        }
+        else
+            player.sendMessage(getHelpMessage());
+    }
+
+    /**
+     * When player use the command '/warp list #' or '/warp list' without an
+     * paramater
+     * 
+     * @param player
+     * @param page
+     */
+    private void showAllWarps(Player player, int page) {
+        // sorted result
         TreeMap<String, Warp> warps;
-        boolean showPlayersWarps = args.length != 0
-                && args[0].equalsIgnoreCase("my");
-        if (showPlayersWarps) {
-            warps = Main.warpManager.getWarpsPlayerIsOwner(player.getName());
-            if (warps != null) {
-                player.sendMessage(ChatColor.AQUA
-                        + Main.localization.get("listCommand.usedSlots",
-                                Main.warpManager.usedWarpSlots(player)));
-                showWarpList(player, warps);
-            }
-
-            else
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get("listCommand.noMyWarps"));
+        // how many pages of warps the player can see
+        int maxPageNumber = (int) Math.nextUp(Main.warpManager
+                .countWarpsCanUse(player) / (double) warpsPerPage);
+        if (maxPageNumber == 0) {
+            player.sendMessage(ChatColor.RED
+                    + Main.localization.get("listCommand.noWarps"));
+            return;
         }
-        else {
-            if (args.length != 0 && !args[0].matches("\\d*")) {
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get("listCommand.pageNumber"));
-                return;
-            }
-            int maxPageNumber = (int) Math.ceil(Main.warpManager
-                    .countWarpsCanUse(player) / (double) warpsPerPage);
-            if (maxPageNumber == 0) {
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get("listCommand.noWarps"));
-                return;
-            }
-            int pageNumber = args.length == 0 ? 1 : Integer.parseInt(args[0]);
-            if (pageNumber <= maxPageNumber) {
-                warps = Main.warpManager.getWarpsForList(pageNumber,
-                        warpsPerPage, player);
-                player.sendMessage(Main.localization.get(
-                        "listCommand.pageHead", String.valueOf(pageNumber),
-                        String.valueOf(maxPageNumber)));
-                showWarpList(player, warps);
-            }
-            else
-                player.sendMessage(ChatColor.RED
-                        + Main.localization.get("listCommand.highPage",
-                                String.valueOf(maxPageNumber)));
-
+        if (page <= maxPageNumber) {
+            warps = Main.warpManager
+                    .getWarpsForList(page, warpsPerPage, player);
+            player.sendMessage(Main.localization.get("listCommand.pageHead",
+                    Integer.toString(page), Integer.toString(maxPageNumber)));
+            showWarpList(player, warps);
         }
+        else
+            player.sendMessage(ChatColor.RED
+                    + Main.localization.get("listCommand.highPage",
+                            String.valueOf(maxPageNumber)));
+
+    }
+
+    /**
+     * When player use the command '/warp list my' or '/warp list playername'
+     * 
+     * @param player
+     * @param targetName
+     */
+    private void showPlayersWarp(Player player, String targetName) {
+        TreeMap<String, Warp> warps = Main.warpManager
+                .getWarpsPlayerIsOwner(targetName);
+        if (warps != null) {
+            player.sendMessage(ChatColor.AQUA
+                    + Main.localization.get("listCommand.usedSlots",
+                            Main.warpManager.usedWarpSlots(player)));
+            showWarpList(player, warps);
+        }
+
+        else
+            player.sendMessage(ChatColor.RED
+                    + Main.localization.get("listCommand.noMyWarps"));
     }
 
     /**
@@ -116,9 +144,9 @@ public class ListCommand extends ExtendedCommand {
             boolean isOwner = warp.isOwner(player.getName());
             String creator = isOwner ? "you" : warp.getOwner();
             Location loc = warp.getLoc();
-            int x = (int) Math.round(loc.getX());
+            int x = loc.getBlockX();
             int y = loc.getBlockY();
-            int z = (int) Math.round(loc.getZ());
+            int z = loc.getBlockZ();
             ChatColor color;
 
             if (isOwner)
@@ -128,8 +156,8 @@ public class ListCommand extends ExtendedCommand {
             else
                 color = ChatColor.RED;
 
-            String location = " @(" + x + ", " + y + ", " + z + " in "
-                    + loc.getWorld().getName() + ")";
+            String location = " " + x + " " + y + " " + z + " in "
+                    + loc.getWorld().getName() + "";
             String creatorString = (warp.isPublic() ? "(+)" : "(-)") + " by "
                     + creator;
             player.sendMessage(color + "'" + warpName + "'" + ChatColor.WHITE

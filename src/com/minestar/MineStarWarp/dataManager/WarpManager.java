@@ -378,7 +378,7 @@ public class WarpManager {
                 warpList.put(warpName, warp);
         }
 
-        return warpList.size() > 0 ? warpList : null;
+        return warpList.size() != 0 ? warpList : null;
     }
 
     /**
@@ -400,7 +400,7 @@ public class WarpManager {
                 warpList.put(entry.getKey(), tempWarp);
         }
 
-        return warpList.size() > 0 ? warpList : null;
+        return warpList.size() != 0 ? warpList : null;
     }
 
     /**
@@ -440,7 +440,7 @@ public class WarpManager {
             warpList.put(key, warpsPlayerCanUse.get(key));
         }
 
-        return warpList.size() > 0 ? warpList : null;
+        return warpList.size() != 0 ? warpList : null;
     }
 
     /**
