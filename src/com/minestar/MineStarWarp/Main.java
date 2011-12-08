@@ -102,7 +102,8 @@ public class Main extends JavaPlugin {
                 pm.registerEvent(Type.PLAYER_BED_ENTER,
                         new PlayerBedListener(), Priority.Normal, this);
 
-            log.printInfo("enabled");
+            log.printInfo("Version " + getDescription().getVersion()
+                    + " enabled");
         }
         else {
             log.printWarning("Can't connect to database!");

@@ -18,8 +18,7 @@
 
 package com.minestar.MineStarWarp.commands.warp;
 
-import java.util.HashMap;
-import java.util.Map.Entry;
+import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
@@ -53,7 +52,7 @@ public class SearchCommand extends Command {
         String query = args[0];
 
         // Getting all warps that contains the query
-        HashMap<String, Warp> result = Main.warpManager.getSimiliarWarps(query,
+        Map<String, Warp> result = Main.warpManager.getSimiliarWarps(query,
                 player);
 
         // When at least one warp is found
@@ -61,34 +60,7 @@ public class SearchCommand extends Command {
             player.sendMessage(ChatColor.YELLOW
                     + Main.localization.get("searchCommand.matches", query));
             // Sending all warps per Line to the player
-            for (Entry<String, Warp> entry : result.entrySet()) {
-                Warp warp = entry.getValue();
-                String warpName = entry.getKey();
-
-                // Output Formation START
-                String owner = null;
-                ChatColor color = null;
-
-                if (warp.isOwner(player.getName())) {
-                    color = ChatColor.AQUA;
-                    owner = "you";
-                }
-                else if (warp.isPublic())
-                    color = ChatColor.GREEN;
-                else
-                    color = ChatColor.RED;
-
-                if (owner == null)
-                    owner = warp.getOwner();
-
-                int x = warp.getLoc().getBlockX();
-                int y = warp.getLoc().getBlockY();
-                int z = warp.getLoc().getBlockZ();
-                // Output Formation END
-                player.sendMessage(color + "'" + warpName + "'"
-                        + ChatColor.WHITE + " by " + owner + " @(" + x + ", "
-                        + y + ", " + z + ")");
-            }
+            Main.warpManager.showWarpList(player, result);
         }
         // When no warp was found
         else

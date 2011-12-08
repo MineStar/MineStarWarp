@@ -18,11 +18,9 @@
 
 package com.minestar.MineStarWarp.commands.warp;
 
-import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
@@ -99,7 +97,7 @@ public class ListCommand extends ExtendedCommand {
                     .getWarpsForList(page, warpsPerPage, player);
             player.sendMessage(Main.localization.get("listCommand.pageHead",
                     Integer.toString(page), Integer.toString(maxPageNumber)));
-            showWarpList(player, warps);
+            Main.warpManager.showWarpList(player, warps);
         }
         else
             player.sendMessage(ChatColor.RED
@@ -121,55 +119,11 @@ public class ListCommand extends ExtendedCommand {
             player.sendMessage(ChatColor.AQUA
                     + Main.localization.get("listCommand.usedSlots",
                             Main.warpManager.usedWarpSlots(player)));
-            showWarpList(player, warps);
+            Main.warpManager.showWarpList(player, warps);
         }
 
         else
             player.sendMessage(ChatColor.RED
                     + Main.localization.get("listCommand.noMyWarps"));
-    }
-
-    /**
-     * This sends all the warps in a good format to the player
-     * 
-     * @param player
-     *            The reciever
-     * @param warps
-     *            The warps to present
-     */
-    private void showWarpList(Player player, TreeMap<String, Warp> warps) {
-
-        // FORMAT IS
-        // COLOR 'WARPNAME' by CREATOR + (X Y Z world)
-        String message = "%s'%s'" + ChatColor.WHITE + " by " + ChatColor.GREEN
-                + "%s" + ChatColor.WHITE + " (" + ChatColor.BLUE
-                + "%d %d %d %s" + ChatColor.WHITE + ")";
-
-        Warp warp = null;
-        boolean isOwner = false;
-        String creator = null;
-        Location loc = null;
-        int x, y, z = 0;
-        ChatColor color = null;
-        for (Entry<String, Warp> entry : warps.entrySet()) {
-
-            warp = entry.getValue();
-            isOwner = warp.isOwner(player.getName());
-            creator = isOwner ? "you" : warp.getOwner();
-            loc = warp.getLoc();
-            x = loc.getBlockX();
-            y = loc.getBlockY();
-            z = loc.getBlockZ();
-
-            if (isOwner)
-                color = ChatColor.AQUA;
-            else if (warp.isPublic())
-                color = ChatColor.GREEN;
-            else
-                color = ChatColor.RED;
-
-            player.sendMessage(String.format(message, color, entry.getKey(),
-                    creator, x, y, z, loc.getWorld().getName()));
-        }
     }
 }
