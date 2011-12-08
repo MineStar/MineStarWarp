@@ -18,6 +18,7 @@
 
 package com.minestar.MineStarWarp.utils;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
@@ -36,17 +37,26 @@ public class PlayerUtil {
      */
     public static Player getPlayer(Server server, String name) {
 
-        Player player = server.getPlayer(name);
-        if (player != null)
-            return player;
-
         name = name.toLowerCase();
+        // name is inside the players real name or the players display name
         for (Player tempPlayer : server.getOnlinePlayers()) {
-            String playerName = tempPlayer.getName().toLowerCase();
-            if (playerName.contains(name))
+            if (tempPlayer.getName().toLowerCase().contains(name)
+                    || tempPlayer.getDisplayName().toLowerCase().contains(name))
                 return tempPlayer;
         }
 
+        return null;
+    }
+
+    public static String getOfflinePlayer(Server server, String name) {
+        // Every player who was on the server
+        OfflinePlayer[] players = server.getOfflinePlayers();
+
+        name = name.toLowerCase();
+        for (OfflinePlayer p : players) {
+            if (p.getName().toLowerCase().contains(name))
+                return p.getName();
+        }
         return null;
     }
 }

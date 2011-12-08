@@ -133,7 +133,7 @@ public class TeleportToCommand extends ExtendedCommand {
             return;
         }
 
-        Player target = server.getPlayer(args[0]);
+        Player target = PlayerUtil.getPlayer(server, args[0]);
         if (target == null) {
             player.sendMessage(Main.localization.get(
                     "teleportToCommand.playerNotFound", args[0]));

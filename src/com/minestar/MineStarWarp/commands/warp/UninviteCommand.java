@@ -63,8 +63,13 @@ public class UninviteCommand extends Command {
                 if (guest != null)
                     guestName = guest.getName();
                 else
-                    player.sendMessage(Main.localization.get(
-                            "uninviteCommand.notExactPlayer", args[0]));
+                    guestName = PlayerUtil.getOfflinePlayer(server, guestName);
+                // PLAYER WAS NEVER ON THE SERVER -> DOES NOT EXIST!
+                if (guestName == null) {
+                    player.sendMessage(ChatColor.RED + " Spieler '" + args[0]
+                            + "' existiert nicht!");
+                    return;
+                }
                 if (Main.warpManager.removeGuest(player, warpName, guestName)
                         && guest != null)
                     guest.sendMessage(ChatColor.RED
