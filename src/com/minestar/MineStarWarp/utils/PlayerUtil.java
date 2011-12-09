@@ -18,11 +18,21 @@
 
 package com.minestar.MineStarWarp.utils;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 
 public class PlayerUtil {
+
+    private static Comparator<OfflinePlayer> c = new Comparator<OfflinePlayer>() {
+        public int compare(OfflinePlayer o1, OfflinePlayer o2) {
+            return o1.getName().toLowerCase()
+                    .compareTo(o2.getName().toLowerCase());
+        }
+    };
 
     /**
      * Searching for a player having the case insensitive name. If not found,
@@ -51,12 +61,9 @@ public class PlayerUtil {
     public static String getOfflinePlayer(Server server, String name) {
         // Every player who was on the server
         OfflinePlayer[] players = server.getOfflinePlayers();
+        OfflinePlayer target = server.getOfflinePlayer(name);
 
-        name = name.toLowerCase();
-        for (OfflinePlayer p : players) {
-            if (p.getName().toLowerCase().contains(name))
-                return p.getName();
-        }
-        return null;
+        int i = Arrays.binarySearch(players, target, c);
+        return i >= 0 ? players[i].getName() : null;
     }
 }
