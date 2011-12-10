@@ -116,9 +116,11 @@ public class ListCommand extends ExtendedCommand {
         TreeMap<String, Warp> warps = Main.warpManager
                 .getWarpsPlayerIsOwner(targetName);
         if (warps != null) {
-            player.sendMessage(ChatColor.AQUA
-                    + Main.localization.get("listCommand.usedSlots",
-                            Main.warpManager.usedWarpSlots(player)));
+            player.sendMessage(ChatColor.AQUA + " Spieler '" + targetName
+                    + "' hat "
+                    + Main.warpManager.countWarpsCreatedBy(targetName) + "/"
+                    + Main.warpManager.getMaximumWarp(targetName)
+                    + " private Warps");
             Main.warpManager.showWarpList(player, warps);
         }
 

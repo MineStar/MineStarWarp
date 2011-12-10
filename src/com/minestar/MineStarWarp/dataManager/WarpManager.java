@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -248,6 +249,15 @@ public class WarpManager {
         return counter;
     }
 
+    public int countWarpsCreatedBy(String playerName) {
+        int counter = 0;
+        for (Warp warp : warps.values()) {
+            if (!warp.isPublic() && warp.getOwner().equals(playerName))
+                ++counter;
+        }
+        return counter;
+    }
+
     /**
      * Count all warps the given player can use(warp is public or player is
      * owner or player is on the guest list) <br>
@@ -303,6 +313,25 @@ public class WarpManager {
             return maximumWarps[FREE];
         else if (groupName.equals("pay"))
             return maximumWarps[PAY];
+        else if (groupName.equals("admins") || groupName.equals("mods"))
+            return Integer.MAX_VALUE;
+        return 0;
+    }
+
+    public int getMaximumWarp(String playerName) {
+
+        String groupName = UtilPermissions.getGroupName(playerName, Bukkit
+                .getServer().getWorlds().get(0).getName());
+        if (groupName.equals("default"))
+            return maximumWarps[DEFAULTS];
+        else if (groupName.equals("probe"))
+            return maximumWarps[PROBE];
+        else if (groupName.equals("vip"))
+            return maximumWarps[FREE];
+        else if (groupName.equals("pay"))
+            return maximumWarps[PAY];
+        else if (groupName.equals("admins") || groupName.equals("mods"))
+            return Integer.MAX_VALUE;
         return 0;
     }
 
@@ -490,11 +519,6 @@ public class WarpManager {
         }
     }
 
-    public String usedWarpSlots(Player player) {
-
-        return countWarpsCreatedBy(player) + "/" + getMaximumWarp(player);
-    }
-    
     /**
      * This sends all the warps in a good format to the player
      * 
