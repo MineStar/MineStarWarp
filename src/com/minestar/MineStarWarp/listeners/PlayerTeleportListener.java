@@ -18,6 +18,12 @@
 
 package com.minestar.MineStarWarp.listeners;
 
+import net.minecraft.server.Packet50PreChunk;
+import net.minecraft.server.Packet51MapChunk;
+
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.CraftWorld;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerListener;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -26,11 +32,38 @@ import com.bukkit.gemo.utils.UtilPermissions;
 import com.minestar.MineStarWarp.Main;
 
 public class PlayerTeleportListener extends PlayerListener {
+
     public void onPlayerTeleport(PlayerTeleportEvent event) {
-        event.getTo().getBlock().getChunk().load();
         Player player = event.getPlayer();
-        if (UtilPermissions.playerCanUseCommand(player,"minestarwarp.command.back")
+        loadChunk(player, event.getTo());
+        if (UtilPermissions.playerCanUseCommand(player,
+                "minestarwarp.command.back")
                 && !Main.respawn.contains(player.getName()))
             Main.backManager.setBack(player);
+    }
+
+    private void loadChunk(Player player, Location target) {
+
+        target.getBlock().getChunk().load();
+        CraftPlayer cPlayer = (CraftPlayer) player;
+        CraftWorld cWorld = (CraftWorld) target.getWorld();
+
+        int minY = (40 / 2) * 2;
+        int maxY = (100 / 2 + 1) * 2;
+        int minX = cWorld.getChunkAt(target).getX() * 16;
+        int minZ = cWorld.getChunkAt(target).getZ() * 16;
+        int j = minX + cWorld.getChunkAt(target).getX() * 16;
+        int i1 = minY;
+        int l1 = minZ + cWorld.getChunkAt(target).getZ() * 16;
+        int j2 = (minX + 16 - minX) + 1;
+        int l2 = (maxY - minY) + 2;
+        int i3 = (minZ + 16 - minZ) + 1;
+
+        // SEND PACKET!
+        cPlayer.getHandle().netServerHandler.sendPacket(new Packet50PreChunk(
+                cWorld.getChunkAt(target).getX(), cWorld.getChunkAt(target)
+                        .getZ(), true));
+        cPlayer.getHandle().netServerHandler.sendPacket(new Packet51MapChunk(j,
+                i1, l1, j2, l2, i3, cWorld.getHandle()));
     }
 }
