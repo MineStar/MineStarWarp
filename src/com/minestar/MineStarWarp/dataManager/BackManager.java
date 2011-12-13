@@ -18,25 +18,37 @@
 
 package com.minestar.MineStarWarp.dataManager;
 
-import java.util.TreeMap;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class BackManager {
-    private TreeMap<String, Location> backs;
+
+    private static final int MAX_BACKS = 10;
+
+    private HashMap<String, LinkedList<Location>> backs;
 
     public BackManager() {
-        backs = new TreeMap<String, Location>();
+        backs = new HashMap<String, LinkedList<Location>>();
     }
 
-    public void setBack(Player player) {
-        String playername = player.getName().toLowerCase();
-        Location loc = player.getLocation();
-        backs.put(playername, loc);
+    public void addBack(Player player) {
+        String pName = player.getName().toLowerCase();
+        LinkedList<Location> l = backs.get(pName);
+        if (l == null)
+            l = new LinkedList<Location>();
+        l.add(player.getLocation());
+        if (l.size() >= MAX_BACKS)
+            l.removeFirst();
+        backs.put(pName, l);
+
     }
 
     public Location getBack(Player player) {
-        return backs.get(player.getName().toLowerCase());
+        String pName = player.getName().toLowerCase();
+        LinkedList<Location> l = backs.get(pName);
+        return l == null ? null : l.removeLast();
     }
 }

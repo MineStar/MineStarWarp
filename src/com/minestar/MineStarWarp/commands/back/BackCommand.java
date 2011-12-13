@@ -45,8 +45,11 @@ public class BackCommand extends Command {
      */
     public void execute(String[] args, Player player) {
         Location loc = Main.backManager.getBack(player);
-        if (loc != null)
+        if (loc != null) {
             player.teleport(loc);
+            player.sendMessage(ChatColor.AQUA
+                    + "Du wurdest an die letzte gespeicherte Position teleporiert!");
+        }
         else
             player.sendMessage(ChatColor.RED
                     + Main.localization.get("backCommand.backNotExist"));

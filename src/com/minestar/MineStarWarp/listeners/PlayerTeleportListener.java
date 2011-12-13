@@ -37,9 +37,8 @@ public class PlayerTeleportListener extends PlayerListener {
         Player player = event.getPlayer();
         loadChunk(player, event.getTo());
         if (UtilPermissions.playerCanUseCommand(player,
-                "minestarwarp.command.back")
-                && !Main.respawn.contains(player.getName()))
-            Main.backManager.setBack(player);
+                "minestarwarp.command.back"))
+            Main.backManager.addBack(player);
     }
 
     private void loadChunk(Player player, Location target) {
