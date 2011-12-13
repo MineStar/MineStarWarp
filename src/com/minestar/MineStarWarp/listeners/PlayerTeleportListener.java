@@ -59,9 +59,7 @@ public class PlayerTeleportListener extends PlayerListener {
         int i3 = (minZ + 16 - minZ) + 1;
 
         // SEND PACKET!
-        cPlayer.getHandle().netServerHandler.sendPacket(new Packet50PreChunk(
-                cWorld.getChunkAt(target).getX(), cWorld.getChunkAt(target)
-                        .getZ(), true));
+
         cPlayer.getHandle().netServerHandler.sendPacket(new Packet51MapChunk(j,
                 i1, l1, j2, l2, i3, cWorld.getHandle()));
     }
