@@ -18,7 +18,6 @@
 
 package com.minestar.MineStarWarp.listeners;
 
-import net.minecraft.server.Packet50PreChunk;
 import net.minecraft.server.Packet51MapChunk;
 
 import org.bukkit.Location;

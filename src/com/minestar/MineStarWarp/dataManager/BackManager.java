@@ -19,6 +19,7 @@
 package com.minestar.MineStarWarp.dataManager;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 import org.bukkit.Location;
@@ -30,12 +31,18 @@ public class BackManager {
 
     private HashMap<String, LinkedList<Location>> backs;
 
+    private HashSet<String> backUser = new HashSet<String>();
+
     public BackManager() {
         backs = new HashMap<String, LinkedList<Location>>();
     }
 
     public void addBack(Player player) {
+
         String pName = player.getName().toLowerCase();
+        // Player has used /back command a second before
+        if (backUser.remove(pName))
+            return;
         LinkedList<Location> l = backs.get(pName);
         if (l == null)
             l = new LinkedList<Location>();
@@ -49,6 +56,10 @@ public class BackManager {
     public Location getBack(Player player) {
         String pName = player.getName().toLowerCase();
         LinkedList<Location> l = backs.get(pName);
-        return l == null ? null : l.removeLast();
+        return l == null || l.isEmpty() ? null : l.removeLast();
+    }
+
+    public void usedBack(Player player) {
+        backUser.add(player.getName().toLowerCase());
     }
 }

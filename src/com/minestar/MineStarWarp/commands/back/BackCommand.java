@@ -27,6 +27,7 @@ import com.minestar.MineStarWarp.Main;
 import com.minestar.MineStarWarp.commands.Command;
 
 public class BackCommand extends Command {
+
     public BackCommand(String syntax, String arguments, String node,
             Server server) {
         super(syntax, arguments, node, server);
@@ -46,6 +47,7 @@ public class BackCommand extends Command {
     public void execute(String[] args, Player player) {
         Location loc = Main.backManager.getBack(player);
         if (loc != null) {
+            Main.backManager.usedBack(player);
             player.teleport(loc);
             player.sendMessage(ChatColor.AQUA
                     + "Du wurdest an die letzte gespeicherte Position teleporiert!");

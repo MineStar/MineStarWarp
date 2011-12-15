@@ -19,7 +19,6 @@
 package com.minestar.MineStarWarp.localization;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -49,10 +48,9 @@ public class Localization {
 
         String line = "";
         try {
-            FileInputStream fstream = new FileInputStream(temp);
-            DataInputStream in = new DataInputStream(fstream);
-            BufferedReader bReader = new BufferedReader(new InputStreamReader(in));
-            
+            BufferedReader bReader = new BufferedReader(new InputStreamReader(
+                    new FileInputStream(temp), "ISO-8859-1"));
+
             String node = "";
             String[] split;
             while ((line = bReader.readLine()) != null) {
