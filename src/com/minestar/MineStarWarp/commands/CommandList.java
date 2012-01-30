@@ -34,8 +34,6 @@ import com.minestar.MineStarWarp.commands.bank.BankListCommand;
 import com.minestar.MineStarWarp.commands.bank.SetBankCommand;
 import com.minestar.MineStarWarp.commands.home.HomeCommand;
 import com.minestar.MineStarWarp.commands.home.SetHomeCommand;
-import com.minestar.MineStarWarp.commands.spawn.SetSpawnCommand;
-import com.minestar.MineStarWarp.commands.spawn.SpawnCommand;
 import com.minestar.MineStarWarp.commands.teleport.TeleportHereCommand;
 import com.minestar.MineStarWarp.commands.teleport.TeleportToCommand;
 import com.minestar.MineStarWarp.commands.warp.CreateCommand;
@@ -77,11 +75,6 @@ public class CommandList {
                 // Home
                 new SetHomeCommand("/sethome", "", "sethome", server),
                 new HomeCommand("/home", "", "home", server),
-
-                // Spawn
-                new SpawnCommand("/spawn", "", "spawn", server),
-                new SpawnCommand("/spawn", "<Worldname>", "spawnSpecific", server),
-                new SetSpawnCommand("/setspawn", "", "setSpawn", server),
 
                 // Bank
                 new BankCommand("/bank", "", "bank", server,

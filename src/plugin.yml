@@ -18,12 +18,6 @@ commands:
   tpHere:
     description: Teleports a Player to the Caller
     usage: /tpHere
-  spawn:
-    description: Teleports a Player to spawn
-    usage: /spawn
-  setSpawn:
-    description: Set the spawn for the world
-    usage: /setSpawn
   bank:
     description: Teleports player to the bank
     usage: /bank
