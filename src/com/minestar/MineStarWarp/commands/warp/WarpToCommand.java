@@ -51,7 +51,8 @@ public class WarpToCommand extends SuperCommand {
     public void execute(String[] args, Player player) {
 
         String warpName = args[0];
-        Entry<String, Warp> entry = Main.warpManager.getSimiliarWarp(warpName,player);
+        Entry<String, Warp> entry = Main.warpManager.getSimiliarWarp(warpName,
+                player);
         if (entry != null) {
             Warp warp = entry.getValue();
             if (warp.canUse(player)) {

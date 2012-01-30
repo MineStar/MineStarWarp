@@ -18,14 +18,15 @@
 
 package com.minestar.MineStarWarp.listeners;
 
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
-import org.bukkit.event.player.PlayerListener;
 
 import com.minestar.MineStarWarp.Main;
 
-public class PlayerBedListener extends PlayerListener {
+public class PlayerBedListener implements Listener {
 
-    @Override
+    @EventHandler
     public void onPlayerBedEnter(PlayerBedEnterEvent event) {
         Main.homeManager.setHome(event.getPlayer());
     }

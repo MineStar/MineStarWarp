@@ -24,14 +24,16 @@ import org.bukkit.Location;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerListener;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 import com.bukkit.gemo.utils.UtilPermissions;
 import com.minestar.MineStarWarp.Main;
 
-public class PlayerTeleportListener extends PlayerListener {
+public class PlayerTeleportListener implements Listener {
 
+    @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
         loadChunk(player, event.getTo());

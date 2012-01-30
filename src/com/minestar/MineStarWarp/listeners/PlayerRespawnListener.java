@@ -20,14 +20,15 @@ package com.minestar.MineStarWarp.listeners;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerListener;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 import com.minestar.MineStarWarp.Main;
 
-public class PlayerRespawnListener extends PlayerListener {
+public class PlayerRespawnListener implements Listener {
 
-    @Override
+    @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
         if (!Main.respawn.contains(player.getName()))

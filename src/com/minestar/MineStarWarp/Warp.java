@@ -106,7 +106,8 @@ public class Warp {
     public boolean canUse(Player player) {
         return isPublic()
                 || canEdit(player)
-                || UtilPermissions.playerCanUseCommand(player, "minestarwarp.useAll")
+                || UtilPermissions.playerCanUseCommand(player,
+                        "minestarwarp.useAll")
                 || guests.contains(player.getName().toLowerCase());
 
     }
@@ -175,7 +176,8 @@ public class Warp {
     public boolean canEdit(Player player) {
         return isOwner(player.getName())
                 || player.isOp()
-                || UtilPermissions.playerCanUseCommand(player, "minestarwarp.editAll");
+                || UtilPermissions.playerCanUseCommand(player,
+                        "minestarwarp.editAll");
     }
 
     /**

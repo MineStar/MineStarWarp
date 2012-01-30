@@ -24,8 +24,6 @@ import java.util.ArrayList;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.Event.Type;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -91,16 +89,12 @@ public class Main extends JavaPlugin {
             respawn = new ArrayList<String>();
 
             PluginManager pm = getServer().getPluginManager();
-
-            pm.registerEvent(Type.PLAYER_RESPAWN, new PlayerRespawnListener(),
-                    Priority.Normal, this);
-            pm.registerEvent(Type.PLAYER_TELEPORT,
-                    new PlayerTeleportListener(), Priority.Normal, this);
+            pm.registerEvents(new PlayerRespawnListener(), this);
+            pm.registerEvents(new PlayerTeleportListener(), this);
 
             // shall the home set when a player uses the bed?
             if (config.getBoolean("home.setHomeUsingBed", true))
-                pm.registerEvent(Type.PLAYER_BED_ENTER,
-                        new PlayerBedListener(), Priority.Normal, this);
+                pm.registerEvents(new PlayerBedListener(), this);
 
             log.printInfo("Version " + getDescription().getVersion()
                     + " enabled");
