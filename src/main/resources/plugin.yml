@@ -1,7 +1,7 @@
 name: MineStarWarp
-main: com.minestar.MineStarWarp.Main
+main: de.minestar.MineStarWarp.Core
 version: 1.3
-softdepend: [MultiVerse]
+softdepend: [GreenMile]
 commands:
   home:
     description: Teleports Player to his Home
