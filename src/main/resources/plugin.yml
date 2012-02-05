@@ -1,0 +1,29 @@
+name: MineStarWarp
+main: com.minestar.MineStarWarp.Main
+version: 1.3
+softdepend: [MultiVerse]
+commands:
+  home:
+    description: Teleports Player to his Home
+    usage: /home
+  setHome:
+    description: Creates a Players Home
+    usage: /setHome
+  warp:
+    description: Warps a Player to the Warp if he can use it
+    usage: /warp
+  tp:
+    description: Teleports the Caller to the Player
+    usage: /tp
+  tpHere:
+    description: Teleports a Player to the Caller
+    usage: /tpHere
+  bank:
+    description: Teleports player to the bank
+    usage: /bank
+  setBank:
+    description: Creates a bank for the player
+    usage: /setBank
+  back:
+    description: Warps you back
+    usage: /back
