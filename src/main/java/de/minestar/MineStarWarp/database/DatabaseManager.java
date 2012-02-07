@@ -36,22 +36,23 @@ import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
 import de.minestar.minestarlibrary.database.AbstractDatabaseHandler;
 import de.minestar.minestarlibrary.database.DatabaseConnection;
+import de.minestar.minestarlibrary.database.DatabaseType;
 import de.minestar.minestarlibrary.database.DatabaseUtils;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
 public class DatabaseManager extends AbstractDatabaseHandler {
 
     // Prepared Statements
-    private PreparedStatement addWarp = null;
-    private PreparedStatement deleteWarp = null;
-    private PreparedStatement changeGuestList = null;
-    private PreparedStatement updateWarp = null;
-    private PreparedStatement renameWarp = null;
-    private PreparedStatement addHome = null;
-    private PreparedStatement updateHome = null;
-    private PreparedStatement convertToPublic = null;
-    private PreparedStatement setBank = null;
-    private PreparedStatement updateBank = null;
+    private PreparedStatement addWarp;
+    private PreparedStatement deleteWarp;
+    private PreparedStatement changeGuestList;
+    private PreparedStatement updateWarp;
+    private PreparedStatement renameWarp;
+    private PreparedStatement addHome;
+    private PreparedStatement updateHome;
+    private PreparedStatement convertToPublic;
+    private PreparedStatement setBank;
+    private PreparedStatement updateBank;
     // /Prepared Statements
 
     public DatabaseManager(String pluginName, File dataFolder) {
@@ -59,47 +60,47 @@ public class DatabaseManager extends AbstractDatabaseHandler {
     }
 
     @Override
-    protected DatabaseConnection createConnection(File dataFolder) throws Exception {
+    protected DatabaseConnection createConnection(String pluginName, File dataFolder) throws Exception {
         File configFile = new File(dataFolder, "sqlconfig.yml");
         YamlConfiguration config = new YamlConfiguration();
 
         if (!configFile.exists()) {
-            DatabaseUtils.createDatabaseConfig(DatabaseUtils.TYPE_SQLLITE, configFile, Core.NAME);
+            DatabaseUtils.createDatabaseConfig(DatabaseType.MySQL, configFile, pluginName);
             return null;
         }
 
         config.load(configFile);
-        return new DatabaseConnection(config.getString("Folder"), config.getString("FileName"));
+        return new DatabaseConnection(pluginName, config.getString("Folder"), config.getString("FileName"));
     }
 
     @Override
-    protected void createStructure(Connection con) throws Exception {
-        DatabaseUtils.createStructure(getClass().getResourceAsStream("/structure.sql"), con, Core.NAME);
+    protected void createStructure(String pluginName, Connection con) throws Exception {
+        DatabaseUtils.createStructure(getClass().getResourceAsStream("/structure.sql"), con, pluginName);
 
     }
 
     @Override
-    protected void createStatements(Connection con) throws Exception {
+    protected void createStatements(String pluginName, Connection con) throws Exception {
 
-        addWarp = con.prepareStatement("INSERT INTO warps (name, creator, world, x, y, z, yaw, pitch) VALUES (?,?,?,?,?,?,?,?);");
+        this.addWarp = con.prepareStatement("INSERT INTO warps (name, creator, world, x, y, z, yaw, pitch) VALUES (?,?,?,?,?,?,?,?)");
 
-        deleteWarp = con.prepareStatement("DELETE FROM warps WHERE name = ?;");
+        this.deleteWarp = con.prepareStatement("DELETE FROM warps WHERE name = ?");
 
-        changeGuestList = con.prepareStatement("UPDATE warps SET permissions = ? WHERE name = ?;");
+        this.changeGuestList = con.prepareStatement("UPDATE warps SET permissions = ? WHERE name = ?");
 
-        updateWarp = con.prepareStatement("UPDATE warps SET world = ? , x = ? , y = ? , z = ? , yaw = ? , pitch = ? WHERE name = ?;");
+        this.updateWarp = con.prepareStatement("UPDATE warps SET world = ? , x = ? , y = ? , z = ? , yaw = ? , pitch = ? WHERE name = ?");
 
-        renameWarp = con.prepareStatement("UPDATE warps SET name = ? WHERE name = ?;");
+        this.renameWarp = con.prepareStatement("UPDATE warps SET name = ? WHERE name = ?");
 
-        addHome = con.prepareStatement("INSERT INTO homes (player,world, x, y, z, yaw, pitch) VALUES (?,?,?,?,?,?,?);");
+        this.addHome = con.prepareStatement("INSERT INTO homes (player,world, x, y, z, yaw, pitch) VALUES (?,?,?,?,?,?,?)");
 
-        updateHome = con.prepareStatement("UPDATE homes SET world = ? , x = ? , y = ? , z = ? , yaw = ? , pitch = ? WHERE player = ?;");
+        this.updateHome = con.prepareStatement("UPDATE homes SET world = ? , x = ? , y = ? , z = ? , yaw = ? , pitch = ? WHERE player = ?");
 
-        convertToPublic = con.prepareStatement("UPDATE warps SET permissions = null WHERE name = ?");
+        this.convertToPublic = con.prepareStatement("UPDATE warps SET permissions = null WHERE name = ?");
 
-        setBank = con.prepareStatement("INSERT INTO banks (player,world, x, y, z, yaw, pitch) VALUES (?,?,?,?,?,?,?);");
+        this.setBank = con.prepareStatement("INSERT INTO banks (player,world, x, y, z, yaw, pitch) VALUES (?,?,?,?,?,?,?)");
 
-        updateBank = con.prepareStatement("UPDATE banks SET world = ? , x = ? , y = ? , z = ? , yaw = ? , pitch = ? WHERE player = ?;");
+        this.updateBank = con.prepareStatement("UPDATE banks SET world = ? , x = ? , y = ? , z = ? , yaw = ? , pitch = ? WHERE player = ?");
 
     }
 

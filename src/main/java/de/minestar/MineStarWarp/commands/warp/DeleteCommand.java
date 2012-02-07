@@ -22,14 +22,18 @@ import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
+import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.minestarlibrary.commands.Command;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
 public class DeleteCommand extends Command {
 
-    public DeleteCommand(String syntax, String arguments, String node) {
+    private WarpManager wManager;
+
+    public DeleteCommand(String syntax, String arguments, String node, WarpManager wManager) {
         super(Core.NAME, syntax, arguments, node);
-        this.description = "L�scht einen deiner Warps.";
+        this.description = "Löscht einen deiner Warps";
+        this.wManager = wManager;
     }
 
     @Override
@@ -46,10 +50,10 @@ public class DeleteCommand extends Command {
     public void execute(String[] args, Player player) {
 
         String warpName = args[0];
-        if (Core.warpManager.isWarpExisting(warpName)) {
-            Warp warp = Core.warpManager.getWarp(warpName);
+        if (wManager.isWarpExisting(warpName)) {
+            Warp warp = wManager.getWarp(warpName);
             if (warp.canEdit(player))
-                Core.warpManager.deleteWarp(player, warpName);
+                wManager.deleteWarp(player, warpName);
             else
                 ChatUtils.printError(player, pluginName, "Du darfst den Warp '" + warpName + "' nicht l�schen!");
         } else

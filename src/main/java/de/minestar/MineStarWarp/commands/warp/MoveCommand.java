@@ -24,13 +24,17 @@ import com.bukkit.gemo.utils.ChatUtils;
 
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
+import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.minestarlibrary.commands.Command;
 
 public class MoveCommand extends Command {
 
-    public MoveCommand(String syntax, String arguments, String node) {
+    private WarpManager wManager;
+
+    public MoveCommand(String syntax, String arguments, String node, WarpManager wManager) {
         super(Core.NAME, syntax, arguments, node);
         this.description = "Verschiebt den Warp an deine Position";
+        this.wManager = wManager;
     }
 
     @Override
@@ -42,16 +46,16 @@ public class MoveCommand extends Command {
     public void execute(String[] args, Player player) {
 
         String warpName = args[0];
-        if (!Core.warpManager.isWarpExisting(warpName)) {
+        if (!wManager.isWarpExisting(warpName)) {
             ChatUtils.printError(player, pluginName, "Der Warp '" + warpName + "' existiert nicht!");
             return;
         }
-        Warp warp = Core.warpManager.getWarp(args[0]);
+        Warp warp = wManager.getWarp(args[0]);
         if (!warp.canEdit(player)) {
             ChatUtils.printError(player, pluginName, "Du darfst diesen Warp nicht verschieben!");
             return;
         }
 
-        Core.warpManager.updateWarp(player, args[0]);
+        wManager.updateWarp(player, args[0]);
     }
 }

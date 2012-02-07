@@ -21,12 +21,16 @@ package de.minestar.MineStarWarp.commands.bank;
 import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
+import de.minestar.MineStarWarp.dataManager.BankManager;
 import de.minestar.minestarlibrary.commands.Command;
 
 public class SetBankCommand extends Command {
 
-    public SetBankCommand(String syntax, String arguments, String node) {
+    private BankManager bankManager;
+
+    public SetBankCommand(String syntax, String arguments, String node, BankManager bankManager) {
         super(Core.NAME, syntax, arguments, node);
+        this.bankManager = bankManager;
     }
 
     @Override
@@ -42,7 +46,7 @@ public class SetBankCommand extends Command {
      */
     public void execute(String[] args, Player player) {
 
-        Core.bankManager.setBank(player, args[0].toLowerCase(), player.getLocation());
+        bankManager.setBank(player, args[0].toLowerCase(), player.getLocation());
     }
 
 }

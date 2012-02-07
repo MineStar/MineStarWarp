@@ -22,13 +22,17 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
+import de.minestar.MineStarWarp.dataManager.BackManager;
 import de.minestar.minestarlibrary.commands.Command;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
 public class BackCommand extends Command {
 
-    public BackCommand(String syntax, String arguments, String node) {
+    private BackManager backManager;
+
+    public BackCommand(String syntax, String arguments, String node, BackManager backManager) {
         super(Core.NAME, syntax, arguments, node);
+        this.backManager = backManager;
     }
 
     @Override
@@ -43,9 +47,9 @@ public class BackCommand extends Command {
      *            Hasn't any effect on the Command
      */
     public void execute(String[] args, Player player) {
-        Location loc = Core.backManager.getBack(player);
+        Location loc = backManager.getBack(player);
         if (loc != null) {
-            Core.backManager.usedBack(player);
+            backManager.usedBack(player);
             player.teleport(loc);
             ChatUtils.printSuccess(player, pluginName, "Du wurdest an die letzte gespeicherte Position teleporiert!");
         } else

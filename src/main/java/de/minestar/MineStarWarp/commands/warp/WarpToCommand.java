@@ -24,15 +24,19 @@ import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
+import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.minestarlibrary.commands.Command;
 import de.minestar.minestarlibrary.commands.SuperCommand;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
 public class WarpToCommand extends SuperCommand {
 
-    public WarpToCommand(String syntax, String arguments, String node, Command... subCommands) {
+    private WarpManager wManager;
+
+    public WarpToCommand(String syntax, String arguments, String node, WarpManager wManager, Command... subCommands) {
         super(Core.NAME, syntax, arguments, node, true, subCommands);
         this.description = "Teleportiert dich zu einem Warp";
+        this.wManager = wManager;
     }
 
     @Override
@@ -49,7 +53,7 @@ public class WarpToCommand extends SuperCommand {
     public void execute(String[] args, Player player) {
 
         String warpName = args[0];
-        Entry<String, Warp> entry = Core.warpManager.getSimiliarWarp(warpName, player);
+        Entry<String, Warp> entry = wManager.getSimiliarWarp(warpName, player);
         if (entry == null) {
             ChatUtils.printError(player, pluginName, "Der Warp '" + warpName + "' wurde nicht gefunden!");
             return;

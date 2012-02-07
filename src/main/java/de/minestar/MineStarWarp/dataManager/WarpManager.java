@@ -529,4 +529,8 @@ public class WarpManager {
             player.sendMessage(String.format(LIST_MESSAGE, color, entry.getKey(), creator, x, y, z, loc.getWorld().getName()));
         }
     }
+
+    public boolean isKeyWord(String warpName) {
+        return warpName.equals("create") || warpName.equals("delete") || warpName.equals("invite") || warpName.equals("uninvite") || warpName.equals("list") || warpName.equals("private") || warpName.equals("public") || warpName.equals("search") || warpName.equals("uninvite") || warpName.equals("move") || warpName.equals("rename") || warpName.equals("guestlist");
+    }
 }

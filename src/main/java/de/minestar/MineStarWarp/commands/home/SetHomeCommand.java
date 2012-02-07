@@ -21,12 +21,16 @@ package de.minestar.MineStarWarp.commands.home;
 import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
+import de.minestar.MineStarWarp.dataManager.HomeManager;
 import de.minestar.minestarlibrary.commands.Command;
 
 public class SetHomeCommand extends Command {
 
-    public SetHomeCommand(String syntax, String arguments, String node) {
+    private HomeManager hManager;
+
+    public SetHomeCommand(String syntax, String arguments, String node, HomeManager hManager) {
         super(Core.NAME, syntax, arguments, node);
+        this.hManager = hManager;
     }
 
     @Override
@@ -41,6 +45,6 @@ public class SetHomeCommand extends Command {
      *            Must be empty!
      */
     public void execute(String[] args, Player player) {
-        Core.homeManager.setHome(player);
+        hManager.setHome(player);
     }
 }

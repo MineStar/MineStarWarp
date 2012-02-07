@@ -25,13 +25,18 @@ import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
+import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.minestarlibrary.commands.Command;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
 public class GuestListCommand extends Command {
-    public GuestListCommand(String syntax, String arguments, String node) {
+
+    private WarpManager wManager;
+
+    public GuestListCommand(String syntax, String arguments, String node, WarpManager wManager) {
         super(Core.NAME, syntax, arguments, node);
-        this.description = "Zeigt die G�ste eines Warps an.";
+        this.description = "Zeigt die Gäste eines Warps an.";
+        this.wManager = wManager;
     }
 
     @Override
@@ -44,31 +49,31 @@ public class GuestListCommand extends Command {
 
         String warpName = args[0];
         // Warp is not existing
-        if (!Core.warpManager.isWarpExisting(warpName)) {
+        if (!wManager.isWarpExisting(warpName)) {
             ChatUtils.printError(player, pluginName, "'" + warpName + "' existiert nicht!");
             return;
         }
-        Warp warp = Core.warpManager.getWarp(warpName);
+        Warp warp = wManager.getWarp(warpName);
         // Player isn't allowed to see the guestlist
         if (!warp.canEdit(player)) {
-            ChatUtils.printError(player, pluginName, "Du darfst die G�steliste f�r '" + warpName + "' nicht sehen!");
+            ChatUtils.printError(player, pluginName, "Du darfst die Gästeliste für '" + warpName + "' nicht sehen!");
             return;
         }
 
         HashSet<String> guests = warp.getGuests();
         // guests == null -> warp is public
         if (guests == null) {
-            ChatUtils.printError(player, pluginName, "Der Warp '" + warpName + "' ist ein �ffentlicher Warp und hat somit keine G�steliste!");
+            ChatUtils.printError(player, pluginName, "Der Warp '" + warpName + "' ist ein öffentlicher Warp und hat somit keine Gästeliste!");
             return;
         }
 
         // warp has no guests
         if (guests.isEmpty()) {
-            ChatUtils.printError(player, pluginName, "Der Warp '" + warpName + "' hat keine G�ste!");
+            ChatUtils.printError(player, pluginName, "Der Warp '" + warpName + "' hat keine Gäste!");
             return;
         }
 
-        ChatUtils.printSuccess(player, pluginName, "G�ste von '" + warpName + "': " + formatGuestList(guests));
+        ChatUtils.printSuccess(player, pluginName, "Gäste'" + warpName + "': " + formatGuestList(guests));
     }
 
     private String formatGuestList(HashSet<String> guests) {

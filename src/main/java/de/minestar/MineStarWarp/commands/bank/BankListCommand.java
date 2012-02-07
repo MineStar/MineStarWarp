@@ -26,15 +26,20 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
+import de.minestar.MineStarWarp.dataManager.BankManager;
 import de.minestar.minestarlibrary.commands.ExtendedCommand;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
 public class BankListCommand extends ExtendedCommand {
 
-    public BankListCommand(String syntax, String arguments, String node) {
+    private BankManager bankManager;
+
+    public BankListCommand(String syntax, String arguments, String node, BankManager bankManager) {
         super(Core.NAME, syntax, arguments, node);
         this.description = "Listet alle Banken auf";
+        this.bankManager = bankManager;
     }
+
     @Override
     /**
      * Representing the command <br>
@@ -57,7 +62,7 @@ public class BankListCommand extends ExtendedCommand {
             pageNumber = Integer.parseInt(args[0]);
 
         int banksPerPage = Core.config.getInt("banks.banksPerPage", 10);
-        int maxPage = (int) Math.ceil(Core.bankManager.countBanks() / (double) banksPerPage);
+        int maxPage = (int) Math.ceil(bankManager.countBanks() / (double) banksPerPage);
 
         if (maxPage == 0) {
             ChatUtils.printError(player, pluginName, "Es existiert keine einzige Bank!");
@@ -69,7 +74,7 @@ public class BankListCommand extends ExtendedCommand {
             return;
         }
 
-        TreeMap<String, Location> banks = Core.bankManager.getBanksForList(pageNumber, banksPerPage);
+        TreeMap<String, Location> banks = bankManager.getBanksForList(pageNumber, banksPerPage);
 
         ChatUtils.printInfo(player, pluginName, ChatColor.WHITE, "------------------- Seite " + pageNumber + "/" + maxPage + " -------------------");
         showBankList(player, banks);

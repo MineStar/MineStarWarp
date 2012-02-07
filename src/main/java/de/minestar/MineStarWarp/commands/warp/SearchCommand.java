@@ -25,14 +25,18 @@ import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
+import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.minestarlibrary.commands.Command;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
 public class SearchCommand extends Command {
 
-    public SearchCommand(String syntax, String arguments, String node) {
+    private WarpManager wManager;
+
+    public SearchCommand(String syntax, String arguments, String node, WarpManager wManager) {
         super(Core.NAME, syntax, arguments, node);
         this.description = "Nach bestimmten Warpnamen suchen";
+        this.wManager = wManager;
     }
 
     @Override
@@ -51,13 +55,13 @@ public class SearchCommand extends Command {
         String query = args[0];
 
         // Getting all warps that contains the query
-        Map<String, Warp> result = Core.warpManager.getSimiliarWarps(query, player);
+        Map<String, Warp> result = wManager.getSimiliarWarps(query, player);
 
         // When at least one warp is found
         if (result != null) {
             ChatUtils.printInfo(player, pluginName, ChatColor.YELLOW, "Treffer für '" + query + "' :");
             // Sending all warps per Line to the player
-            Core.warpManager.showWarpList(player, result);
+            wManager.showWarpList(player, result);
         }
         // When no warp was found
         else

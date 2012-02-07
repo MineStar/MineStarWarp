@@ -23,15 +23,19 @@ import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
+import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.minestarlibrary.commands.Command;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class InviteCommand extends Command {
 
-    public InviteCommand(String syntax, String arguments, String node) {
+    private WarpManager wManager;
+
+    public InviteCommand(String syntax, String arguments, String node, WarpManager wManager) {
         super(Core.NAME, syntax, arguments, node);
         this.description = "Einem anderen Spieler erlauben, den Warp mitzubenutzen!";
+        this.wManager = wManager;
     }
 
     @Override
@@ -50,7 +54,7 @@ public class InviteCommand extends Command {
 
         String guestName = args[0];
         String warpName = args[1];
-        Warp warp = Core.warpManager.getWarp(warpName);
+        Warp warp = wManager.getWarp(warpName);
         if (warp == null) {
             ChatUtils.printError(player, pluginName, "Warp '" + warpName + "' existiert nicht!");
             return;
@@ -75,7 +79,7 @@ public class InviteCommand extends Command {
                 return;
             }
         }
-        if (Core.warpManager.addGuest(player, warpName, guestName) && guest != null)
+        if (wManager.addGuest(player, warpName, guestName) && guest != null)
             ChatUtils.printSuccess(guest, pluginName, "Du wurdest zu dem Warp '" + warpName + "' eingeladen!");
     }
 }

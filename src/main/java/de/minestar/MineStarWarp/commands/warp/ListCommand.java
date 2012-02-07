@@ -27,18 +27,21 @@ import com.bukkit.gemo.utils.UtilPermissions;
 
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
+import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.minestarlibrary.commands.ExtendedCommand;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
 public class ListCommand extends ExtendedCommand {
 
+    private WarpManager wManager;
     private final int warpsPerPage;
 
-    public ListCommand(String syntax, String arguments, String node) {
+    public ListCommand(String syntax, String arguments, String node, WarpManager wManager) {
         super(Core.NAME, syntax, arguments, node);
         // TODO: Don't load config in command
         warpsPerPage = Core.config.getInt("warps.warpsPerPage", 8);
         this.description = "Listet alle benutzbaren Warps nach Seiten sortiert auf.";
+        this.wManager = wManager;
     }
 
     @Override
@@ -84,8 +87,9 @@ public class ListCommand extends ExtendedCommand {
         // sorted result
         TreeMap<String, Warp> warps;
         // how many pages of warps the player can see
-        int maxPageNumber = (int) Math.nextUp(Core.warpManager.countWarpsCanUse(player) / (double) warpsPerPage);
-        if (maxPageNumber == 0) {
+        // TODO: Fix me
+        int maxPageNumber = (int) Math.nextUp(wManager.countWarpsCanUse(player) / (double) warpsPerPage);
+        if (maxPageNumber == 0.0) {
             ChatUtils.printError(player, pluginName, "Du hast keinen benutzbaren Warp!");
             return;
         }
@@ -95,9 +99,9 @@ public class ListCommand extends ExtendedCommand {
             return;
         }
 
-        warps = Core.warpManager.getWarpsForList(page, warpsPerPage, player);
+        warps = wManager.getWarpsForList(page, warpsPerPage, player);
         ChatUtils.printInfo(player, pluginName, ChatColor.WHITE, "------------------- Seite " + page + "/" + maxPageNumber + " -------------------");
-        Core.warpManager.showWarpList(player, warps);
+        wManager.showWarpList(player, warps);
 
     }
 
@@ -108,10 +112,10 @@ public class ListCommand extends ExtendedCommand {
      * @param targetName
      */
     private void showPlayersWarp(Player player, String targetName) {
-        TreeMap<String, Warp> warps = Core.warpManager.getWarpsPlayerIsOwner(targetName);
+        TreeMap<String, Warp> warps = wManager.getWarpsPlayerIsOwner(targetName);
         if (warps != null) {
-            ChatUtils.printInfo(player, pluginName, ChatColor.AQUA, " Spieler '" + targetName + "' hat " + Core.warpManager.countWarpsCreatedBy(targetName) + "/" + Core.warpManager.getMaximumWarp(targetName) + " private Warps");
-            Core.warpManager.showWarpList(player, warps);
+            ChatUtils.printInfo(player, pluginName, ChatColor.AQUA, " Spieler '" + targetName + "' hat " + wManager.countWarpsCreatedBy(targetName) + "/" + wManager.getMaximumWarp(targetName) + " private Warps");
+            wManager.showWarpList(player, warps);
         } else
             ChatUtils.printError(player, pluginName, "Spieler '" + targetName + "' hat keine Warps!");
     }

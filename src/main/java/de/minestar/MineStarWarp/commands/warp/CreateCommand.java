@@ -22,14 +22,18 @@ import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
+import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.minestarlibrary.commands.Command;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
 public class CreateCommand extends Command {
 
-    public CreateCommand(String syntax, String arguments, String node) {
+    private WarpManager wManager;
+
+    public CreateCommand(String syntax, String arguments, String node, WarpManager wManager) {
         super(Core.NAME, syntax, arguments, node);
-        this.description = "Erstellt einen privaten Warp.";
+        this.description = "Erstellt einen privaten Warp";
+        this.wManager = wManager;
     }
 
     @Override
@@ -48,20 +52,17 @@ public class CreateCommand extends Command {
     public void execute(String[] args, Player player) {
 
         String warpName = args[0];
-        if (isKeyWord(warpName.toLowerCase())) {
+        if (wManager.isKeyWord(warpName.toLowerCase())) {
             ChatUtils.printError(player, pluginName, "Der Name '" + warpName + "' kann nicht verwendet werden. Bitte nutz einen anderen!");
             return;
         }
-        if (Core.warpManager.hasFreeWarps(player)) {
-            if (!Core.warpManager.isWarpExisting(warpName))
-                Core.warpManager.addWarp(player, warpName, new Warp(player));
+        // TODO: Anzeigen wieviele Warps ein user noch frei hat
+        if (wManager.hasFreeWarps(player)) {
+            if (!wManager.isWarpExisting(warpName))
+                wManager.addWarp(player, warpName, new Warp(player));
             else
                 ChatUtils.printError(player, pluginName, "Es existiert bereits ein Warp names '" + warpName + "'!");
         } else
             ChatUtils.printError(player, warpName, "Du hast zu viele private Warps erstellt, um einen neuen erstellen zu k�nnen. L�sche bitte einen alten.");
-    }
-
-    public static boolean isKeyWord(String warpName) {
-        return warpName.equals("create") || warpName.equals("delete") || warpName.equals("invite") || warpName.equals("uninvite") || warpName.equals("list") || warpName.equals("private") || warpName.equals("public") || warpName.equals("search") || warpName.equals("uninvite") || warpName.equals("move") || warpName.equals("rename") || warpName.equals("guestlist");
     }
 }

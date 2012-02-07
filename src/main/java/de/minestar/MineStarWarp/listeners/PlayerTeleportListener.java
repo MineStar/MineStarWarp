@@ -30,16 +30,22 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 
 import com.bukkit.gemo.utils.UtilPermissions;
 
-import de.minestar.MineStarWarp.Core;
+import de.minestar.MineStarWarp.dataManager.BackManager;
 
 public class PlayerTeleportListener implements Listener {
+
+    private BackManager backManager;
+
+    public PlayerTeleportListener(BackManager backManager) {
+        this.backManager = backManager;
+    }
 
     @EventHandler
     public void onPlayerTeleport(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
         loadChunk(player, event.getTo());
         if (UtilPermissions.playerCanUseCommand(player, "minestarwarp.command.back"))
-            Core.backManager.addBack(player);
+            backManager.addBack(player);
     }
 
     private void loadChunk(Player player, Location target) {

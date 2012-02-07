@@ -22,13 +22,17 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
+import de.minestar.MineStarWarp.dataManager.HomeManager;
 import de.minestar.minestarlibrary.commands.Command;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
 public class HomeCommand extends Command {
 
-    public HomeCommand(String syntax, String arguments, String node) {
+    private HomeManager hManager;
+
+    public HomeCommand(String syntax, String arguments, String node, HomeManager hManager) {
         super(Core.NAME, syntax, arguments, node);
+        this.hManager = hManager;
     }
 
     @Override
@@ -45,7 +49,7 @@ public class HomeCommand extends Command {
     public void execute(String[] args, Player player) {
 
         // When the player didn't have set a home, it returns null
-        Location homeLocation = Core.homeManager.getPlayersHome(player);
+        Location homeLocation = hManager.getPlayersHome(player);
         if (homeLocation != null) {
             player.teleport(homeLocation);
             ChatUtils.printSuccess(player, pluginName, "Willkommen zu Hause!");

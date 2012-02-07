@@ -23,15 +23,19 @@ import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
+import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.minestarlibrary.commands.Command;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class UninviteCommand extends Command {
 
-    public UninviteCommand(String syntax, String arguments, String node) {
+    private WarpManager wManager;
+
+    public UninviteCommand(String syntax, String arguments, String node, WarpManager wManager) {
         super(Core.NAME, syntax, arguments, node);
         this.description = "Entfernt einen Spieler aus der Gästeliste des Warps";
+        this.wManager = wManager;
     }
 
     @Override
@@ -50,7 +54,7 @@ public class UninviteCommand extends Command {
 
         String guestName = args[0];
         String warpName = args[1];
-        Warp warp = Core.warpManager.getWarp(warpName);
+        Warp warp = wManager.getWarp(warpName);
         if (warp == null) {
             ChatUtils.printError(player, pluginName, "Der Warp '" + warpName + "' existiert nicht!");
             return;
@@ -71,13 +75,13 @@ public class UninviteCommand extends Command {
             guestName = guest.getName();
         else {
             guestName = PlayerUtils.getOfflinePlayerName(guestName);
-            // PLAYER WAS NEVER ON THE SERVER -> DOES NOT EXIST!
+
             if (guestName == null) {
                 ChatUtils.printError(player, pluginName, "Der Spieler '" + args[0] + "' existiert nicht!");
                 return;
             }
         }
-        if (Core.warpManager.removeGuest(player, warpName, guestName) && guest != null)
+        if (wManager.removeGuest(player, warpName, guestName) && guest != null)
             ChatUtils.printInfo(guest, pluginName, ChatColor.RED, "Du wurdest aus dem Warp '" + warpName + "' ausgeladen!");
     }
 }

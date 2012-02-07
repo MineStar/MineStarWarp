@@ -23,14 +23,18 @@ import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
+import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.minestarlibrary.commands.Command;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
 public class PublicCommand extends Command {
 
-    public PublicCommand(String syntax, String arguments, String node) {
+    private WarpManager wManager;
+
+    public PublicCommand(String syntax, String arguments, String node, WarpManager wManager) {
         super(Core.NAME, syntax, arguments, node);
         this.description = "Wandelt einen privaten in  einen öffentlichen Warp um";
+        this.wManager = wManager;
     }
 
     @Override
@@ -47,11 +51,11 @@ public class PublicCommand extends Command {
     public void execute(String[] args, Player player) {
 
         String warpName = args[0];
-        Warp warp = Core.warpManager.getWarp(warpName);
+        Warp warp = wManager.getWarp(warpName);
 
         if (warp == null) {
             ChatUtils.printError(player, pluginName, "Der Warp '" + warpName + "' existiert nicht!");
-            if (Core.warpManager.getWarp(warpName.toLowerCase()) != null)
+            if (wManager.getWarp(warpName.toLowerCase()) != null)
                 ChatUtils.printInfo(player, pluginName, ChatColor.GRAY, "Vielleicht meintest du den Warp '" + warpName.toLowerCase() + "'?");
             return;
         }
@@ -61,11 +65,11 @@ public class PublicCommand extends Command {
             return;
         }
 
-        if (!warp.isPublic()) {
+        if (warp.isPublic()) {
             ChatUtils.printError(player, pluginName, "Der Warp '" + warpName + "' ist bereits öffentlich!");
             return;
         }
 
-        Core.warpManager.changeAccess(player, true, warpName);
+        wManager.changeAccess(player, true, warpName);
     }
 }

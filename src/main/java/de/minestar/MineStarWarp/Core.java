@@ -60,11 +60,11 @@ public class Core extends JavaPlugin {
 
     public static final String NAME = "MineStarWarp";
 
-    public static WarpManager warpManager;
-    public static HomeManager homeManager;
-    public static BankManager bankManager;
-    public static BackManager backManager;
-    public static DatabaseManager dbManager;
+    private WarpManager warpManager;
+    private HomeManager homeManager;
+    private BankManager bankManager;
+    private BackManager backManager;
+    private DatabaseManager dbManager;
 
     public static ArrayList<String> respawn;
 
@@ -98,7 +98,7 @@ public class Core extends JavaPlugin {
         initCommands();
 
         PluginManager pm = getServer().getPluginManager();
-        pm.registerEvents(new PlayerTeleportListener(), this);
+        pm.registerEvents(new PlayerTeleportListener(backManager), this);
 
         ChatUtils.printConsoleInfo("Version " + getDescription().getVersion() + " enabled", NAME);
     }
@@ -112,45 +112,48 @@ public class Core extends JavaPlugin {
                 new TeleportToCommand("/tp", "<Player>", "tpTo"),
 
                 // Home
-                new SetHomeCommand("/sethome", "", "sethome"),
-                new HomeCommand("/home", "", "home"),
+                new SetHomeCommand("/sethome", "", "sethome", homeManager),
+                new HomeCommand("/home", "", "home", homeManager),
 
                 // Bank
-                new BankCommand("/bank", "", "bank",
-                        new BankListCommand("list", "", "bankList")),
-                new SetBankCommand("/setbank", "<Player>", "setBank"),
+                new BankCommand("/bank", "", "bank", bankManager,
+                        new BankListCommand("list", "", "bankList", bankManager)
+                        ),
+
+                new SetBankCommand("/setbank", "<Player>", "setBank", bankManager),
 
                 // Back
-                new BackCommand("/back", "", "back"),
+                new BackCommand("/back", "", "back", backManager),
 
                 // Warp Command
-                new WarpToCommand("/warp", "<Name>", "warpTo",
+                new WarpToCommand("/warp", "<Name>", "warpTo", warpManager,
                         new Command[] {
                                 // Warp Creation, Removing, Moving and
                                 // Renameing.
-                                new CreateCommand("create", "<Name>", "create"),
-                                new CreateCommand("pcreate", "<Name>", "create"),
-                                new DeleteCommand("delete", "<Name>", "delete"),
-                                new MoveCommand("move", "<Name>", "move"),
-                                new RenameCommand("rename", "<Oldname> <Newname>", "rename"),
+                                new CreateCommand("create", "<Name>", "create", warpManager),
+                                new CreateCommand("pcreate", "<Name>", "create", warpManager),
+                                new DeleteCommand("delete", "<Name>", "delete", warpManager),
+                                new MoveCommand("move", "<Name>", "move", warpManager),
+                                new RenameCommand("rename", "<Oldname> <Newname>", "rename", warpManager),
         
                                 // Searching Warps
-                                new ListCommand("list", "", "list"),
-                                new SearchCommand("search", "<Name>", "search"),
+                                new ListCommand("list", "", "list", warpManager),
+                                new SearchCommand("search", "<Name>", "search", warpManager),
         
                                 // Modifiers
-                                new PrivateCommand("private", "<Name>", "private"),
-                                new PublicCommand("public", "<Name>", "public"),
+                                new PrivateCommand("private", "<Name>", "private", warpManager),
+                                new PublicCommand("public", "<Name>", "public", warpManager),
         
                                 // Guests
-                                new InviteCommand("invite", "<PlayerName> <Warpname>", "invite"),
-                                new UninviteCommand("uninvite", "<PlayerName> <Warpname>", "uninvite"),
-                                new GuestListCommand("guestlist", "<WarpName>", "guestlist")
+                                new InviteCommand("invite", "<PlayerName> <Warpname>", "invite", warpManager),
+                                new UninviteCommand("uninvite", "<PlayerName> <Warpname>", "uninvite", warpManager),
+                                new GuestListCommand("guestlist", "<WarpName>", "guestlist", warpManager)
                         }
                 )
         });
         //@formatter:on
     }
+
     @Override
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
         commandList.handleCommand(sender, label, args);
@@ -163,6 +166,7 @@ public class Core extends JavaPlugin {
      */
     private void checkConfig() {
 
+        // TODO: Rewrite
         File dataFolder = getDataFolder();
         dataFolder.mkdirs();
 
@@ -191,8 +195,6 @@ public class Core extends JavaPlugin {
         config.addDefault("banks.banksPerPage", 10);
 
         config.addDefault("home.setHomeUsingBed", true);
-
-        config.addDefault("language", "de");
 
         config.options().copyDefaults(true);
         saveConfig();

@@ -24,14 +24,18 @@ import org.bukkit.entity.Player;
 import com.bukkit.gemo.utils.UtilPermissions;
 
 import de.minestar.MineStarWarp.Core;
+import de.minestar.MineStarWarp.dataManager.BankManager;
 import de.minestar.minestarlibrary.commands.Command;
 import de.minestar.minestarlibrary.commands.SuperCommand;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
 public class BankCommand extends SuperCommand {
 
-    public BankCommand(String syntax, String arguments, String node, Command... commands) {
+    private BankManager bankManager;
+
+    public BankCommand(String syntax, String arguments, String node, BankManager bankManager, Command... commands) {
         super(Core.NAME, syntax, arguments, node, true, commands);
+        this.bankManager = bankManager;
     }
 
     @Override
@@ -50,7 +54,7 @@ public class BankCommand extends SuperCommand {
         Location bank = null;
 
         if (args.length == 0) {
-            bank = Core.bankManager.getBank(player.getName());
+            bank = bankManager.getBank(player.getName());
             if (bank != null) {
                 player.teleport(bank);
                 ChatUtils.printSuccess(player, pluginName, "Willkommen in deiner Bank!");
@@ -63,7 +67,7 @@ public class BankCommand extends SuperCommand {
                 return;
             }
             String targetName = args[0];
-            bank = Core.bankManager.getBank(targetName);
+            bank = bankManager.getBank(targetName);
             if (bank != null) {
                 player.teleport(bank);
                 ChatUtils.printSuccess(player, pluginName, "Du bist in der Bank von '" + targetName + "'!");
