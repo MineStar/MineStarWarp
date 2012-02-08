@@ -24,6 +24,7 @@ import java.util.TreeMap;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import com.bukkit.gemo.utils.ChatUtils;
@@ -36,10 +37,12 @@ public class BankManager {
     private HashMap<String, Location> banks;
 
     private final DatabaseManager dbManager;
+    private final int banksPerPage;
 
-    public BankManager(DatabaseManager dbManager) {
+    public BankManager(DatabaseManager dbManager, YamlConfiguration config) {
         this.dbManager = dbManager;
         banks = dbManager.loadBanksFromDatabase();
+        banksPerPage = config.getInt("banks.banksPerPage");
     }
 
     public Location getBank(String playerName) {
@@ -63,7 +66,7 @@ public class BankManager {
 
         if (banks.containsKey(playerName)) {
             if (dbManager.updateBank(playerName, bankLocation)) {
-                ChatUtils.printSuccess(player, Core.NAME, "Eine Bank für Spieler '" + playerName + "' erstellt!");
+                ChatUtils.printSuccess(player, Core.NAME, "Eine Bank fï¿½r Spieler '" + playerName + "' erstellt!");
                 banks.put(playerName, bankLocation);
                 return;
             } else
@@ -71,7 +74,7 @@ public class BankManager {
 
         } else {
             if (dbManager.setBank(playerName, bankLocation)) {
-                ChatUtils.printSuccess(player, Core.NAME, "Bank für Spieler '" + playerName + "' aktualisiert!");
+                ChatUtils.printSuccess(player, Core.NAME, "Bank fï¿½r Spieler '" + playerName + "' aktualisiert!");
                 banks.put(playerName, bankLocation);
                 return;
             } else
@@ -94,7 +97,7 @@ public class BankManager {
      * @return HashMap banks concerning the intervall. Returns null if the list
      *         is empty
      */
-    public TreeMap<String, Location> getBanksForList(int pageNumber, int banksPerPage) {
+    public TreeMap<String, Location> getBanksForList(int pageNumber) {
 
         TreeMap<String, Location> bankList = new TreeMap<String, Location>();
 
@@ -109,10 +112,15 @@ public class BankManager {
         return bankList.size() > 0 ? bankList : null;
     }
 
-    /**
-     * @return Size of banks
-     */
-    public int countBanks() {
-        return banks.size();
+    public int getMaxPage() {
+
+        if (banks.size() == 0)
+            return 0;
+
+        double maxPage = (double) banks.size() / (double) banksPerPage;
+        if (maxPage % 1 != 0)
+            maxPage = Math.floor(maxPage) + 1;
+
+        return (int) maxPage;
     }
 }

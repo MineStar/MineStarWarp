@@ -22,7 +22,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -70,8 +70,6 @@ public class Core extends JavaPlugin {
 
     private CommandList commandList;
 
-    public static FileConfiguration config;
-
     public void onDisable() {
         dbManager.closeConnection();
         dbManager = null;
@@ -86,12 +84,12 @@ public class Core extends JavaPlugin {
 
     public void onEnable() {
 
-        checkConfig();
+        YamlConfiguration config = checkConfig();
 
         dbManager = new DatabaseManager(Core.NAME, getDataFolder());
         warpManager = new WarpManager(dbManager, config);
         homeManager = new HomeManager(dbManager);
-        bankManager = new BankManager(dbManager);
+        bankManager = new BankManager(dbManager, config);
         backManager = new BackManager();
         respawn = new ArrayList<String>();
 
@@ -118,7 +116,7 @@ public class Core extends JavaPlugin {
                 // Bank
                 new BankCommand("/bank", "", "bank", bankManager,
                         new BankListCommand("list", "", "bankList", bankManager)
-                        ),
+                ),
 
                 new SetBankCommand("/setbank", "<Player>", "setBank", bankManager),
 
@@ -160,43 +158,27 @@ public class Core extends JavaPlugin {
         return true;
     }
 
-    /**
-     * Load the properties from the configFile. If the configFile not exists it
-     * create ones
-     */
-    private void checkConfig() {
-
-        // TODO: Rewrite
-        File dataFolder = getDataFolder();
-        dataFolder.mkdirs();
-
-        File configFile = new File(dataFolder, "config.yml");
-
-        if (!configFile.exists()) {
-            createConfig();
+    public YamlConfiguration checkConfig() {
+        YamlConfiguration config = null;
+        try {
+            File configFile = new File(getDataFolder(), "config.yml");
+            config = new YamlConfiguration();
+            if (!configFile.exists()) {
+                configFile.createNewFile();
+                ChatUtils.printConsoleWarning("Can't find config.yml. Plugin creates a default configuration and uses the default values.", NAME);
+                config.load(configFile);
+                config.set("warps.default", 0);
+                config.set("warps.probe", 2);
+                config.set("warps.free", 5);
+                config.set("warps.pay", 9);
+                config.set("warps.warrpsPerPage", 15);
+                config.set("banks.banksPerPage", 15);
+                config.save(configFile);
+            }
+        } catch (Exception e) {
+            ChatUtils.printConsoleException(e, "Can't load configuration file!", NAME);
         }
 
-        config = getConfig();
-    }
-
-    /**
-     * Creates a config and use default values for it. They are stored in a yml
-     * format.
-     */
-    public void createConfig() {
-
-        config = getConfig();
-        config.addDefault("warps.default", 0);
-        config.addDefault("warps.probe", 2);
-        config.addDefault("warps.free", 5);
-        config.addDefault("warps.pay", 9);
-        config.addDefault("warps.warpsPerPage", 8);
-
-        config.addDefault("banks.banksPerPage", 10);
-
-        config.addDefault("home.setHomeUsingBed", true);
-
-        config.options().copyDefaults(true);
-        saveConfig();
+        return config;
     }
 }

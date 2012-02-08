@@ -34,12 +34,9 @@ import de.minestar.minestarlibrary.utils.ChatUtils;
 public class ListCommand extends ExtendedCommand {
 
     private WarpManager wManager;
-    private final int warpsPerPage;
 
     public ListCommand(String syntax, String arguments, String node, WarpManager wManager) {
         super(Core.NAME, syntax, arguments, node);
-        // TODO: Don't load config in command
-        warpsPerPage = Core.config.getInt("warps.warpsPerPage", 8);
         this.description = "Listet alle benutzbaren Warps nach Seiten sortiert auf.";
         this.wManager = wManager;
     }
@@ -87,20 +84,22 @@ public class ListCommand extends ExtendedCommand {
         // sorted result
         TreeMap<String, Warp> warps;
         // how many pages of warps the player can see
-        // TODO: Fix me
-        int maxPageNumber = (int) Math.nextUp(wManager.countWarpsCanUse(player) / (double) warpsPerPage);
-        if (maxPageNumber == 0.0) {
+
+        int maxPage = wManager.getMaxPage(player);
+
+        if (maxPage == 0) {
             ChatUtils.printError(player, pluginName, "Du hast keinen benutzbaren Warp!");
             return;
         }
+
         // To high number
-        if (maxPageNumber > page) {
-            ChatUtils.printError(player, pluginName, "Bitte benutzen nur Seitenzahlen von 1 bis " + maxPageNumber);
+        if (page > maxPage || page <= 0) {
+            ChatUtils.printError(player, pluginName, "Bitte benutzen nur Seitenzahlen von 1 bis " + maxPage);
             return;
         }
 
-        warps = wManager.getWarpsForList(page, warpsPerPage, player);
-        ChatUtils.printInfo(player, pluginName, ChatColor.WHITE, "------------------- Seite " + page + "/" + maxPageNumber + " -------------------");
+        warps = wManager.getWarpsForList(page, maxPage, player);
+        ChatUtils.printInfo(player, pluginName, ChatColor.WHITE, "------------------- Seite " + page + "/" + maxPage + " -------------------");
         wManager.showWarpList(player, warps);
 
     }

@@ -62,6 +62,8 @@ public class WarpManager {
     // Used to store how many warps a player can have
     private final int[] maximumWarps = new int[4];
 
+    private final int warpsPerPage;
+
     /**
      * Creates a WarpManager. Use this for handling all data belongs to warps
      * 
@@ -74,10 +76,12 @@ public class WarpManager {
         this.dbManager = dbManager;
         warps = dbManager.loadWarpsFromDatabase();
 
-        maximumWarps[DEFAULTS] = config.getInt("warps.default", 0);
-        maximumWarps[PROBE] = config.getInt("warps.probe", 2);
-        maximumWarps[FREE] = config.getInt("warps.free", 5);
-        maximumWarps[PAY] = config.getInt("warps.pay", 9);
+        maximumWarps[DEFAULTS] = config.getInt("warps.default");
+        maximumWarps[PROBE] = config.getInt("warps.probe");
+        maximumWarps[FREE] = config.getInt("warps.free");
+        maximumWarps[PAY] = config.getInt("warps.pay");
+
+        warpsPerPage = config.getInt("warps.warpsPerPage");
     }
 
     /**
@@ -532,5 +536,18 @@ public class WarpManager {
 
     public boolean isKeyWord(String warpName) {
         return warpName.equals("create") || warpName.equals("delete") || warpName.equals("invite") || warpName.equals("uninvite") || warpName.equals("list") || warpName.equals("private") || warpName.equals("public") || warpName.equals("search") || warpName.equals("uninvite") || warpName.equals("move") || warpName.equals("rename") || warpName.equals("guestlist");
+    }
+
+    public int getMaxPage(Player player) {
+
+        int warpSize = countWarpsCanUse(player);
+        if (warpSize == 0)
+            return 0;
+
+        double maxPage = (double) warpSize / (double) warpsPerPage;
+        if (maxPage % 1 != 0)
+            maxPage = Math.floor(maxPage) + 1;
+
+        return (int) maxPage;
     }
 }

@@ -61,20 +61,19 @@ public class BankListCommand extends ExtendedCommand {
         } else if (args.length == 1)
             pageNumber = Integer.parseInt(args[0]);
 
-        int banksPerPage = Core.config.getInt("banks.banksPerPage", 10);
-        int maxPage = (int) Math.ceil(bankManager.countBanks() / (double) banksPerPage);
+        int maxPage = bankManager.getMaxPage();
 
         if (maxPage == 0) {
             ChatUtils.printError(player, pluginName, "Es existiert keine einzige Bank!");
             return;
         }
 
-        if (pageNumber > maxPage || pageNumber == 0) {
+        if (pageNumber > maxPage || pageNumber <= 0) {
             ChatUtils.printError(player, pluginName, "Benutze nur Zahlen von 1 bis " + maxPage);
             return;
         }
 
-        TreeMap<String, Location> banks = bankManager.getBanksForList(pageNumber, banksPerPage);
+        TreeMap<String, Location> banks = bankManager.getBanksForList(pageNumber);
 
         ChatUtils.printInfo(player, pluginName, ChatColor.WHITE, "------------------- Seite " + pageNumber + "/" + maxPage + " -------------------");
         showBankList(player, banks);
