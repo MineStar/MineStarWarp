@@ -19,7 +19,6 @@
 package de.minestar.MineStarWarp;
 
 import java.io.File;
-import java.util.ArrayList;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -66,8 +65,6 @@ public class Core extends JavaPlugin {
     private BackManager backManager;
     private DatabaseManager dbManager;
 
-    public static ArrayList<String> respawn;
-
     private CommandList commandList;
 
     public void onDisable() {
@@ -78,7 +75,6 @@ public class Core extends JavaPlugin {
         bankManager = null;
         commandList = null;
         backManager = null;
-        respawn = null;
         ChatUtils.printConsoleInfo("Disabled!", NAME);
     }
 
@@ -91,7 +87,6 @@ public class Core extends JavaPlugin {
         homeManager = new HomeManager(dbManager);
         bankManager = new BankManager(dbManager, config);
         backManager = new BackManager();
-        respawn = new ArrayList<String>();
 
         initCommands();
 
