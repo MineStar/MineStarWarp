@@ -98,7 +98,7 @@ public class ListCommand extends ExtendedCommand {
             return;
         }
 
-        warps = wManager.getWarpsForList(page, maxPage, player);
+        warps = wManager.getWarpsForList(page, player);
         ChatUtils.printInfo(player, pluginName, ChatColor.WHITE, "------------------- Seite " + page + "/" + maxPage + " -------------------");
         wManager.showWarpList(player, warps);
 

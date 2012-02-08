@@ -21,7 +21,6 @@ package de.minestar.MineStarWarp.commands.warp;
 import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
-import de.minestar.MineStarWarp.Warp;
 import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.minestarlibrary.commands.Command;
 import de.minestar.minestarlibrary.utils.ChatUtils;
@@ -56,13 +55,17 @@ public class CreateCommand extends Command {
             ChatUtils.printError(player, pluginName, "Der Name '" + warpName + "' kann nicht verwendet werden. Bitte nutz einen anderen!");
             return;
         }
-        // TODO: Anzeigen wieviele Warps ein user noch frei hat
-        if (wManager.hasFreeWarps(player)) {
-            if (!wManager.isWarpExisting(warpName))
-                wManager.addWarp(player, warpName, new Warp(player));
-            else
-                ChatUtils.printError(player, pluginName, "Es existiert bereits ein Warp names '" + warpName + "'!");
-        } else
-            ChatUtils.printError(player, warpName, "Du hast zu viele private Warps erstellt, um einen neuen erstellen zu k�nnen. L�sche bitte einen alten.");
+
+        int freeWarp = wManager.getFreeWarpCount(player);
+        // player has no free warps
+        if (freeWarp == 0) {
+            ChatUtils.printError(player, pluginName, "Du kannst keinen privaten Warp mehr erstellen! Lösche bitte einen alten Warp!");
+            return;
+        }
+        if (wManager.isWarpExisting(warpName)) {
+            ChatUtils.printError(player, pluginName, "Es existiert bereits ein Warp names '" + warpName + "'!");
+            return;
+        }
+        wManager.addWarp(player, warpName, freeWarp);
     }
 }

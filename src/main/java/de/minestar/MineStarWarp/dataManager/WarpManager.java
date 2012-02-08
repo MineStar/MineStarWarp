@@ -105,16 +105,15 @@ public class WarpManager {
      *            The command caller of /warp create
      * @param name
      *            The name of the warp
-     * @param warp
-     *            The warp itself. You have to create an object of the class for
-     *            this.
      */
-    public void addWarp(Player creator, String name, Warp warp) {
+    public void addWarp(Player creator, String name, int warpCount) {
 
+        Warp warp = new Warp(creator);
         if (dbManager.addWarp(creator, name, warp)) {
             warps.put(name, warp);
             ChatUtils.printSuccess(creator, Core.NAME, "Der Warp '" + name + "' wurde erstellt.");
-            ChatUtils.printInfo(creator, Core.NAME, ChatColor.GRAY, "Um anderen zum Warp zu inviten, benutze den Befehl '/warp invite <Spieler> " + name + " .");
+            ChatUtils.printInfo(creator, Core.NAME, ChatColor.AQUA, "Um anderen zum Warp zu inviten, benutze den Befehl '/warp invite <Spieler> " + name + " .");
+            ChatUtils.printInfo(creator, Core.NAME, ChatColor.AQUA, "Du hast noch " + (warpCount - 1) + " freie Warps übrig.");
         } else
             ChatUtils.printError(creator, Core.NAME, "Warp '" + name + "' konnte durch einen internen Fehler nicht erstellt werden! Bitte an einen Admin wenden!");
     }
@@ -218,24 +217,6 @@ public class WarpManager {
         return true;
     }
 
-    /**
-     * Count all warps the given player has created. Public warps doesn't not
-     * count!
-     * 
-     * @param player
-     *            The player who is the owner of the warp
-     * @return How many warps the player has created and are not public
-     */
-    public int countWarpsCreatedBy(Player player) {
-
-        int counter = 0;
-        for (Warp warp : warps.values()) {
-            if (!warp.isPublic() && warp.getOwner().equals(player.getName()))
-                ++counter;
-        }
-        return counter;
-    }
-
     public int countWarpsCreatedBy(String playerName) {
         int counter = 0;
         for (Warp warp : warps.values()) {
@@ -245,48 +226,20 @@ public class WarpManager {
         return counter;
     }
 
-    /**
-     * Count all warps the given player can use(warp is public or player is
-     * owner or player is on the guest list) <br>
-     * It returns warps.size() when the player is an admin
-     * 
-     * @param player
-     *            The who can uses the warps
-     * @return How many warps the player can use
-     */
-    public int countWarpsCanUse(Player player) {
+    public int getFreeWarpCount(Player player) {
+        int maxWarp = getMaximumWarp(player);
 
-        if (player.isOp())
-            return warps.size();
-        int counter = 0;
+        // handling for admins/mods and infinity
+        if (maxWarp == Integer.MAX_VALUE || maxWarp == -1)
+            return Integer.MAX_VALUE;
+
+        int created = 0;
         for (Warp warp : warps.values()) {
-            if (warp.canUse(player))
-                ++counter;
+            if (!warp.isPublic() && warp.isOwner(player.getName()))
+                ++created;
         }
-        return counter;
-    }
 
-    /**
-     * Compares the count of private warps the player has created and the
-     * maximum number the player can create. If there is space, it returns true. <br>
-     * Example: <br>
-     * Player is Free User (can have 5 private warps) and have 7 warps created,
-     * but 3 are public. So he can create one more private warp and the method
-     * returns true
-     * 
-     * @param player
-     *            The player which warp count is checked
-     * @return True when the player can at least create one private warp
-     */
-    public boolean hasFreeWarps(Player player) {
-
-        if (player.isOp())
-            return true;
-        int warpCount = countWarpsCreatedBy(player);
-        int maximumWarps = getMaximumWarp(player);
-        // when the value is set to -1 the player group can create infinite
-        // warps
-        return maximumWarps == -1 || maximumWarps > warpCount;
+        return maxWarp - created;
     }
 
     private int getMaximumWarp(Player player) {
@@ -436,7 +389,7 @@ public class WarpManager {
      * @return HashMap concerning the intervall. Returns null if the list is
      *         empty
      */
-    public TreeMap<String, Warp> getWarpsForList(int pageNumber, int warpsPerPage, Player player) {
+    public TreeMap<String, Warp> getWarpsForList(int pageNumber, Player player) {
 
         TreeMap<String, Warp> warpList = new TreeMap<String, Warp>();
         TreeMap<String, Warp> warpsPlayerCanUse = new TreeMap<String, Warp>();
@@ -540,11 +493,21 @@ public class WarpManager {
 
     public int getMaxPage(Player player) {
 
-        int warpSize = countWarpsCanUse(player);
-        if (warpSize == 0)
+        int warpCount = 0;
+
+        if (player.isOp() || UtilPermissions.playerCanUseCommand(player, "minestarwarp.useAll"))
+            warpCount = warps.size();
+        else {
+            for (Warp warp : warps.values()) {
+                if (warp.canUse(player))
+                    ++warpCount;
+            }
+        }
+
+        if (warpCount == 0)
             return 0;
 
-        double maxPage = (double) warpSize / (double) warpsPerPage;
+        double maxPage = (double) warpCount / (double) warpsPerPage;
         if (maxPage % 1 != 0)
             maxPage = Math.floor(maxPage) + 1;
 
