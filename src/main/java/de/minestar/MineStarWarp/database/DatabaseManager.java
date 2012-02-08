@@ -122,7 +122,7 @@ public class DatabaseManager extends AbstractDatabaseHandler {
                 String world = rs.getString(3);
                 Location loc = new Location(Bukkit.getWorld(world), rs.getDouble(4), rs.getDouble(5), rs.getDouble(6), rs.getInt(7), rs.getInt(8));
                 String guestsList = rs.getString(9);
-                Warp warp = new Warp(creator, loc, this.convertsGuestsToList(guestsList));
+                Warp warp = new Warp(creator, loc, this.guestListAsSet(guestsList));
                 warps.put(name, warp);
             }
         } catch (Exception e) {
@@ -432,7 +432,7 @@ public class DatabaseManager extends AbstractDatabaseHandler {
      *         Otherwise the name of player which can use the warp in an
      *         ArrayList
      */
-    private HashSet<String> convertsGuestsToList(String guestList) {
+    private HashSet<String> guestListAsSet(String guestList) {
 
         if (guestList == null)
             return null;
