@@ -55,6 +55,12 @@ public class InviteCommand extends Command {
         String guestName = args[0];
         String warpName = args[1];
         Warp warp = wManager.getWarp(warpName);
+
+        if (guestName.equalsIgnoreCase(player.getName())) {
+            ChatUtils.printError(player, pluginName, "Du kannst dich nicht selber einladen!");
+            return;
+        }
+
         if (warp == null) {
             ChatUtils.printError(player, pluginName, "Warp '" + warpName + "' existiert nicht!");
             return;
