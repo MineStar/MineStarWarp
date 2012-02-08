@@ -382,8 +382,6 @@ public class WarpManager {
      * 
      * @param pageNumber
      *            Indicates the start of the intervall
-     * @param warpsPerPage
-     *            How many warps are returned
      * @param player
      *            The command caller. Only warps are listed he can use
      * @return HashMap concerning the intervall. Returns null if the list is

@@ -64,7 +64,7 @@ public class ListCommand extends ExtendedCommand {
             if (args[0].equalsIgnoreCase("my"))
                 showPlayersWarp(player, player.getName());
             // warp list #
-            else if (args[0].matches("\\d*"))
+            else if (args[0].matches("-?\\d*"))
                 showAllWarps(player, Integer.parseInt(args[0]));
             // warp list playerName
             else if (UtilPermissions.playerCanUseCommand(player, "minestarwarp.command.listPlayer"))
@@ -94,14 +94,13 @@ public class ListCommand extends ExtendedCommand {
 
         // To high number
         if (page > maxPage || page <= 0) {
-            ChatUtils.printError(player, pluginName, "Bitte benutzen nur Seitenzahlen von 1 bis " + maxPage);
+            ChatUtils.printError(player, pluginName, "Benutze bitte nur Seitenzahlen von 1 bis " + maxPage);
             return;
         }
 
         warps = wManager.getWarpsForList(page, player);
-        ChatUtils.printInfo(player, pluginName, ChatColor.WHITE, "------------------- Seite " + page + "/" + maxPage + " -------------------");
+        ChatUtils.printInfo(player, pluginName, ChatColor.WHITE, "---------------- Seite " + page + "/" + maxPage + " ----------------");
         wManager.showWarpList(player, warps);
-
     }
 
     /**

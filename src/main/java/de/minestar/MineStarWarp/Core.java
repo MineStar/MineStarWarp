@@ -175,6 +175,7 @@ public class Core extends JavaPlugin {
                 config.set("banks.banksPerPage", 15);
                 config.save(configFile);
             }
+            config.load(configFile);
         } catch (Exception e) {
             ChatUtils.printConsoleException(e, "Can't load configuration file!", NAME);
         }
