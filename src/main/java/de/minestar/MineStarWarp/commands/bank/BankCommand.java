@@ -21,8 +21,6 @@ package de.minestar.MineStarWarp.commands.bank;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import com.bukkit.gemo.utils.UtilPermissions;
-
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.dataManager.BankManager;
 import de.minestar.minestarlibrary.commands.Command;
@@ -62,17 +60,17 @@ public class BankCommand extends SuperCommand {
                 ChatUtils.printError(player, pluginName, "Du hast keine Bank!");
 
         } else {
-            if (!UtilPermissions.playerCanUseCommand(player, "minestarwarp.commands.bankSpecific")) {
-                ChatUtils.printError(player, pluginName, NO_RIGHT);
+            if (!checkSpecialPermission(player, "minestarwarp.commands.bankSpecific"))
                 return;
-            }
+
             String targetName = args[0];
             bank = bankManager.getBank(targetName);
+
             if (bank != null) {
                 player.teleport(bank);
                 ChatUtils.printSuccess(player, pluginName, "Du bist in der Bank von '" + targetName + "'!");
             } else
-                ChatUtils.printError(player, pluginName, "Keine Bank f�r '" + targetName + "' gefunden!");
+                ChatUtils.printError(player, pluginName, "Keine Bank von '" + targetName + "' gefunden!");
         }
     }
 }
