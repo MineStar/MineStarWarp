@@ -106,46 +106,46 @@ public class Core extends JavaPlugin {
         commandList = new CommandList(new Command[] {
 
                 // Teleport Commands
-                new TeleportHereCommand("/tphere", "<Player>", "tphere"),
-                new TeleportToCommand("/tp", "<Player>", "tpTo"),
+                new TeleportHereCommand("/tphere", "<Player>", "minestarwarp.command.tphere"),
+                new TeleportToCommand("/tp", "<Player>", "minestarwarp.command.tpTo"),
 
                 // Home
-                new SetHomeCommand("/sethome", "", "sethome", homeManager),
-                new HomeCommand("/home", "", "home", homeManager),
+                new SetHomeCommand("/sethome", "", "minestarwarp.command.sethome", homeManager),
+                new HomeCommand("/home", "", "minestarwarp.command.home", homeManager),
 
                 // Bank
-                new BankCommand("/bank", "", "bank", bankManager,
-                        new BankListCommand("list", "", "bankList", bankManager)
+                new BankCommand("/bank", "", "minestarwarp.command.bank", bankManager,
+                        new BankListCommand("list", "", "minestarwarp.command.bankList", bankManager)
                 ),
 
-                new SetBankCommand("/setbank", "<Player>", "setBank", bankManager),
+                new SetBankCommand("/setbank", "<Player>", "minestarwarp.command.setBank", bankManager),
 
                 // Back
-                new BackCommand("/back", "", "back", backManager),
+                new BackCommand("/back", "", "minestarwarp.command.back", backManager),
 
                 // Warp Command
-                new WarpToCommand("/warp", "<Name>", "warpTo", warpManager,
+                new WarpToCommand("/warp", "<Name>", "minestarwarp.command.warpTo", warpManager,
                         new Command[] {
                                 // Warp Creation, Removing, Moving and
                                 // Renameing.
-                                new CreateCommand("create", "<Name>", "create", warpManager),
-                                new CreateCommand("pcreate", "<Name>", "create", warpManager),
-                                new DeleteCommand("delete", "<Name>", "delete", warpManager),
-                                new MoveCommand("move", "<Name>", "move", warpManager),
-                                new RenameCommand("rename", "<Oldname> <Newname>", "rename", warpManager),
+                                new CreateCommand("create", "<Name>", "minestarwarp.command.create", warpManager),
+                                new CreateCommand("pcreate", "<Name>", "minestarwarp.command.create", warpManager),
+                                new DeleteCommand("delete", "<Name>", "minestarwarp.command.delete", warpManager),
+                                new MoveCommand("move", "<Name>", "minestarwarp.command.move", warpManager),
+                                new RenameCommand("rename", "<Oldname> <Newname>", "minestarwarp.command.rename", warpManager),
         
                                 // Searching Warps
-                                new ListCommand("list", "", "list", warpManager),
-                                new SearchCommand("search", "<Name>", "search", warpManager),
+                                new ListCommand("list", "", "minestarwarp.command.list", warpManager),
+                                new SearchCommand("search", "<Name>", "minestarwarp.command.search", warpManager),
         
                                 // Modifiers
-                                new PrivateCommand("private", "<Name>", "private", warpManager),
-                                new PublicCommand("public", "<Name>", "public", warpManager),
+                                new PrivateCommand("private", "<Name>", "minestarwarp.command.private", warpManager),
+                                new PublicCommand("public", "<Name>", "minestarwarp.command.public", warpManager),
         
                                 // Guests
-                                new InviteCommand("invite", "<PlayerName> <Warpname>", "invite", warpManager),
-                                new UninviteCommand("uninvite", "<PlayerName> <Warpname>", "uninvite", warpManager),
-                                new GuestListCommand("guestlist", "<WarpName>", "guestlist", warpManager)
+                                new InviteCommand("invite", "<PlayerName> <Warpname>", "minestarwarp.command.invite", warpManager),
+                                new UninviteCommand("uninvite", "<PlayerName> <Warpname>", "minestarwarp.command.uninvite", warpManager),
+                                new GuestListCommand("guestlist", "<WarpName>", "minestarwarp.command.guestlist", warpManager)
                         }
                 )
         });

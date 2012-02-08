@@ -60,7 +60,7 @@ public class BankCommand extends SuperCommand {
                 ChatUtils.printError(player, pluginName, "Du hast keine Bank!");
 
         } else {
-            if (!checkSpecialPermission(player, "minestarwarp.commands.bankSpecific"))
+            if (!checkSpecialPermission(player, "minestarwarp.command.bankSpecific"))
                 return;
 
             String targetName = args[0];

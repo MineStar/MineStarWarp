@@ -66,7 +66,7 @@ public class UninviteCommand extends Command {
         }
 
         if (!warp.canEdit(player)) {
-            ChatUtils.printError(player, pluginName, "Du kannst aus diesem Warp niemanden aus der Gästeliste entfernen!");
+            ChatUtils.printError(player, pluginName, "Du kannst bei diesem Warp niemanden aus der Gästeliste entfernen!");
             return;
         }
 

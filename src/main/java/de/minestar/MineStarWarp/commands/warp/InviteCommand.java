@@ -60,7 +60,6 @@ public class InviteCommand extends Command {
             ChatUtils.printError(player, pluginName, "Du kannst dich nicht selber einladen!");
             return;
         }
-
         if (warp == null) {
             ChatUtils.printError(player, pluginName, "Warp '" + warpName + "' existiert nicht!");
             return;

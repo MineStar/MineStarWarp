@@ -50,13 +50,15 @@ public class DeleteCommand extends Command {
     public void execute(String[] args, Player player) {
 
         String warpName = args[0];
-        if (wManager.isWarpExisting(warpName)) {
-            Warp warp = wManager.getWarp(warpName);
-            if (warp.canEdit(player))
-                wManager.deleteWarp(player, warpName);
-            else
-                ChatUtils.printError(player, pluginName, "Du darfst den Warp '" + warpName + "' nicht l�schen!");
-        } else
+        if (!wManager.isWarpExisting(warpName)) {
             ChatUtils.printError(player, pluginName, "'" + warpName + "' exisiert nicht!");
+            return;
+        }
+        Warp warp = wManager.getWarp(warpName);
+        if (warp.canEdit(player))
+            wManager.deleteWarp(player, warpName);
+        else
+            ChatUtils.printError(player, pluginName, "Du darfst den Warp '" + warpName + "' nicht l�schen!");
+
     }
 }
