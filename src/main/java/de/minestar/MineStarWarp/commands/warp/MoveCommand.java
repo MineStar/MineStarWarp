@@ -25,9 +25,9 @@ import com.bukkit.gemo.utils.ChatUtils;
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
 import de.minestar.MineStarWarp.dataManager.WarpManager;
-import de.minestar.minestarlibrary.commands.Command;
+import de.minestar.minestarlibrary.commands.AbstractCommand;
 
-public class MoveCommand extends Command {
+public class MoveCommand extends AbstractCommand {
 
     private WarpManager wManager;
 

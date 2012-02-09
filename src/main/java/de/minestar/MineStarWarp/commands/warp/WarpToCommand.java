@@ -25,15 +25,15 @@ import org.bukkit.entity.Player;
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
 import de.minestar.MineStarWarp.dataManager.WarpManager;
-import de.minestar.minestarlibrary.commands.Command;
-import de.minestar.minestarlibrary.commands.SuperCommand;
+import de.minestar.minestarlibrary.commands.AbstractCommand;
+import de.minestar.minestarlibrary.commands.AbstractSuperCommand;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
-public class WarpToCommand extends SuperCommand {
+public class WarpToCommand extends AbstractSuperCommand {
 
     private WarpManager wManager;
 
-    public WarpToCommand(String syntax, String arguments, String node, WarpManager wManager, Command... subCommands) {
+    public WarpToCommand(String syntax, String arguments, String node, WarpManager wManager, AbstractCommand... subCommands) {
         super(Core.NAME, syntax, arguments, node, true, subCommands);
         this.description = "Teleportiert dich zu einem Warp";
         this.wManager = wManager;

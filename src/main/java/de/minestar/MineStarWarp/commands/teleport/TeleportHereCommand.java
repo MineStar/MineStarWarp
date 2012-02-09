@@ -21,11 +21,11 @@ package de.minestar.MineStarWarp.commands.teleport;
 import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
-import de.minestar.minestarlibrary.commands.ExtendedCommand;
+import de.minestar.minestarlibrary.commands.AbstractExtendedCommand;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 import de.minestar.minestarlibrary.utils.PlayerUtils;
 
-public class TeleportHereCommand extends ExtendedCommand {
+public class TeleportHereCommand extends AbstractExtendedCommand {
 
     public TeleportHereCommand(String syntax, String arguments, String node) {
         super(Core.NAME, syntax, arguments, node);

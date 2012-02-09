@@ -22,9 +22,9 @@ import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.dataManager.HomeManager;
-import de.minestar.minestarlibrary.commands.Command;
+import de.minestar.minestarlibrary.commands.AbstractCommand;
 
-public class SetHomeCommand extends Command {
+public class SetHomeCommand extends AbstractCommand {
 
     private HomeManager hManager;
 

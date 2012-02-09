@@ -24,11 +24,11 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
-import de.minestar.minestarlibrary.commands.ExtendedCommand;
+import de.minestar.minestarlibrary.commands.AbstractExtendedCommand;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 import de.minestar.minestarlibrary.utils.PlayerUtils;
 
-public class TeleportToCommand extends ExtendedCommand {
+public class TeleportToCommand extends AbstractExtendedCommand {
 
     public TeleportToCommand(String syntax, String arguments, String node) {
         super(Core.NAME, syntax, arguments, node);

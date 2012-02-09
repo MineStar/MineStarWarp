@@ -76,7 +76,6 @@ public class DatabaseManager extends AbstractDatabaseHandler {
     @Override
     protected void createStructure(String pluginName, Connection con) throws Exception {
         DatabaseUtils.createStructure(getClass().getResourceAsStream("/structure.sql"), con, pluginName);
-
     }
 
     @Override

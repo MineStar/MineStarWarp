@@ -27,10 +27,10 @@ import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.dataManager.BankManager;
-import de.minestar.minestarlibrary.commands.ExtendedCommand;
+import de.minestar.minestarlibrary.commands.AbstractExtendedCommand;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
-public class BankListCommand extends ExtendedCommand {
+public class BankListCommand extends AbstractExtendedCommand {
 
     private BankManager bankManager;
 

@@ -28,10 +28,10 @@ import com.bukkit.gemo.utils.UtilPermissions;
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
 import de.minestar.MineStarWarp.dataManager.WarpManager;
-import de.minestar.minestarlibrary.commands.ExtendedCommand;
+import de.minestar.minestarlibrary.commands.AbstractExtendedCommand;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
-public class ListCommand extends ExtendedCommand {
+public class ListCommand extends AbstractExtendedCommand {
 
     private WarpManager wManager;
 

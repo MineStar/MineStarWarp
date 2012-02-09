@@ -24,10 +24,10 @@ import org.bukkit.entity.Player;
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
 import de.minestar.MineStarWarp.dataManager.WarpManager;
-import de.minestar.minestarlibrary.commands.Command;
+import de.minestar.minestarlibrary.commands.AbstractCommand;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
-public class PublicCommand extends Command {
+public class PublicCommand extends AbstractCommand {
 
     private WarpManager wManager;
 

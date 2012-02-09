@@ -23,15 +23,15 @@ import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.dataManager.BankManager;
-import de.minestar.minestarlibrary.commands.Command;
-import de.minestar.minestarlibrary.commands.SuperCommand;
+import de.minestar.minestarlibrary.commands.AbstractCommand;
+import de.minestar.minestarlibrary.commands.AbstractSuperCommand;
 import de.minestar.minestarlibrary.utils.ChatUtils;
 
-public class BankCommand extends SuperCommand {
+public class BankCommand extends AbstractSuperCommand {
 
     private BankManager bankManager;
 
-    public BankCommand(String syntax, String arguments, String node, BankManager bankManager, Command... commands) {
+    public BankCommand(String syntax, String arguments, String node, BankManager bankManager, AbstractCommand... commands) {
         super(Core.NAME, syntax, arguments, node, true, commands);
         this.bankManager = bankManager;
     }
