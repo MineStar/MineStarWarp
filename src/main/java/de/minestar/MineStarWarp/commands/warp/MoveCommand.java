@@ -49,12 +49,12 @@ public class MoveCommand extends AbstractCommand {
             PlayerUtils.sendError(player, pluginName, "Der Warp '" + warpName + "' existiert nicht!");
             return;
         }
-        Warp warp = wManager.getWarp(args[0]);
+        Warp warp = wManager.getWarp(warpName);
         if (!warp.canEdit(player)) {
             PlayerUtils.sendError(player, pluginName, "Du darfst diesen Warp nicht verschieben!");
             return;
         }
 
-        wManager.updateWarp(player, args[0]);
+        wManager.updateWarp(player, warpName);
     }
 }

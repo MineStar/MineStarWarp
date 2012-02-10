@@ -112,7 +112,7 @@ public class WarpManager {
         if (dbManager.addWarp(creator, name, warp)) {
             warps.put(name, warp);
             PlayerUtils.sendSuccess(creator, Core.NAME, "Der Warp '" + name + "' wurde erstellt.");
-            PlayerUtils.sendInfo(creator, Core.NAME, "Um anderen zum Warp zu inviten, benutze den Befehl '/warp invite <Spieler> " + name + " .");
+            PlayerUtils.sendInfo(creator, Core.NAME, "Um anderen zum Warp zu inviten, benutze den Befehl '/warp invite <Spieler> " + name + "'");
             PlayerUtils.sendInfo(creator, Core.NAME, "Du hast noch " + (warpCount - 1) + " freie Warps übrig.");
         } else
             PlayerUtils.sendError(creator, Core.NAME, "Warp '" + name + "' konnte durch einen internen Fehler nicht erstellt werden! Bitte an einen Admin wenden!");
@@ -152,8 +152,8 @@ public class WarpManager {
 
         if (dbManager.renameWarp(oldName, newName)) {
             PlayerUtils.sendSuccess(player, Core.NAME, "Der Warp '" + oldName + "' heißt nun '" + newName + "'!");
-            warps.remove(oldName);
-            warps.put(newName, warps.get(oldName));
+            Warp temp = warps.remove(oldName);
+            warps.put(newName, temp);
         }
     }
 
@@ -175,7 +175,12 @@ public class WarpManager {
     public boolean addGuest(Player player, String warpName, String guest) {
 
         Warp warp = warps.get(warpName);
+        if (warp.isGuest(guest)) {
+            PlayerUtils.sendError(player, Core.NAME, "Spieler '" + guest + "' ist bereits Gast des Warps '" + warpName + "'!");
+            return false;
+        }
         warp.invitePlayer(guest);
+
         if (dbManager.changeGuestList(warp.getGuestsAsString(), warpName)) {
             PlayerUtils.sendSuccess(player, Core.NAME, "Spieler '" + guest + "' wurde zu dem Warp '" + warpName + "' eingeladen!");
             return true;
@@ -185,7 +190,6 @@ public class WarpManager {
             return false;
         }
     }
-
     /**
      * The uninvited player loosing the right to use the warp. <br>
      * The changed guest list will stored in the database. If no error occurs it
@@ -204,6 +208,10 @@ public class WarpManager {
     public boolean removeGuest(Player player, String warpName, String guest) {
 
         Warp warp = warps.get(warpName);
+        if (!warp.isGuest(guest)) {
+            PlayerUtils.sendError(player, Core.NAME, "Spieler '" + guest + "' ist kein Gast des Warps '" + warpName + "'!");
+            return false;
+        }
         warp.uninvitePlayer(guest);
         if (dbManager.changeGuestList(warp.getGuestsAsString(), warpName))
             PlayerUtils.sendSuccess(player, Core.NAME, "Spieler '" + guest + "' wurde aus dem Warp '" + warpName + "' ausgeladen!");

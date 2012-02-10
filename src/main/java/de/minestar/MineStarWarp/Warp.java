@@ -191,4 +191,8 @@ public class Warp {
         }
         return result.substring(0, result.length() - 1);
     }
+
+    public boolean isGuest(String name) {
+        return guests.contains(name.toLowerCase());
+    }
 }

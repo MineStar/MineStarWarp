@@ -53,13 +53,13 @@ public class BankListCommand extends AbstractExtendedCommand {
      */
     public void execute(String[] args, Player player) {
 
-        int pageNumber = 1;
+        int page = 1;
 
         if (args.length != 0 && !args[0].matches("\\d*")) {
             PlayerUtils.sendError(player, pluginName, "Benutze eine Zahl f�r die Seite!");
             return;
         } else if (args.length == 1)
-            pageNumber = Integer.parseInt(args[0]);
+            page = Integer.parseInt(args[0]);
 
         int maxPage = bankManager.getMaxPage();
 
@@ -68,14 +68,14 @@ public class BankListCommand extends AbstractExtendedCommand {
             return;
         }
 
-        if (pageNumber > maxPage || pageNumber <= 0) {
+        if (page > maxPage || page <= 0) {
             PlayerUtils.sendError(player, pluginName, "Benutze nur Zahlen von 1 bis " + maxPage);
             return;
         }
 
-        TreeMap<String, Location> banks = bankManager.getBanksForList(pageNumber);
+        TreeMap<String, Location> banks = bankManager.getBanksForList(page);
 
-        PlayerUtils.sendMessage(player, ChatColor.WHITE, pluginName, "------------------- Seite " + pageNumber + "/" + maxPage + " -------------------");
+        PlayerUtils.sendMessage(player, ChatColor.WHITE, pluginName, "-------------- Seite " + page + "/" + maxPage + " --------------");
         showBankList(player, banks);
     }
 

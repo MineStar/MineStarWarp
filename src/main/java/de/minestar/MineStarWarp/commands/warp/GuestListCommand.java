@@ -73,7 +73,7 @@ public class GuestListCommand extends AbstractCommand {
             return;
         }
 
-        PlayerUtils.sendSuccess(player, pluginName, "Gäste'" + warpName + "': " + formatGuestList(guests));
+        PlayerUtils.sendSuccess(player, pluginName, "Gäste '" + warpName + "': " + formatGuestList(guests));
     }
 
     private String formatGuestList(HashSet<String> guests) {
