@@ -75,7 +75,7 @@ public class BankListCommand extends AbstractExtendedCommand {
 
         TreeMap<String, Location> banks = bankManager.getBanksForList(page);
 
-        PlayerUtils.sendMessage(player, ChatColor.WHITE, pluginName, "-------------- Seite " + page + "/" + maxPage + " --------------");
+        PlayerUtils.sendMessage(player, ChatColor.WHITE, "-------------- Seite " + page + "/" + maxPage + " --------------");
         showBankList(player, banks);
     }
 
