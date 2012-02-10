@@ -27,7 +27,7 @@ import de.minestar.MineStarWarp.Warp;
 import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.minestarlibrary.commands.AbstractCommand;
 import de.minestar.minestarlibrary.commands.AbstractSuperCommand;
-import de.minestar.minestarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class WarpToCommand extends AbstractSuperCommand {
 
@@ -55,15 +55,15 @@ public class WarpToCommand extends AbstractSuperCommand {
         String warpName = args[0];
         Entry<String, Warp> entry = wManager.getSimiliarWarp(warpName, player);
         if (entry == null) {
-            ChatUtils.printError(player, pluginName, "Der Warp '" + warpName + "' wurde nicht gefunden!");
+            PlayerUtils.sendError(player, pluginName, "Der Warp '" + warpName + "' wurde nicht gefunden!");
             return;
         }
 
         Warp warp = entry.getValue();
         if (warp.canUse(player)) {
             player.teleport(warp.getLoc());
-            ChatUtils.printSuccess(player, pluginName, "Willkommen beim Warp '" + entry.getKey() + "'!");
+            PlayerUtils.sendSuccess(player, pluginName, "Willkommen beim Warp '" + entry.getKey() + "'!");
         } else
-            ChatUtils.printError(player, pluginName, "Du darfst den Warp '" + entry.getKey() + "' nicht nutzen!");
+            PlayerUtils.sendError(player, pluginName, "Du darfst den Warp '" + entry.getKey() + "' nicht nutzen!");
     }
 }

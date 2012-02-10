@@ -24,7 +24,7 @@ import org.bukkit.entity.Player;
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.dataManager.HomeManager;
 import de.minestar.minestarlibrary.commands.AbstractCommand;
-import de.minestar.minestarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class HomeCommand extends AbstractCommand {
 
@@ -52,8 +52,8 @@ public class HomeCommand extends AbstractCommand {
         Location homeLocation = hManager.getPlayersHome(player);
         if (homeLocation != null) {
             player.teleport(homeLocation);
-            ChatUtils.printSuccess(player, pluginName, "Willkommen zu Hause!");
+            PlayerUtils.sendSuccess(player, pluginName, "Willkommen zu Hause!");
         } else
-            ChatUtils.printError(player, pluginName, "Du besitzt kein Zuhause! Benutze /setHome um eines zu erstellen.");
+            PlayerUtils.sendError(player, pluginName, "Du besitzt kein Zuhause! Benutze /setHome um eines zu erstellen.");
     }
 }

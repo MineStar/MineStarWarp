@@ -20,12 +20,11 @@ package de.minestar.MineStarWarp.commands.warp;
 
 import org.bukkit.entity.Player;
 
-import com.bukkit.gemo.utils.ChatUtils;
-
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
 import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.minestarlibrary.commands.AbstractCommand;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class MoveCommand extends AbstractCommand {
 
@@ -47,12 +46,12 @@ public class MoveCommand extends AbstractCommand {
 
         String warpName = args[0];
         if (!wManager.isWarpExisting(warpName)) {
-            ChatUtils.printError(player, pluginName, "Der Warp '" + warpName + "' existiert nicht!");
+            PlayerUtils.sendError(player, pluginName, "Der Warp '" + warpName + "' existiert nicht!");
             return;
         }
         Warp warp = wManager.getWarp(args[0]);
         if (!warp.canEdit(player)) {
-            ChatUtils.printError(player, pluginName, "Du darfst diesen Warp nicht verschieben!");
+            PlayerUtils.sendError(player, pluginName, "Du darfst diesen Warp nicht verschieben!");
             return;
         }
 

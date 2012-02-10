@@ -25,7 +25,6 @@ import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
 import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.minestarlibrary.commands.AbstractCommand;
-import de.minestar.minestarlibrary.utils.ChatUtils;
 import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class InviteCommand extends AbstractCommand {
@@ -57,19 +56,19 @@ public class InviteCommand extends AbstractCommand {
         Warp warp = wManager.getWarp(warpName);
 
         if (guestName.equalsIgnoreCase(player.getName())) {
-            ChatUtils.printError(player, pluginName, "Du kannst dich nicht selber einladen!");
+            PlayerUtils.sendError(player, pluginName, "Du kannst dich nicht selber einladen!");
             return;
         }
         if (warp == null) {
-            ChatUtils.printError(player, pluginName, "Warp '" + warpName + "' existiert nicht!");
+            PlayerUtils.sendError(player, pluginName, "Warp '" + warpName + "' existiert nicht!");
             return;
         }
         if (warp.isPublic()) {
-            ChatUtils.printError(player, pluginName, "Du kannst niemanden einladen, da der Warp öffentlich ist!");
+            PlayerUtils.sendError(player, pluginName, "Du kannst niemanden einladen, da der Warp öffentlich ist!");
             return;
         }
         if (!warp.canEdit(player)) {
-            ChatUtils.printError(player, pluginName, "Du darfst zu dem Warp '" + warpName + "' niemanden einladen!");
+            PlayerUtils.sendError(player, pluginName, "Du darfst zu dem Warp '" + warpName + "' niemanden einladen!");
             return;
         }
         Player guest = PlayerUtils.getOnlinePlayer(guestName);
@@ -85,6 +84,6 @@ public class InviteCommand extends AbstractCommand {
             }
         }
         if (wManager.addGuest(player, warpName, guestName) && guest != null)
-            ChatUtils.printSuccess(guest, pluginName, "Du wurdest zu dem Warp '" + warpName + "' eingeladen!");
+            PlayerUtils.sendSuccess(guest, pluginName, "Du wurdest zu dem Warp '" + warpName + "' eingeladen!");
     }
 }

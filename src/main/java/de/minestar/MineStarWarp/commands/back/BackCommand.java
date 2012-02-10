@@ -24,7 +24,7 @@ import org.bukkit.entity.Player;
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.dataManager.BackManager;
 import de.minestar.minestarlibrary.commands.AbstractCommand;
-import de.minestar.minestarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class BackCommand extends AbstractCommand {
 
@@ -51,8 +51,8 @@ public class BackCommand extends AbstractCommand {
         if (loc != null) {
             backManager.usedBack(player);
             player.teleport(loc);
-            ChatUtils.printSuccess(player, pluginName, "Du wurdest an die letzte gespeicherte Position teleporiert!");
+            PlayerUtils.sendSuccess(player, pluginName, "Du wurdest an die letzte gespeicherte Position teleporiert!");
         } else
-            ChatUtils.printError(player, pluginName, "Es gibt keinen Punkt zum Zur�ckwarpen!");
+            PlayerUtils.sendError(player, pluginName, "Es gibt keinen Punkt zum Zur�ckwarpen!");
     }
 }

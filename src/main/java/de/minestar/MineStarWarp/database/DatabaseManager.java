@@ -38,7 +38,7 @@ import de.minestar.minestarlibrary.database.AbstractDatabaseHandler;
 import de.minestar.minestarlibrary.database.DatabaseConnection;
 import de.minestar.minestarlibrary.database.DatabaseType;
 import de.minestar.minestarlibrary.database.DatabaseUtils;
-import de.minestar.minestarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
 public class DatabaseManager extends AbstractDatabaseHandler {
 
@@ -125,12 +125,11 @@ public class DatabaseManager extends AbstractDatabaseHandler {
                 warps.put(name, warp);
             }
         } catch (Exception e) {
-            ChatUtils.printConsoleException(e, "Can't loading all warps from database!", Core.NAME);
+            ConsoleUtils.printException(e, Core.NAME, "Can't loading all warps from database!");
         }
-        ChatUtils.printConsoleInfo("Warps loaded: " + warps.size(), Core.NAME);
+        ConsoleUtils.printInfo(Core.NAME, "Warps loaded: " + warps.size());
         return warps;
     }
-
     /**
      * Load the homes from the database and put them into a TreeMap. This should
      * only loaded onEnabled()
@@ -150,9 +149,9 @@ public class DatabaseManager extends AbstractDatabaseHandler {
                 homes.put(name, loc);
             }
         } catch (Exception e) {
-            ChatUtils.printConsoleException(e, "Can't loading all homes from database!", Core.NAME);
+            ConsoleUtils.printException(e, Core.NAME, "Can't loading all homes from database!");
         }
-        ChatUtils.printConsoleInfo("Homes loaded: " + homes.size(), Core.NAME);
+        ConsoleUtils.printInfo(Core.NAME, "Homes loaded: " + homes.size());
         return homes;
     }
 
@@ -175,9 +174,9 @@ public class DatabaseManager extends AbstractDatabaseHandler {
                 banks.put(name, loc);
             }
         } catch (Exception e) {
-            ChatUtils.printConsoleException(e, "Can't loading all banks from database!", Core.NAME);
+            ConsoleUtils.printException(e, Core.NAME, "Can't loading all banks from database!");
         }
-        ChatUtils.printConsoleInfo("Banks loaded: " + banks.size(), Core.NAME);
+        ConsoleUtils.printInfo(Core.NAME, "Banks loaded: " + banks.size());
         return banks;
     }
 
@@ -208,7 +207,7 @@ public class DatabaseManager extends AbstractDatabaseHandler {
             addWarp.setInt(8, Math.round(loc.getPitch()) % 360);
             addWarp.executeUpdate();
         } catch (Exception e) {
-            ChatUtils.printConsoleException(e, "Can't store a new warp in database! Name=" + name + ",Player=" + creator.getName() + " ,Loc=" + creator.getLocation().toString(), Core.NAME);
+            ConsoleUtils.printException(e, Core.NAME, "Can't store a new warp in database! Name=" + name + ",Player=" + creator.getName() + " ,Loc=" + creator.getLocation().toString());
             return false;
         }
         return true;
@@ -237,7 +236,7 @@ public class DatabaseManager extends AbstractDatabaseHandler {
             addHome.setInt(7, Math.round(loc.getPitch()) % 360);
             addHome.executeUpdate();
         } catch (Exception e) {
-            ChatUtils.printConsoleException(e, "Can't set home in database! Player=" + creator.getName() + " ,Loc=" + creator.getLocation(), Core.NAME);
+            ConsoleUtils.printException(e, Core.NAME, "Can't set home in database! Player=" + creator.getName() + " ,Loc=" + creator.getLocation());
             return false;
         }
         return true;
@@ -265,7 +264,7 @@ public class DatabaseManager extends AbstractDatabaseHandler {
             updateHome.setString(7, player.getName().toLowerCase());
             updateHome.executeUpdate();
         } catch (Exception e) {
-            ChatUtils.printConsoleException(e, "Can't update home in database! Player=" + player.getName() + " ,Loc=" + player.getLocation(), Core.NAME);
+            ConsoleUtils.printException(e, Core.NAME, "Can't update home in database! Player=" + player.getName() + " ,Loc=" + player.getLocation());
             return false;
         }
         return true;
@@ -296,7 +295,7 @@ public class DatabaseManager extends AbstractDatabaseHandler {
             setBank.setInt(7, Math.round(bankLocation.getPitch()) % 360);
             setBank.executeUpdate();
         } catch (Exception e) {
-            ChatUtils.printConsoleException(e, "Can't set new bank location in database! Player=" + playerName + " ,Loc=" + bankLocation, Core.NAME);
+            ConsoleUtils.printException(e, Core.NAME, "Can't set new bank location in database! Player=" + playerName + " ,Loc=" + bankLocation);
             return false;
         }
         return true;
@@ -323,7 +322,7 @@ public class DatabaseManager extends AbstractDatabaseHandler {
             updateBank.setString(7, playerName.toLowerCase());
             updateBank.executeUpdate();
         } catch (Exception e) {
-            ChatUtils.printConsoleException(e, "Can't update bank location in database! Player=" + playerName + ",Loc=" + bankLocation, Core.NAME);
+            ConsoleUtils.printException(e, Core.NAME, "Can't update bank location in database! Player=" + playerName + ",Loc=" + bankLocation);
             return false;
         }
         return true;
@@ -343,7 +342,7 @@ public class DatabaseManager extends AbstractDatabaseHandler {
             deleteWarp.setString(1, name);
             deleteWarp.executeUpdate();
         } catch (Exception e) {
-            ChatUtils.printConsoleException(e, "Can't delete warp from database! Warp=" + name, Core.NAME);
+            ConsoleUtils.printException(e, Core.NAME, "Can't delete warp from database! Warp=" + name);
             return false;
         }
         return true;
@@ -364,7 +363,7 @@ public class DatabaseManager extends AbstractDatabaseHandler {
             changeGuestList.setString(2, name);
             changeGuestList.executeUpdate();
         } catch (Exception e) {
-            ChatUtils.printConsoleException(e, "Can't change guest list in database! Warp=" + name + " ,GuestList=" + guestList, Core.NAME);
+            ConsoleUtils.printException(e, Core.NAME, "Can't change guest list in database! Warp=" + name + " ,GuestList=" + guestList);
             return false;
         }
         return true;
@@ -391,7 +390,7 @@ public class DatabaseManager extends AbstractDatabaseHandler {
             updateWarp.setString(7, warpName);
             updateWarp.executeUpdate();
         } catch (Exception e) {
-            ChatUtils.printConsoleException(e, "Can't update warp location in database! Warp=" + warpName + " ,Loc=" + loc, Core.NAME);
+            ConsoleUtils.printException(e, Core.NAME, "Can't update warp location in database! Warp=" + warpName + " ,Loc=" + loc);
             return false;
         }
         return true;
@@ -413,7 +412,7 @@ public class DatabaseManager extends AbstractDatabaseHandler {
             renameWarp.setString(2, oldname);
             renameWarp.executeUpdate();
         } catch (Exception e) {
-            ChatUtils.printConsoleException(e, "Can't rename warp in database! OldName=" + oldname + " ,NewName=" + newname, Core.NAME);
+            ConsoleUtils.printException(e, Core.NAME, "Can't rename warp in database! OldName=" + oldname + " ,NewName=" + newname);
             return false;
         }
         return true;
@@ -457,7 +456,7 @@ public class DatabaseManager extends AbstractDatabaseHandler {
             convertToPublic.setString(1, name);
             convertToPublic.executeUpdate();
         } catch (Exception e) {
-            ChatUtils.printConsoleException(e, "Can't delete guest list in database! Warp=" + name, Core.NAME);
+            ConsoleUtils.printException(e, Core.NAME, "Can't delete guest list in database! Warp=" + name);
             return false;
         }
         return true;

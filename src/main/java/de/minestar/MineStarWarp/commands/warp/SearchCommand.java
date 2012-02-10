@@ -20,14 +20,13 @@ package de.minestar.MineStarWarp.commands.warp;
 
 import java.util.Map;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
 import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.minestarlibrary.commands.AbstractCommand;
-import de.minestar.minestarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class SearchCommand extends AbstractCommand {
 
@@ -59,12 +58,12 @@ public class SearchCommand extends AbstractCommand {
 
         // When at least one warp is found
         if (result != null) {
-            ChatUtils.printInfo(player, pluginName, ChatColor.YELLOW, "Treffer für '" + query + "' :");
+            PlayerUtils.sendInfo(player, pluginName, "Treffer für '" + query + "' :");
             // Sending all warps per Line to the player
             wManager.showWarpList(player, result);
         }
         // When no warp was found
         else
-            ChatUtils.printError(player, pluginName, "Keine Treffer gefunden für '" + query + "'!");
+            PlayerUtils.sendError(player, pluginName, "Keine Treffer gefunden für '" + query + "'!");
     }
 }

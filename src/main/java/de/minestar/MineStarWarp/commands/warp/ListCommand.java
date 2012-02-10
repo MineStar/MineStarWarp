@@ -29,7 +29,7 @@ import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
 import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.minestarlibrary.commands.AbstractExtendedCommand;
-import de.minestar.minestarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class ListCommand extends AbstractExtendedCommand {
 
@@ -88,18 +88,18 @@ public class ListCommand extends AbstractExtendedCommand {
         int maxPage = wManager.getMaxPage(player);
 
         if (maxPage == 0) {
-            ChatUtils.printError(player, pluginName, "Du hast keinen benutzbaren Warp!");
+            PlayerUtils.sendError(player, pluginName, "Du hast keinen benutzbaren Warp!");
             return;
         }
 
         // To high number
         if (page > maxPage || page <= 0) {
-            ChatUtils.printError(player, pluginName, "Benutze bitte nur Seitenzahlen von 1 bis " + maxPage);
+            PlayerUtils.sendError(player, pluginName, "Benutze bitte nur Seitenzahlen von 1 bis " + maxPage);
             return;
         }
 
         warps = wManager.getWarpsForList(page, player);
-        ChatUtils.printInfo(player, pluginName, ChatColor.WHITE, "---------------- Seite " + page + "/" + maxPage + " ----------------");
+        PlayerUtils.sendMessage(player, ChatColor.WHITE, pluginName, "---------------- Seite " + page + "/" + maxPage + " ----------------");
         wManager.showWarpList(player, warps);
     }
 
@@ -112,9 +112,9 @@ public class ListCommand extends AbstractExtendedCommand {
     private void showPlayersWarp(Player player, String targetName) {
         TreeMap<String, Warp> warps = wManager.getWarpsPlayerIsOwner(targetName);
         if (warps != null) {
-            ChatUtils.printInfo(player, pluginName, ChatColor.AQUA, " Spieler '" + targetName + "' hat " + wManager.countWarpsCreatedBy(targetName) + "/" + wManager.getMaximumWarp(targetName) + " private Warps");
+            PlayerUtils.sendInfo(player, pluginName, " Spieler '" + targetName + "' hat " + wManager.countWarpsCreatedBy(targetName) + "/" + wManager.getMaximumWarp(targetName) + " private Warps");
             wManager.showWarpList(player, warps);
         } else
-            ChatUtils.printError(player, pluginName, "Spieler '" + targetName + "' hat keine Warps!");
+            PlayerUtils.sendError(player, pluginName, "Spieler '" + targetName + "' hat keine Warps!");
     }
 }

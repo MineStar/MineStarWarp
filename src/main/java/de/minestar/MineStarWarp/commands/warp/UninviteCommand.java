@@ -25,7 +25,6 @@ import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
 import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.minestarlibrary.commands.AbstractCommand;
-import de.minestar.minestarlibrary.utils.ChatUtils;
 import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class UninviteCommand extends AbstractCommand {
@@ -56,7 +55,7 @@ public class UninviteCommand extends AbstractCommand {
         String warpName = args[1];
         Warp warp = wManager.getWarp(warpName);
         if (warp == null) {
-            ChatUtils.printError(player, pluginName, "Der Warp '" + warpName + "' existiert nicht!");
+            PlayerUtils.sendError(player, pluginName, "Der Warp '" + warpName + "' existiert nicht!");
             return;
         }
 
@@ -66,7 +65,7 @@ public class UninviteCommand extends AbstractCommand {
         }
 
         if (!warp.canEdit(player)) {
-            ChatUtils.printError(player, pluginName, "Du kannst bei diesem Warp niemanden aus der Gästeliste entfernen!");
+            PlayerUtils.sendError(player, pluginName, "Du kannst bei diesem Warp niemanden aus der Gästeliste entfernen!");
             return;
         }
 
@@ -77,11 +76,11 @@ public class UninviteCommand extends AbstractCommand {
             guestName = PlayerUtils.getOfflinePlayerName(guestName);
 
             if (guestName == null) {
-                ChatUtils.printError(player, pluginName, "Der Spieler '" + args[0] + "' existiert nicht!");
+                PlayerUtils.sendError(player, pluginName, "Der Spieler '" + args[0] + "' existiert nicht!");
                 return;
             }
         }
         if (wManager.removeGuest(player, warpName, guestName) && guest != null)
-            ChatUtils.printInfo(guest, pluginName, ChatColor.RED, "Du wurdest aus dem Warp '" + warpName + "' ausgeladen!");
+            PlayerUtils.sendError(guest, pluginName, "Du wurdest aus dem Warp '" + warpName + "' ausgeladen!");
     }
 }

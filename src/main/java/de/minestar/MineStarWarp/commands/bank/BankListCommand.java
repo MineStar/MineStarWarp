@@ -28,7 +28,7 @@ import org.bukkit.entity.Player;
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.dataManager.BankManager;
 import de.minestar.minestarlibrary.commands.AbstractExtendedCommand;
-import de.minestar.minestarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class BankListCommand extends AbstractExtendedCommand {
 
@@ -56,7 +56,7 @@ public class BankListCommand extends AbstractExtendedCommand {
         int pageNumber = 1;
 
         if (args.length != 0 && !args[0].matches("\\d*")) {
-            ChatUtils.printError(player, pluginName, "Benutze eine Zahl f�r die Seite!");
+            PlayerUtils.sendError(player, pluginName, "Benutze eine Zahl f�r die Seite!");
             return;
         } else if (args.length == 1)
             pageNumber = Integer.parseInt(args[0]);
@@ -64,18 +64,18 @@ public class BankListCommand extends AbstractExtendedCommand {
         int maxPage = bankManager.getMaxPage();
 
         if (maxPage == 0) {
-            ChatUtils.printError(player, pluginName, "Es existiert keine einzige Bank!");
+            PlayerUtils.sendError(player, pluginName, "Es existiert keine einzige Bank!");
             return;
         }
 
         if (pageNumber > maxPage || pageNumber <= 0) {
-            ChatUtils.printError(player, pluginName, "Benutze nur Zahlen von 1 bis " + maxPage);
+            PlayerUtils.sendError(player, pluginName, "Benutze nur Zahlen von 1 bis " + maxPage);
             return;
         }
 
         TreeMap<String, Location> banks = bankManager.getBanksForList(pageNumber);
 
-        ChatUtils.printInfo(player, pluginName, ChatColor.WHITE, "------------------- Seite " + pageNumber + "/" + maxPage + " -------------------");
+        PlayerUtils.sendMessage(player, ChatColor.WHITE, pluginName, "------------------- Seite " + pageNumber + "/" + maxPage + " -------------------");
         showBankList(player, banks);
     }
 
@@ -96,7 +96,7 @@ public class BankListCommand extends AbstractExtendedCommand {
             int x = loc.getBlockX();
             int y = loc.getBlockY();
             int z = loc.getBlockZ();
-            ChatUtils.printInfo(player, playerName, ChatColor.AQUA, "'" + playerName + "' " + " @(" + x + ", " + y + ", " + z);
+            PlayerUtils.sendMessage(player, ChatColor.AQUA, playerName, "'" + playerName + "' " + " @(" + x + ", " + y + ", " + z);
         }
     }
 }

@@ -25,7 +25,7 @@ import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.dataManager.BankManager;
 import de.minestar.minestarlibrary.commands.AbstractCommand;
 import de.minestar.minestarlibrary.commands.AbstractSuperCommand;
-import de.minestar.minestarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class BankCommand extends AbstractSuperCommand {
 
@@ -55,9 +55,9 @@ public class BankCommand extends AbstractSuperCommand {
             bank = bankManager.getBank(player.getName());
             if (bank != null) {
                 player.teleport(bank);
-                ChatUtils.printSuccess(player, pluginName, "Willkommen in deiner Bank!");
+                PlayerUtils.sendSuccess(player, pluginName, "Willkommen in deiner Bank!");
             } else
-                ChatUtils.printError(player, pluginName, "Du hast keine Bank!");
+                PlayerUtils.sendError(player, pluginName, "Du hast keine Bank!");
 
         } else {
             if (!checkSpecialPermission(player, "minestarwarp.command.bankSpecific"))
@@ -68,9 +68,9 @@ public class BankCommand extends AbstractSuperCommand {
 
             if (bank != null) {
                 player.teleport(bank);
-                ChatUtils.printSuccess(player, pluginName, "Du bist in der Bank von '" + targetName + "'!");
+                PlayerUtils.sendSuccess(player, pluginName, "Du bist in der Bank von '" + targetName + "'!");
             } else
-                ChatUtils.printError(player, pluginName, "Keine Bank von '" + targetName + "' gefunden!");
+                PlayerUtils.sendError(player, pluginName, "Keine Bank von '" + targetName + "' gefunden!");
         }
     }
 }

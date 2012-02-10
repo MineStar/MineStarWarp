@@ -25,7 +25,7 @@ import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.database.DatabaseManager;
-import de.minestar.minestarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 /**
  * Is responsible for handling all home commands.
@@ -62,17 +62,17 @@ public class HomeManager {
         if (homes.containsKey(playerName)) {
             if (dbManager.updateHome(player)) {
                 homes.put(playerName, loc);
-                ChatUtils.printSuccess(player, Core.NAME, "Neues Zuhause gesetzt. Nutze '/home', um dich hier hin zu teleportieren");
+                PlayerUtils.sendSuccess(player, Core.NAME, "Neues Zuhause gesetzt. Nutze '/home', um dich hier hin zu teleportieren");
             } else
-                ChatUtils.printError(player, playerName, "Fehler beim setzen des Zuhauses! Bitte an einen Admin wenden!");
+                PlayerUtils.sendError(player, playerName, "Fehler beim setzen des Zuhauses! Bitte an einen Admin wenden!");
         }
         // If not, we have to create a new entry in the database
         else {
             if (dbManager.setHome(player)) {
                 homes.put(playerName, loc);
-                ChatUtils.printSuccess(player, Core.NAME, "Neues Zuhause gesetzt. Nutze '/home', um dich hier hin zu teleportieren");
+                PlayerUtils.sendSuccess(player, Core.NAME, "Neues Zuhause gesetzt. Nutze '/home', um dich hier hin zu teleportieren");
             } else
-                ChatUtils.printError(player, playerName, "Fehler beim setzen des Zuhauses! Bitte an einen Admin wenden!");
+                PlayerUtils.sendError(player, playerName, "Fehler beim setzen des Zuhauses! Bitte an einen Admin wenden!");
         }
     }
 

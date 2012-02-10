@@ -23,7 +23,7 @@ import org.bukkit.entity.Player;
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.minestarlibrary.commands.AbstractCommand;
-import de.minestar.minestarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class CreateCommand extends AbstractCommand {
 
@@ -52,18 +52,18 @@ public class CreateCommand extends AbstractCommand {
 
         String warpName = args[0];
         if (wManager.isKeyWord(warpName.toLowerCase())) {
-            ChatUtils.printError(player, pluginName, "Der Name '" + warpName + "' kann nicht verwendet werden. Bitte nutz einen anderen!");
+            PlayerUtils.sendError(player, pluginName, "Der Name '" + warpName + "' kann nicht verwendet werden. Bitte nutz einen anderen!");
             return;
         }
 
         int freeWarp = wManager.getFreeWarpCount(player);
         // player has no free warps
         if (freeWarp == 0) {
-            ChatUtils.printError(player, pluginName, "Du kannst keinen privaten Warp mehr erstellen! Lösche bitte einen alten Warp!");
+            PlayerUtils.sendError(player, pluginName, "Du kannst keinen privaten Warp mehr erstellen! Lösche bitte einen alten Warp!");
             return;
         }
         if (wManager.isWarpExisting(warpName)) {
-            ChatUtils.printError(player, pluginName, "Es existiert bereits ein Warp names '" + warpName + "'!");
+            PlayerUtils.sendError(player, pluginName, "Es existiert bereits ein Warp names '" + warpName + "'!");
             return;
         }
         wManager.addWarp(player, warpName, freeWarp);

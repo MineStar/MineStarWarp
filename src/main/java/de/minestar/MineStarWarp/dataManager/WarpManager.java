@@ -34,7 +34,7 @@ import com.bukkit.gemo.utils.UtilPermissions;
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
 import de.minestar.MineStarWarp.database.DatabaseManager;
-import de.minestar.minestarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 /**
  * This class handels all data changes and data calls for the warps. <br>
@@ -111,11 +111,11 @@ public class WarpManager {
         Warp warp = new Warp(creator);
         if (dbManager.addWarp(creator, name, warp)) {
             warps.put(name, warp);
-            ChatUtils.printSuccess(creator, Core.NAME, "Der Warp '" + name + "' wurde erstellt.");
-            ChatUtils.printInfo(creator, Core.NAME, ChatColor.AQUA, "Um anderen zum Warp zu inviten, benutze den Befehl '/warp invite <Spieler> " + name + " .");
-            ChatUtils.printInfo(creator, Core.NAME, ChatColor.AQUA, "Du hast noch " + (warpCount - 1) + " freie Warps übrig.");
+            PlayerUtils.sendSuccess(creator, Core.NAME, "Der Warp '" + name + "' wurde erstellt.");
+            PlayerUtils.sendInfo(creator, Core.NAME, "Um anderen zum Warp zu inviten, benutze den Befehl '/warp invite <Spieler> " + name + " .");
+            PlayerUtils.sendInfo(creator, Core.NAME, "Du hast noch " + (warpCount - 1) + " freie Warps übrig.");
         } else
-            ChatUtils.printError(creator, Core.NAME, "Warp '" + name + "' konnte durch einen internen Fehler nicht erstellt werden! Bitte an einen Admin wenden!");
+            PlayerUtils.sendError(creator, Core.NAME, "Warp '" + name + "' konnte durch einen internen Fehler nicht erstellt werden! Bitte an einen Admin wenden!");
     }
 
     /**
@@ -133,25 +133,25 @@ public class WarpManager {
     public void deleteWarp(Player player, String name) {
 
         if (dbManager.deleteWarp(name)) {
-            ChatUtils.printSuccess(player, Core.NAME, "Der Warp '" + name + "' wurde gelöscht!");
+            PlayerUtils.sendSuccess(player, Core.NAME, "Der Warp '" + name + "' wurde gelöscht!");
             warps.remove(name);
         } else
-            ChatUtils.printError(player, Core.NAME, "Warp '" + name + "' konnte durch einen internen Fehler nicht gelöscht werden! Bitte an einen Admin wenden!");
+            PlayerUtils.sendError(player, Core.NAME, "Warp '" + name + "' konnte durch einen internen Fehler nicht gelöscht werden! Bitte an einen Admin wenden!");
     }
 
     public void updateWarp(Player player, String name) {
 
         if (dbManager.updateWarp(name, player.getLocation())) {
             warps.get(name).moveWarp(player.getLocation());
-            ChatUtils.printSuccess(player, Core.NAME, "Der Warp '" + name + "' wurde verschoben!");
+            PlayerUtils.sendSuccess(player, Core.NAME, "Der Warp '" + name + "' wurde verschoben!");
         } else
-            ChatUtils.printError(player, Core.NAME, "Warp '" + name + "' konnte durch einen internen Fehler nicht verschoben werden! Bitte an einen  Admin wenden!");
+            PlayerUtils.sendError(player, Core.NAME, "Warp '" + name + "' konnte durch einen internen Fehler nicht verschoben werden! Bitte an einen  Admin wenden!");
     }
 
     public void renameWarp(Player player, String oldName, String newName) {
 
         if (dbManager.renameWarp(oldName, newName)) {
-            ChatUtils.printSuccess(player, Core.NAME, "Der Warp '" + oldName + "' heißt nun '" + newName + "'!");
+            PlayerUtils.sendSuccess(player, Core.NAME, "Der Warp '" + oldName + "' heißt nun '" + newName + "'!");
             warps.remove(oldName);
             warps.put(newName, warps.get(oldName));
         }
@@ -177,11 +177,11 @@ public class WarpManager {
         Warp warp = warps.get(warpName);
         warp.invitePlayer(guest);
         if (dbManager.changeGuestList(warp.getGuestsAsString(), warpName)) {
-            ChatUtils.printSuccess(player, Core.NAME, "Spieler '" + guest + "' wurde zu dem Warp '" + warpName + "' eingeladen!");
+            PlayerUtils.sendSuccess(player, Core.NAME, "Spieler '" + guest + "' wurde zu dem Warp '" + warpName + "' eingeladen!");
             return true;
         } else {
             warp.uninvitePlayer(guest);
-            ChatUtils.printError(player, Core.NAME, "Der Spieler '" + guest + "' konnte nicht zum Warp '" + warpName + "' eingeladen werden! Bitte an einen Admin wenden!");
+            PlayerUtils.sendError(player, Core.NAME, "Der Spieler '" + guest + "' konnte nicht zum Warp '" + warpName + "' eingeladen werden! Bitte an einen Admin wenden!");
             return false;
         }
     }
@@ -206,11 +206,11 @@ public class WarpManager {
         Warp warp = warps.get(warpName);
         warp.uninvitePlayer(guest);
         if (dbManager.changeGuestList(warp.getGuestsAsString(), warpName))
-            ChatUtils.printSuccess(player, Core.NAME, "Spieler '" + guest + "' wurde aus dem Warp '" + warpName + "' ausgeladen!");
+            PlayerUtils.sendSuccess(player, Core.NAME, "Spieler '" + guest + "' wurde aus dem Warp '" + warpName + "' ausgeladen!");
 
         else {
             warp.invitePlayer(guest);
-            ChatUtils.printError(player, Core.NAME, "Der Spieler '" + guest + "' konnte nicht aus Warp '" + warpName + "' ausgeladen werden! Bitte an einen Admin wenden!");
+            PlayerUtils.sendError(player, Core.NAME, "Der Spieler '" + guest + "' konnte nicht aus Warp '" + warpName + "' ausgeladen werden! Bitte an einen Admin wenden!");
             return false;
         }
 
@@ -429,16 +429,16 @@ public class WarpManager {
 
         if (toPublic) {
             if (dbManager.removeGuestsList(warpName)) {
-                ChatUtils.printSuccess(player, Core.NAME, "Der Warp '" + warpName + "' ist nun öffentlich!");
+                PlayerUtils.sendSuccess(player, Core.NAME, "Der Warp '" + warpName + "' ist nun öffentlich!");
                 warps.get(warpName).setAccess(toPublic);
             } else
-                ChatUtils.printError(player, Core.NAME, "Der Warp '" + warpName + "' konnte durch internen Fehler nicht veröffentlich werden! Bitte an einen Admin wenden!");
+                PlayerUtils.sendError(player, Core.NAME, "Der Warp '" + warpName + "' konnte durch internen Fehler nicht veröffentlich werden! Bitte an einen Admin wenden!");
         } else {
             if (dbManager.changeGuestList("", warpName)) {
-                ChatUtils.printSuccess(player, Core.NAME, "Der Warp '" + warpName + "' ist nun privat!");
+                PlayerUtils.sendSuccess(player, Core.NAME, "Der Warp '" + warpName + "' ist nun privat!");
                 warps.get(warpName).setAccess(toPublic);
             } else
-                ChatUtils.printError(player, Core.NAME, "Der Warp '" + warpName + "' konnte durch internen Fehler nicht privat werden! Bitte an einen Admin wenden!");
+                PlayerUtils.sendError(player, Core.NAME, "Der Warp '" + warpName + "' konnte durch internen Fehler nicht privat werden! Bitte an einen Admin wenden!");
         }
     }
 

@@ -23,7 +23,7 @@ import org.bukkit.entity.Player;
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.minestarlibrary.commands.AbstractCommand;
-import de.minestar.minestarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class RenameCommand extends AbstractCommand {
 
@@ -46,24 +46,24 @@ public class RenameCommand extends AbstractCommand {
         String oldName = args[0];
 
         if (!wManager.isWarpExisting(oldName)) {
-            ChatUtils.printError(player, pluginName, "Der Warp '" + oldName + "' existiert nicht!");
+            PlayerUtils.sendError(player, pluginName, "Der Warp '" + oldName + "' existiert nicht!");
             return;
         }
 
         String newName = args[1];
         if (wManager.isWarpExisting(newName)) {
-            ChatUtils.printError(player, pluginName, "Der Warp '" + newName + "' existiert bereits!");
+            PlayerUtils.sendError(player, pluginName, "Der Warp '" + newName + "' existiert bereits!");
             return;
         }
 
         if (wManager.isKeyWord(newName)) {
-            ChatUtils.printError(player, pluginName, "Der Name '" + newName + "' kann nicht verwendet werden! Bitte benutze einen anderen!");
+            PlayerUtils.sendError(player, pluginName, "Der Name '" + newName + "' kann nicht verwendet werden! Bitte benutze einen anderen!");
             return;
         }
 
         if (wManager.getWarp(oldName).canEdit(player))
             wManager.renameWarp(player, oldName, newName);
         else
-            ChatUtils.printError(player, pluginName, "Du darfst den Warp '" + oldName + "' nicht umbennen!");
+            PlayerUtils.sendError(player, pluginName, "Du darfst den Warp '" + oldName + "' nicht umbennen!");
     }
 }

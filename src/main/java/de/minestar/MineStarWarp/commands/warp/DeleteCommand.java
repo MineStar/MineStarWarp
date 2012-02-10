@@ -24,7 +24,7 @@ import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
 import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.minestarlibrary.commands.AbstractCommand;
-import de.minestar.minestarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class DeleteCommand extends AbstractCommand {
 
@@ -51,14 +51,14 @@ public class DeleteCommand extends AbstractCommand {
 
         String warpName = args[0];
         if (!wManager.isWarpExisting(warpName)) {
-            ChatUtils.printError(player, pluginName, "'" + warpName + "' exisiert nicht!");
+            PlayerUtils.sendError(player, pluginName, "'" + warpName + "' exisiert nicht!");
             return;
         }
         Warp warp = wManager.getWarp(warpName);
         if (warp.canEdit(player))
             wManager.deleteWarp(player, warpName);
         else
-            ChatUtils.printError(player, pluginName, "Du darfst den Warp '" + warpName + "' nicht l�schen!");
+            PlayerUtils.sendError(player, pluginName, "Du darfst den Warp '" + warpName + "' nicht l�schen!");
 
     }
 }

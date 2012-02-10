@@ -27,10 +27,9 @@ import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import com.bukkit.gemo.utils.ChatUtils;
-
 import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.database.DatabaseManager;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class BankManager {
 
@@ -66,7 +65,7 @@ public class BankManager {
 
         if (banks.containsKey(playerName)) {
             if (dbManager.updateBank(playerName, bankLocation)) {
-                ChatUtils.printSuccess(player, Core.NAME, "Eine Bank f�r Spieler '" + playerName + "' erstellt!");
+                PlayerUtils.sendSuccess(player, Core.NAME, "Eine Bank f�r Spieler '" + playerName + "' erstellt!");
                 banks.put(playerName, bankLocation);
                 return;
             } else
@@ -74,7 +73,7 @@ public class BankManager {
 
         } else {
             if (dbManager.setBank(playerName, bankLocation)) {
-                ChatUtils.printSuccess(player, Core.NAME, "Bank f�r Spieler '" + playerName + "' aktualisiert!");
+                PlayerUtils.sendSuccess(player, Core.NAME, "Bank f�r Spieler '" + playerName + "' aktualisiert!");
                 banks.put(playerName, bankLocation);
                 return;
             } else

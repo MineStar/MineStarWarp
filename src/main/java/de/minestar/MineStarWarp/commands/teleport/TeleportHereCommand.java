@@ -22,7 +22,6 @@ import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
 import de.minestar.minestarlibrary.commands.AbstractExtendedCommand;
-import de.minestar.minestarlibrary.utils.ChatUtils;
 import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class TeleportHereCommand extends AbstractExtendedCommand {
@@ -49,11 +48,11 @@ public class TeleportHereCommand extends AbstractExtendedCommand {
 
             Player target = PlayerUtils.getOnlinePlayer(playerName);
             if (target == null) {
-                ChatUtils.printError(player, pluginName, "Spieler '" + playerName + "' nicht gefunden? Vielleicht ist er offline?");
+                PlayerUtils.sendError(player, pluginName, "Spieler '" + playerName + "' nicht gefunden? Vielleicht ist er offline?");
                 return;
             }
-            ChatUtils.printSuccess(player, pluginName, "'" + target.getName() + "' wurde zu dir teleportiert!");
-            ChatUtils.printSuccess(target, pluginName, "Du wurdest zu '" + player.getName() + "' teleportiert!");
+            PlayerUtils.sendSuccess(player, pluginName, "'" + target.getName() + "' wurde zu dir teleportiert!");
+            PlayerUtils.sendSuccess(target, pluginName, "Du wurdest zu '" + player.getName() + "' teleportiert!");
             target.teleport(player.getLocation());
         }
     }

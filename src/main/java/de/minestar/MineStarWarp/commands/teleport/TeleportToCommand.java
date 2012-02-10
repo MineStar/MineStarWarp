@@ -25,7 +25,6 @@ import org.bukkit.entity.Player;
 
 import de.minestar.MineStarWarp.Core;
 import de.minestar.minestarlibrary.commands.AbstractExtendedCommand;
-import de.minestar.minestarlibrary.utils.ChatUtils;
 import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class TeleportToCommand extends AbstractExtendedCommand {
@@ -71,12 +70,12 @@ public class TeleportToCommand extends AbstractExtendedCommand {
 
         Player target = PlayerUtils.getOnlinePlayer(targetName);
         if (target == null) {
-            ChatUtils.printError(player, pluginName, "Der Spieler '" + targetName + "' wurde nicht gefunden. Vielleicht ist er offline?");
+            PlayerUtils.sendError(player, pluginName, "Der Spieler '" + targetName + "' wurde nicht gefunden. Vielleicht ist er offline?");
             return;
         }
 
         player.teleport(target.getLocation());
-        ChatUtils.printSuccess(player, pluginName, "Du hast dich zum Spieler '" + target.getName() + "' teleportiert!");
+        PlayerUtils.sendSuccess(player, pluginName, "Du hast dich zum Spieler '" + target.getName() + "' teleportiert!");
     }
 
     private void teleportPlayerToPlayer(String[] args, Player player) {
@@ -89,22 +88,22 @@ public class TeleportToCommand extends AbstractExtendedCommand {
 
         Player playerToTeleport = PlayerUtils.getOnlinePlayer(playerName);
         if (playerToTeleport == null) {
-            ChatUtils.printError(player, pluginName, "Der Spieler '" + playerName + "' wurde nicht gefunden. Vielleicht ist er offline?");
+            PlayerUtils.sendError(player, pluginName, "Der Spieler '" + playerName + "' wurde nicht gefunden. Vielleicht ist er offline?");
             return;
         }
         Player target = PlayerUtils.getOnlinePlayer(args[1]);
         if (target == null) {
-            ChatUtils.printError(player, pluginName, "Der Spieler '" + targetName + "' wurde nicht gefunden. Vielleicht ist er offline?");
+            PlayerUtils.sendError(player, pluginName, "Der Spieler '" + targetName + "' wurde nicht gefunden. Vielleicht ist er offline?");
             return;
         }
         playerToTeleport.teleport(target);
 
         // Information for players
-        ChatUtils.printSuccess(playerToTeleport, pluginName, "Du wurdest zum Spieler '" + target.getName() + "' teleportiert!");
-        ChatUtils.printSuccess(target, pluginName, "Der Spieler '" + playerToTeleport.getName() + "' wurde zu dir teleportiert!");
+        PlayerUtils.sendSuccess(playerToTeleport, pluginName, "Du wurdest zum Spieler '" + target.getName() + "' teleportiert!");
+        PlayerUtils.sendSuccess(target, pluginName, "Der Spieler '" + playerToTeleport.getName() + "' wurde zu dir teleportiert!");
 
         // Information for command executer
-        ChatUtils.printSuccess(player, pluginName, "Der Spieler '" + target.getName() + "' wurde zu '" + playerToTeleport.getName() + "' teleportiert!");
+        PlayerUtils.sendSuccess(player, pluginName, "Der Spieler '" + target.getName() + "' wurde zu '" + playerToTeleport.getName() + "' teleportiert!");
     }
 
     private void teleportToCoords(String[] args, Player player) {
@@ -127,13 +126,13 @@ public class TeleportToCommand extends AbstractExtendedCommand {
         if (args.length == 4) {
             targetWorld = player.getServer().getWorld(args[4]);
             if (targetWorld == null) {
-                ChatUtils.printError(player, pluginName, "Die Welt '" + targetWorld + "' existiert nicht!");
+                PlayerUtils.sendError(player, pluginName, "Die Welt '" + targetWorld + "' existiert nicht!");
                 return;
             }
         } else
             targetWorld = player.getWorld();
 
         player.teleport(new Location(targetWorld, x, y, z));
-        ChatUtils.printSuccess(player, pluginName, "Du wurdest erfolgreich zur der Position X=" + x + " Y=" + y + " Z=" + z + " in der Welt " + targetWorld.getName());
+        PlayerUtils.sendSuccess(player, pluginName, "Du wurdest erfolgreich zur der Position X=" + x + " Y=" + y + " Z=" + z + " in der Welt " + targetWorld.getName());
     }
 }

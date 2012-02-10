@@ -53,7 +53,7 @@ import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.MineStarWarp.database.DatabaseManager;
 import de.minestar.MineStarWarp.listeners.PlayerTeleportListener;
 import de.minestar.minestarlibrary.commands.CommandList;
-import de.minestar.minestarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
 public class Core extends JavaPlugin {
 
@@ -75,7 +75,7 @@ public class Core extends JavaPlugin {
         bankManager = null;
         commandList = null;
         backManager = null;
-        ChatUtils.printConsoleInfo("Disabled!", NAME);
+        ConsoleUtils.printInfo(NAME, "Disabled!");
     }
 
     public void onEnable() {
@@ -93,7 +93,7 @@ public class Core extends JavaPlugin {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new PlayerTeleportListener(backManager), this);
 
-        ChatUtils.printConsoleInfo("Version " + getDescription().getVersion() + " enabled", NAME);
+        ConsoleUtils.printInfo(NAME, "Version " + getDescription().getVersion() + " enabled");
     }
 
     private void initCommands() {
@@ -158,7 +158,7 @@ public class Core extends JavaPlugin {
             config = new YamlConfiguration();
             if (!configFile.exists()) {
                 configFile.createNewFile();
-                ChatUtils.printConsoleWarning("Can't find config.yml. Plugin creates a default configuration and uses the default values.", NAME);
+                ConsoleUtils.printWarning(NAME, "Can't find config.yml. Plugin creates a default configuration and uses the default values.");
                 config.load(configFile);
                 config.set("warps.default", 0);
                 config.set("warps.probe", 2);
@@ -170,7 +170,7 @@ public class Core extends JavaPlugin {
             }
             config.load(configFile);
         } catch (Exception e) {
-            ChatUtils.printConsoleException(e, "Can't load configuration file!", NAME);
+            ConsoleUtils.printException(e, NAME, "Can't load configuration file!");
         }
 
         return config;

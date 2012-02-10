@@ -27,7 +27,7 @@ import de.minestar.MineStarWarp.Core;
 import de.minestar.MineStarWarp.Warp;
 import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.minestarlibrary.commands.AbstractCommand;
-import de.minestar.minestarlibrary.utils.ChatUtils;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class GuestListCommand extends AbstractCommand {
 
@@ -50,30 +50,30 @@ public class GuestListCommand extends AbstractCommand {
         String warpName = args[0];
         // Warp is not existing
         if (!wManager.isWarpExisting(warpName)) {
-            ChatUtils.printError(player, pluginName, "'" + warpName + "' existiert nicht!");
+            PlayerUtils.sendError(player, pluginName, "'" + warpName + "' existiert nicht!");
             return;
         }
         Warp warp = wManager.getWarp(warpName);
         // Player isn't allowed to see the guestlist
         if (!warp.canEdit(player)) {
-            ChatUtils.printError(player, pluginName, "Du darfst die Gästeliste für '" + warpName + "' nicht sehen!");
+            PlayerUtils.sendError(player, pluginName, "Du darfst die Gästeliste für '" + warpName + "' nicht sehen!");
             return;
         }
 
         HashSet<String> guests = warp.getGuests();
         // guests == null -> warp is public
         if (guests == null) {
-            ChatUtils.printError(player, pluginName, "Der Warp '" + warpName + "' ist ein öffentlicher Warp und hat somit keine Gästeliste!");
+            PlayerUtils.sendError(player, pluginName, "Der Warp '" + warpName + "' ist ein öffentlicher Warp und hat somit keine Gästeliste!");
             return;
         }
 
         // warp has no guests
         if (guests.isEmpty()) {
-            ChatUtils.printError(player, pluginName, "Der Warp '" + warpName + "' hat keine Gäste!");
+            PlayerUtils.sendError(player, pluginName, "Der Warp '" + warpName + "' hat keine Gäste!");
             return;
         }
 
-        ChatUtils.printSuccess(player, pluginName, "Gäste'" + warpName + "': " + formatGuestList(guests));
+        PlayerUtils.sendSuccess(player, pluginName, "Gäste'" + warpName + "': " + formatGuestList(guests));
     }
 
     private String formatGuestList(HashSet<String> guests) {
