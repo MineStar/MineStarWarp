@@ -52,6 +52,7 @@ import de.minestar.MineStarWarp.dataManager.HomeManager;
 import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.MineStarWarp.database.DatabaseManager;
 import de.minestar.MineStarWarp.listeners.PlayerTeleportListener;
+import de.minestar.MineStarWarp.listeners.SignListener;
 import de.minestar.minestarlibrary.commands.CommandList;
 import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
@@ -92,6 +93,7 @@ public class Core extends JavaPlugin {
 
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new PlayerTeleportListener(backManager), this);
+        pm.registerEvents(new SignListener(warpManager), this);
 
         ConsoleUtils.printInfo(NAME, "Version " + getDescription().getVersion() + " enabled");
     }
