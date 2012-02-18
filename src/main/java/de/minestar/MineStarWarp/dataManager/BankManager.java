@@ -65,7 +65,7 @@ public class BankManager {
 
         if (banks.containsKey(playerName)) {
             if (dbManager.updateBank(playerName, bankLocation)) {
-                PlayerUtils.sendSuccess(player, Core.NAME, "Eine Bank f�r Spieler '" + playerName + "' erstellt!");
+                PlayerUtils.sendSuccess(player, Core.NAME, "Bank für Spieler '" + playerName + "' aktualisiert!");
                 banks.put(playerName, bankLocation);
                 return;
             } else
@@ -73,7 +73,7 @@ public class BankManager {
 
         } else {
             if (dbManager.setBank(playerName, bankLocation)) {
-                PlayerUtils.sendSuccess(player, Core.NAME, "Bank f�r Spieler '" + playerName + "' aktualisiert!");
+                PlayerUtils.sendSuccess(player, Core.NAME, "Eine Bank für Spieler '" + playerName + "' wurde erstellt!");
                 banks.put(playerName, bankLocation);
                 return;
             } else
