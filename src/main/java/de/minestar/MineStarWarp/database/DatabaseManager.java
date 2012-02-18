@@ -65,12 +65,12 @@ public class DatabaseManager extends AbstractDatabaseHandler {
         YamlConfiguration config = new YamlConfiguration();
 
         if (!configFile.exists()) {
-            DatabaseUtils.createDatabaseConfig(DatabaseType.MySQL, configFile, pluginName);
+            DatabaseUtils.createDatabaseConfig(DatabaseType.SQLLite, configFile, pluginName);
             return null;
         }
 
         config.load(configFile);
-        return new DatabaseConnection(pluginName, config.getString("Folder"), config.getString("FileName"));
+        return new DatabaseConnection(pluginName, DatabaseType.SQLLite, config);
     }
 
     @Override
@@ -101,6 +101,18 @@ public class DatabaseManager extends AbstractDatabaseHandler {
 
         this.updateBank = con.prepareStatement("UPDATE banks SET world = ? , x = ? , y = ? , z = ? , yaw = ? , pitch = ? WHERE player = ?");
 
+    }
+
+    @Override
+    public void updateDatabase(String pluginName, Connection con, File dataFolder) throws Exception {
+        File update = new File(dataFolder, "update.sql");
+        if (update.exists()) {
+            ConsoleUtils.printInfo(pluginName, "Start to import sql changes");
+            DatabaseUtils.createStructure(update, con, pluginName);
+            // rename file to prevent double import
+            update.renameTo(new File(dataFolder, "update_done.sql"));
+            
+        }
     }
 
     /**
