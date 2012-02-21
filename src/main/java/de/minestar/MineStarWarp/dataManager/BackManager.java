@@ -39,7 +39,7 @@ public class BackManager {
 
     public void addBack(Player player) {
 
-        String pName = player.getName().toLowerCase();
+        String pName = player.getName();
         // Player has used /back command a second before
         if (backUser.remove(pName))
             return;
@@ -54,12 +54,12 @@ public class BackManager {
     }
 
     public Location getBack(Player player) {
-        String pName = player.getName().toLowerCase();
+        String pName = player.getName();
         LinkedList<Location> l = backs.get(pName);
         return l == null || l.isEmpty() ? null : l.removeLast();
     }
 
     public void usedBack(Player player) {
-        backUser.add(player.getName().toLowerCase());
+        backUser.add(player.getName());
     }
 }
