@@ -42,6 +42,7 @@ import de.minestar.MineStarWarp.commands.warp.ListCommand;
 import de.minestar.MineStarWarp.commands.warp.MoveCommand;
 import de.minestar.MineStarWarp.commands.warp.PrivateCommand;
 import de.minestar.MineStarWarp.commands.warp.PublicCommand;
+import de.minestar.MineStarWarp.commands.warp.RandomCommand;
 import de.minestar.MineStarWarp.commands.warp.RenameCommand;
 import de.minestar.MineStarWarp.commands.warp.SearchCommand;
 import de.minestar.MineStarWarp.commands.warp.UninviteCommand;
@@ -102,51 +103,42 @@ public class Core extends JavaPlugin {
         //@formatter:off
         commandList = new CommandList(
                 
-                // Teleport Commands
-                new TeleportHereCommand("/tphere", "<Player>", "minestarwarp.command.tphere"),
-                new TeleportToCommand("/tp", "<Player>", "minestarwarp.command.tpTo"),
+                new TeleportHereCommand(    "/tphere",          "<Player>",                 "minestarwarp.command.tphere"),
+                new TeleportToCommand(      "/tp",              "<Player>",                 "minestarwarp.command.tpTo"),
 
-                // Home
-                new SetHomeCommand("/sethome", "", "minestarwarp.command.sethome", homeManager),
-                new HomeCommand("/home", "", "minestarwarp.command.home", homeManager),
+                new SetHomeCommand(         "/sethome",         "",                         "minestarwarp.command.sethome", homeManager),
+                new HomeCommand(            "/home",            "",                         "minestarwarp.command.home", homeManager),
 
-                // Bank
-                new BankCommand("/bank", "", "minestarwarp.command.bank", bankManager,
-                        new BankListCommand("list", "", "minestarwarp.command.bankList", bankManager)
+                new BackCommand(            "/back",            "",                         "minestarwarp.command.back", backManager),
+
+                new WarpToCommand       (   "/warp",            "<Name>",                   "minestarwarp.command.warpTo", warpManager,
+
+                        new RandomCommand(      "random",       "",                         "minestarwarp.command.random", warpManager),
+                        new CreateCommand(      "create",       "<Name>",                   "minestarwarp.command.create", warpManager),
+                        new CreateCommand(      "pcreate",      "<Name>",                   "minestarwarp.command.create", warpManager),
+                        new DeleteCommand(      "delete",       "<Name>",                   "minestarwarp.command.delete", warpManager),
+                        new MoveCommand(        "move",         "<Name>",                   "minestarwarp.command.move", warpManager),
+                        new RenameCommand(      "rename",       "<Oldname> <Newname>",      "minestarwarp.command.rename", warpManager),
+
+                        new ListCommand(        "list",         "",                         "minestarwarp.command.list", warpManager),
+                        new SearchCommand(      "search",       "<Name>",                   "minestarwarp.command.search", warpManager),
+
+                        new PrivateCommand(     "private",      "<Name>",                   "minestarwarp.command.private", warpManager),
+                        new PublicCommand(      "public",       "<Name>",                   "minestarwarp.command.public", warpManager),
+
+                        new InviteCommand(      "invite",       "<PlayerName> <Warpname>",  "minestarwarp.command.invite", warpManager),
+                        new UninviteCommand(    "uninvite",     "<PlayerName> <Warpname>",  "minestarwarp.command.uninvite", warpManager),
+                        new GuestListCommand(   "guestlist",    "<WarpName>",               "minestarwarp.command.guestlist", warpManager)
                 ),
 
-                new SetBankCommand("/setbank", "<Player>", "minestarwarp.command.setBank", bankManager),
+                new BankCommand(            "/bank",            "",                         "minestarwarp.command.bank", bankManager,
+                        new BankListCommand(    "list",         "",                         "minestarwarp.command.bankList", bankManager)
+                ),
 
-                // Back
-                new BackCommand("/back", "", "minestarwarp.command.back", backManager),
-
-                // Warp Command
-                new WarpToCommand("/warp", "<Name>", "minestarwarp.command.warpTo", warpManager,
-                        
-                        // Create,Delete,Move,Rename
-                        new CreateCommand("create", "<Name>", "minestarwarp.command.create", warpManager),
-                        new CreateCommand("pcreate", "<Name>", "minestarwarp.command.create", warpManager),
-                        new DeleteCommand("delete", "<Name>", "minestarwarp.command.delete", warpManager),
-                        new MoveCommand("move", "<Name>", "minestarwarp.command.move", warpManager),
-                        new RenameCommand("rename", "<Oldname> <Newname>", "minestarwarp.command.rename", warpManager),
-
-                        // Searching Warps
-                        new ListCommand("list", "", "minestarwarp.command.list", warpManager),
-                        new SearchCommand("search", "<Name>", "minestarwarp.command.search", warpManager),
-
-                        // Modifiers
-                        new PrivateCommand("private", "<Name>", "minestarwarp.command.private", warpManager),
-                        new PublicCommand("public", "<Name>", "minestarwarp.command.public", warpManager),
-
-                        // Guests
-                        new InviteCommand("invite", "<PlayerName> <Warpname>", "minestarwarp.command.invite", warpManager),
-                        new UninviteCommand("uninvite", "<PlayerName> <Warpname>", "minestarwarp.command.uninvite", warpManager),
-                        new GuestListCommand("guestlist", "<WarpName>", "minestarwarp.command.guestlist", warpManager)
-                )
+                new SetBankCommand(         "/setbank",         "<Player>",                 "minestarwarp.command.setBank", bankManager)
         );
         //@formatter:on
     }
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         commandList.handleCommand(sender, label, args);
