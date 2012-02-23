@@ -111,7 +111,6 @@ public class DatabaseManager extends AbstractDatabaseHandler {
             DatabaseUtils.createStructure(update, con, pluginName);
             // rename file to prevent double import
             update.renameTo(new File(dataFolder, "update_done.sql"));
-            
         }
     }
 

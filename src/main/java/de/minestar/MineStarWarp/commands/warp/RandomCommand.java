@@ -19,6 +19,7 @@
 package de.minestar.MineStarWarp.commands.warp;
 
 import java.util.Map.Entry;
+import java.util.ArrayList;
 import java.util.Random;
 
 import org.bukkit.entity.Player;
@@ -43,9 +44,9 @@ public class RandomCommand extends AbstractCommand {
     public void execute(String[] args, Player player) {
         PlayerUtils.sendInfo(player, pluginName, "Es wird ein zufaelliger Warp ausgewaehlt...");
 
-        Entry<String, Warp>[] publicWarps = wManager.getPublicWarps();
-        int i = rand.nextInt(publicWarps.length);
-        Entry<String, Warp> target = publicWarps[i];
+        ArrayList<Entry<String, Warp>> publicWarps = wManager.getPublicWarps();
+        int i = rand.nextInt(publicWarps.size());
+        Entry<String, Warp> target = publicWarps.get(i);
         player.teleport(target.getValue().getLoc());
         PlayerUtils.sendSuccess(player, pluginName, "Willkommen beim Warp '" + target.getKey() + "'!");
     }

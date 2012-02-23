@@ -18,9 +18,8 @@
 
 package de.minestar.MineStarWarp.dataManager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -418,17 +417,17 @@ public class WarpManager {
         return warpList.size() != 0 ? warpList : null;
     }
 
-    @SuppressWarnings("unchecked")
-    public Entry<String, Warp>[] getPublicWarps() {
-        List<Entry<String, Warp>> list = new LinkedList<Entry<String, Warp>>();
+    public ArrayList<Entry<String, Warp>> getPublicWarps() {
+        ArrayList<Entry<String, Warp>> list = new ArrayList<Entry<String, Warp>>(warps.size() / 10);
 
         for (Entry<String, Warp> entry : warps.entrySet()) {
             if (entry.getValue().isPublic())
                 list.add(entry);
         }
 
-        return list.toArray((Entry<String, Warp>[]) new Object[list.size()]);
+        return list.size() != 0 ? list : null;
     }
+
     /**
      * Changing the access from public to private or vice versa. The change is
      * send at first to the database and when no error occurs, it is changed in
