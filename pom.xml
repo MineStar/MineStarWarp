@@ -52,5 +52,10 @@
 			<artifactId>craftbukkit</artifactId>
 			<version>1.1-R3</version>
 		</dependency>
+		<dependency>
+			<groupId>de.minestar</groupId>
+			<artifactId>FalseBookCore</artifactId>
+			<version>0.92.3alpha</version>
+		</dependency>
 	</dependencies>
 </project>
