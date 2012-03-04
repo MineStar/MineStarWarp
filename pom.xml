@@ -43,19 +43,19 @@
 			<version>1.4.3</version>
 		</dependency>
 		<dependency>
+			<groupId>de.minestar</groupId>
+			<artifactId>FalseBookCore</artifactId>
+			<version>0.92.3alpha</version>
+		</dependency>
+		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.1-R3</version>
+			<version>1.1-R6</version>
 		</dependency>
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>craftbukkit</artifactId>
-			<version>1.1-R3</version>
-		</dependency>
-		<dependency>
-			<groupId>de.minestar</groupId>
-			<artifactId>FalseBookCore</artifactId>
-			<version>0.92.3alpha</version>
+			<version>1.1-R6</version>
 		</dependency>
 	</dependencies>
 </project>
