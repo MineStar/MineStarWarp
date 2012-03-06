@@ -18,12 +18,7 @@
 
 package de.minestar.MineStarWarp.listeners;
 
-import net.minecraft.server.Packet51MapChunk;
-import net.minecraft.server.World;
-
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.CraftWorld;
-import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -50,25 +45,6 @@ public class PlayerTeleportListener implements Listener {
     }
 
     private void loadChunk(Player player, Location target) {
-
         target.getBlock().getChunk().load();
-//        CraftPlayer cPlayer = (CraftPlayer) player;
-//        CraftWorld cWorld = (CraftWorld) target.getWorld();
-//
-//        int minY = (40 / 2) * 2;
-//        int maxY = (100 / 2 + 1) * 2;
-//        int minX = cWorld.getChunkAt(target).getX() * 16;
-//        int minZ = cWorld.getChunkAt(target).getZ() * 16;
-//        int j = minX + cWorld.getChunkAt(target).getX() * 16;
-//        int i1 = minY;
-//        int l1 = minZ + cWorld.getChunkAt(target).getZ() * 16;
-//        int j2 = (minX + 16 - minX) + 1;
-//        int l2 = (maxY - minY) + 2;
-//        int i3 = (minZ + 16 - minZ) + 1;
-
-        // SEND PACKET!
-
-        // cPlayer.getHandle().netServerHandler.sendPacket(new
-        // Packet51MapChunk(0, 0, 0, 0, 0, 0, cWorld.getHandle()));
     }
 }
