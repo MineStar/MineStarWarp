@@ -1,6 +1,6 @@
 name: MineStarWarp
 main: de.minestar.MineStarWarp.Core
-version: 1.3
+version: 1.5
 depend: [MineStarLibrary]
 softdepend: [GreenMile]
 commands:
