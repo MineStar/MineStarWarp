@@ -28,11 +28,11 @@ import com.bukkit.gemo.utils.UtilPermissions;
 
 import de.minestar.MineStarWarp.dataManager.BackManager;
 
-public class PlayerTeleportListener implements Listener {
+public class TeleportListener implements Listener {
 
     private BackManager backManager;
 
-    public PlayerTeleportListener(BackManager backManager) {
+    public TeleportListener(BackManager backManager) {
         this.backManager = backManager;
     }
 

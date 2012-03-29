@@ -49,7 +49,7 @@ import de.minestar.MineStarWarp.dataManager.BankManager;
 import de.minestar.MineStarWarp.dataManager.HomeManager;
 import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.MineStarWarp.database.DatabaseManager;
-import de.minestar.MineStarWarp.listeners.PlayerTeleportListener;
+import de.minestar.MineStarWarp.listeners.TeleportListener;
 import de.minestar.MineStarWarp.listeners.SignListener;
 import de.minestar.minestarlibrary.AbstractCore;
 import de.minestar.minestarlibrary.commands.CommandList;
@@ -92,7 +92,7 @@ public class Core extends AbstractCore {
     @Override
     protected boolean createListener() {
 
-        teleportListener = new PlayerTeleportListener(backManager);
+        teleportListener = new TeleportListener(backManager);
         signListener = new SignListener(warpManager);
 
         return true;
