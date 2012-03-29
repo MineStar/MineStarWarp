@@ -31,6 +31,8 @@ public class SetBankCommand extends AbstractCommand {
     public SetBankCommand(String syntax, String arguments, String node, BankManager bankManager) {
         super(Core.NAME, syntax, arguments, node);
         this.bankManager = bankManager;
+
+        this.description = "Setzt das Bankfachschliessfach des Spielers fest";
     }
 
     @Override

@@ -31,8 +31,9 @@ public class CreateCommand extends AbstractCommand {
 
     public CreateCommand(String syntax, String arguments, String node, WarpManager wManager) {
         super(Core.NAME, syntax, arguments, node);
-        this.description = "Erstellt einen privaten Warp";
         this.wManager = wManager;
+
+        this.description = "Erstellt einen privaten Warp";
     }
 
     @Override

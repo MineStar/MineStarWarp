@@ -31,6 +31,7 @@ public class TeleportToCommand extends AbstractExtendedCommand {
 
     public TeleportToCommand(String syntax, String arguments, String node) {
         super(Core.NAME, syntax, arguments, node);
+
         this.description = "Teleportiert dich zu einem Spieler";
     }
 

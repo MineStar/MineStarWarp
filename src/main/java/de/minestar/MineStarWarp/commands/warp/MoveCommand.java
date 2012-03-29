@@ -32,8 +32,9 @@ public class MoveCommand extends AbstractCommand {
 
     public MoveCommand(String syntax, String arguments, String node, WarpManager wManager) {
         super(Core.NAME, syntax, arguments, node);
-        this.description = "Verschiebt den Warp an deine Position";
         this.wManager = wManager;
+
+        this.description = "Verschiebt den Warp an deine Position";
     }
 
     @Override

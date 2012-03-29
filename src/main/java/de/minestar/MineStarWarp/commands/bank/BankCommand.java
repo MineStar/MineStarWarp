@@ -34,6 +34,8 @@ public class BankCommand extends AbstractSuperCommand {
     public BankCommand(String syntax, String arguments, String node, BankManager bankManager, AbstractCommand... commands) {
         super(Core.NAME, syntax, arguments, node, true, commands);
         this.bankManager = bankManager;
+
+        this.description = "Teleportiert den Spieler zu seinem Bankfach";
     }
 
     @Override

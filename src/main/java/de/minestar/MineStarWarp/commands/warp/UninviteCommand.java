@@ -33,8 +33,10 @@ public class UninviteCommand extends AbstractCommand {
 
     public UninviteCommand(String syntax, String arguments, String node, WarpManager wManager) {
         super(Core.NAME, syntax, arguments, node);
-        this.description = "Entfernt einen Spieler aus der Gästeliste des Warps";
         this.wManager = wManager;
+        
+
+        this.description = "Entfernt einen Spieler aus der Gaesteliste des Warps";
     }
 
     @Override

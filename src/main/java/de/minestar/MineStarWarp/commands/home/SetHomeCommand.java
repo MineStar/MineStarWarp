@@ -31,6 +31,8 @@ public class SetHomeCommand extends AbstractCommand {
     public SetHomeCommand(String syntax, String arguments, String node, HomeManager hManager) {
         super(Core.NAME, syntax, arguments, node);
         this.hManager = hManager;
+
+        this.description = "Setzt das Zuhause des Spielers fest";
     }
 
     @Override

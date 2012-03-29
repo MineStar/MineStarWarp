@@ -36,8 +36,9 @@ public class BankListCommand extends AbstractExtendedCommand {
 
     public BankListCommand(String syntax, String arguments, String node, BankManager bankManager) {
         super(Core.NAME, syntax, arguments, node);
-        this.description = "Listet alle Banken auf";
         this.bankManager = bankManager;
+
+        this.description = "Listet alle Banken auf";
     }
 
     @Override

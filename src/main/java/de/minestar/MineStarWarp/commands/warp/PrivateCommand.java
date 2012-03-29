@@ -32,8 +32,9 @@ public class PrivateCommand extends AbstractCommand {
 
     public PrivateCommand(String syntax, String arguments, String node, WarpManager wManager) {
         super(Core.NAME, syntax, arguments, node);
-        this.description = "Wandelt einen öffentlichen in  einen privaten Warp um";
         this.wManager = wManager;
+        
+        this.description = "Wandelt einen oeffentlichen in  einen privaten Warp um";
     }
 
     @Override

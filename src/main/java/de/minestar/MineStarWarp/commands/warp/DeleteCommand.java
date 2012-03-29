@@ -32,8 +32,9 @@ public class DeleteCommand extends AbstractCommand {
 
     public DeleteCommand(String syntax, String arguments, String node, WarpManager wManager) {
         super(Core.NAME, syntax, arguments, node);
-        this.description = "Löscht einen deiner Warps";
         this.wManager = wManager;
+        
+        this.description = "Loescht einen deiner Warps";
     }
 
     @Override

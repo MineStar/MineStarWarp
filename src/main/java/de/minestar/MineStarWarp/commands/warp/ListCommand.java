@@ -37,8 +37,9 @@ public class ListCommand extends AbstractExtendedCommand {
 
     public ListCommand(String syntax, String arguments, String node, WarpManager wManager) {
         super(Core.NAME, syntax, arguments, node);
-        this.description = "Listet alle benutzbaren Warps nach Seiten sortiert auf.";
         this.wManager = wManager;
+        
+        this.description = "Listet alle benutzbaren Warps nach Seiten sortiert auf.";
     }
 
     @Override

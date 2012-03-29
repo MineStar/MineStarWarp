@@ -35,8 +35,9 @@ public class GuestListCommand extends AbstractCommand {
 
     public GuestListCommand(String syntax, String arguments, String node, WarpManager wManager) {
         super(Core.NAME, syntax, arguments, node);
-        this.description = "Zeigt die Gäste eines Warps an.";
         this.wManager = wManager;
+        
+        this.description = "Zeigt die Gaeste eines Warps an";
     }
 
     @Override

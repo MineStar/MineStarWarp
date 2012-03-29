@@ -38,6 +38,8 @@ public class RandomCommand extends AbstractCommand {
     public RandomCommand(String syntax, String arguments, String node, WarpManager wManager) {
         super(Core.NAME, syntax, arguments, node);
         this.wManager = wManager;
+        
+        this.description = "Teleportiert den Spieler zu einem zufaelligen, oeffentlichen Warp";
     }
 
     @Override

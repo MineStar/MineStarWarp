@@ -31,8 +31,9 @@ public class RenameCommand extends AbstractCommand {
 
     public RenameCommand(String syntax, String arguments, String node, WarpManager wManager) {
         super(Core.NAME, syntax, arguments, node);
-        this.description = "Benennt einen Warp um";
         this.wManager = wManager;
+
+        this.description = "Benennt einen Warp um";
     }
 
     @Override

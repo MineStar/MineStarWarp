@@ -35,8 +35,9 @@ public class WarpToCommand extends AbstractSuperCommand {
 
     public WarpToCommand(String syntax, String arguments, String node, WarpManager wManager, AbstractCommand... subCommands) {
         super(Core.NAME, syntax, arguments, node, true, subCommands);
-        this.description = "Teleportiert dich zu einem Warp";
         this.wManager = wManager;
+
+        this.description = "Teleportiert dich zu einem Warp";
     }
 
     @Override

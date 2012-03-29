@@ -34,8 +34,9 @@ public class SearchCommand extends AbstractCommand {
 
     public SearchCommand(String syntax, String arguments, String node, WarpManager wManager) {
         super(Core.NAME, syntax, arguments, node);
-        this.description = "Nach bestimmten Warpnamen suchen";
         this.wManager = wManager;
+
+        this.description = "Nach bestimmten Warpnamen suchen";
     }
 
     @Override

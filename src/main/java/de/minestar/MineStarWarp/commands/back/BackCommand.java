@@ -33,6 +33,8 @@ public class BackCommand extends AbstractCommand {
     public BackCommand(String syntax, String arguments, String node, BackManager backManager) {
         super(Core.NAME, syntax, arguments, node);
         this.backManager = backManager;
+
+        this.description = "Teleportiert den Spieler zur letzten Position zurueck";
     }
 
     @Override

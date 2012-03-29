@@ -33,6 +33,8 @@ public class HomeCommand extends AbstractCommand {
     public HomeCommand(String syntax, String arguments, String node, HomeManager hManager) {
         super(Core.NAME, syntax, arguments, node);
         this.hManager = hManager;
+
+        this.description = "Teleportiert den Spieler zu seinem Zuhause";
     }
 
     @Override

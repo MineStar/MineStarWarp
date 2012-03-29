@@ -33,8 +33,9 @@ public class InviteCommand extends AbstractCommand {
 
     public InviteCommand(String syntax, String arguments, String node, WarpManager wManager) {
         super(Core.NAME, syntax, arguments, node);
-        this.description = "Einem anderen Spieler erlauben, den Warp mitzubenutzen!";
         this.wManager = wManager;
+
+        this.description = "Einem anderen Spieler erlauben, den Warp mitzubenutzen";
     }
 
     @Override
