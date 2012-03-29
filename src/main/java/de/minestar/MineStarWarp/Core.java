@@ -20,11 +20,8 @@ package de.minestar.MineStarWarp;
 
 import java.io.File;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import de.minestar.MineStarWarp.commands.back.BackCommand;
 import de.minestar.MineStarWarp.commands.bank.BankCommand;
@@ -54,54 +51,67 @@ import de.minestar.MineStarWarp.dataManager.WarpManager;
 import de.minestar.MineStarWarp.database.DatabaseManager;
 import de.minestar.MineStarWarp.listeners.PlayerTeleportListener;
 import de.minestar.MineStarWarp.listeners.SignListener;
+import de.minestar.minestarlibrary.AbstractCore;
 import de.minestar.minestarlibrary.commands.CommandList;
+import de.minestar.minestarlibrary.config.MinestarConfig;
 import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
-public class Core extends JavaPlugin {
+public class Core extends AbstractCore {
 
     public static final String NAME = "MineStarWarp";
 
+    /** Manager */
     private WarpManager warpManager;
     private HomeManager homeManager;
     private BankManager bankManager;
     private BackManager backManager;
     private DatabaseManager dbManager;
 
-    private CommandList commandList;
+    /** Listener */
+    private Listener teleportListener, signListener;
 
-    public void onDisable() {
-        dbManager.closeConnection();
-        dbManager = null;
-        warpManager = null;
-        homeManager = null;
-        bankManager = null;
-        commandList = null;
-        backManager = null;
-        ConsoleUtils.printInfo(NAME, "Disabled!");
-    }
+    @Override
+    protected boolean createManager() {
 
-    public void onEnable() {
-
-        YamlConfiguration config = checkConfig();
+        MinestarConfig config = loadConfig();
+        if (config == null)
+            return false;
 
         dbManager = new DatabaseManager(Core.NAME, getDataFolder());
+        if (!dbManager.hasConnection())
+            return false;
+
         warpManager = new WarpManager(dbManager, config);
         homeManager = new HomeManager(dbManager);
         bankManager = new BankManager(dbManager, config);
         backManager = new BackManager();
 
-        initCommands();
-
-        PluginManager pm = getServer().getPluginManager();
-        pm.registerEvents(new PlayerTeleportListener(backManager), this);
-        pm.registerEvents(new SignListener(warpManager), this);
-
-        ConsoleUtils.printInfo(NAME, "Version " + getDescription().getVersion() + " enabled");
+        return true;
     }
 
-    private void initCommands() {
+    @Override
+    protected boolean createListener() {
+
+        teleportListener = new PlayerTeleportListener(backManager);
+        signListener = new SignListener(warpManager);
+
+        return true;
+    }
+
+    @Override
+    protected boolean registerEvents(PluginManager pm) {
+
+        pm.registerEvents(teleportListener, this);
+        pm.registerEvents(signListener, this);
+
+        return true;
+    }
+
+    @Override
+    protected boolean createCommands() {
+
         //@formatter:off
-        commandList = new CommandList(
+        cmdList = new CommandList(
                 
                 new TeleportHereCommand(    "/tphere",          "<Player>",                 "minestarwarp.command.tphere"),
                 new TeleportToCommand(      "/tp",              "<Player>",                 "minestarwarp.command.tpTo"),
@@ -138,35 +148,40 @@ public class Core extends JavaPlugin {
                 new SetBankCommand(         "/setbank",         "<Player>",                 "minestarwarp.command.setBank", bankManager)
         );
         //@formatter:on
-    }
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        commandList.handleCommand(sender, label, args);
+
         return true;
     }
 
-    public YamlConfiguration checkConfig() {
-        YamlConfiguration config = null;
+    @Override
+    protected boolean commonDisable() {
+
+        dbManager.closeConnection();
+        if (dbManager.hasConnection())
+            return false;
+
+        dbManager = null;
+        warpManager = null;
+        homeManager = null;
+        bankManager = null;
+        cmdList = null;
+        backManager = null;
+
+        return true;
+    }
+
+    public MinestarConfig loadConfig() {
+        File configFile = new File(getDataFolder(), "config.yml");
         try {
-            File configFile = new File(getDataFolder(), "config.yml");
-            config = new YamlConfiguration();
+            // copy default one from .jar
             if (!configFile.exists()) {
-                configFile.createNewFile();
-                ConsoleUtils.printWarning(NAME, "Can't find config.yml. Plugin creates a default configuration and uses the default values.");
-                config.load(configFile);
-                config.set("warps.default", 0);
-                config.set("warps.probe", 2);
-                config.set("warps.free", 5);
-                config.set("warps.pay", 9);
-                config.set("warps.warrpsPerPage", 15);
-                config.set("banks.banksPerPage", 15);
-                config.save(configFile);
+                ConsoleUtils.printWarning(NAME, "Can't find " + configFile + ", creating a default configuration");
+                MinestarConfig.copyDefault(this.getClass().getResourceAsStream("/config.yml"), configFile);
             }
-            config.load(configFile);
+            // load config and check version tag
+            return new MinestarConfig(configFile, NAME, getDescription().getVersion());
         } catch (Exception e) {
             ConsoleUtils.printException(e, NAME, "Can't load configuration file!");
+            return null;
         }
-
-        return config;
     }
 }

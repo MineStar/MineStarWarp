@@ -1,0 +1,9 @@
+VERSION: ${pom.version}
+warps:
+  default: 0
+  probe: 2
+  free: 5
+  pay: 9
+  warpsPerPage: 15
+banks:
+  banksPerPage: 15

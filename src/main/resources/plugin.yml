@@ -1,7 +1,7 @@
 name: MineStarWarp
 main: de.minestar.MineStarWarp.Core
 version: ${pom.version}
-depend: [MineStarLibrary]
+depend: [MineStarLibrary, FalseBookCore]
 softdepend: [GreenMile]
 commands:
   home:
