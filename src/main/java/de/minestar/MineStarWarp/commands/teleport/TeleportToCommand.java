@@ -104,7 +104,7 @@ public class TeleportToCommand extends AbstractExtendedCommand {
         PlayerUtils.sendSuccess(target, pluginName, "Der Spieler '" + playerToTeleport.getName() + "' wurde zu dir teleportiert!");
 
         // Information for command executer
-        PlayerUtils.sendSuccess(player, pluginName, "Der Spieler '" + target.getName() + "' wurde zu '" + playerToTeleport.getName() + "' teleportiert!");
+        PlayerUtils.sendSuccess(player, pluginName, "Der Spieler '" + playerToTeleport.getName() + "' wurde zu '" + target.getName() + "' teleportiert!");
     }
 
     private void teleportToCoords(String[] args, Player player) {
